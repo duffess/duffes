@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0c0e0d" />
+    
+    <!-- Primary Meta Tags -->
+    <title>DUFFES | Growth Design & Front-End Architecture</title>
+    <meta name="title" content="DUFFES | Growth Design & Front-End Architecture" />
+    <meta name="description" content="Engenharia de Landing Pages e Aplicações B2B para operações de alta performance. Interfaces focadas em agressividade analítica e conversão absoluta." />
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://duffes-portfolio.netlify.app/" />
+    <meta property="og:title" content="DUFFES | Growth Design & Front-End Engineering" />
+    <meta property="og:description" content="Sistemas B2B focado puramente em lucro e escalabilidade. Acesse meu portfólio." />
+    <meta property="og:image" content="/dash-lp.webp" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://duffes-portfolio.netlify.app/" />
+    <meta property="twitter:title" content="DUFFES | Digital Sales Architect" />
+    <meta property="twitter:description" content="Engenharia de ponta a ponta voltada para conversão implacável." />
+    <meta property="twitter:image" content="/dash-lp.webp" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="preload" as="image" href="/dash-lp.webp" fetchpriority="high" />
+    
+    <style>
+      :root { --font-headline: "Noto Serif", serif; --font-body: "Inter", sans-serif; --font-label: "Space Grotesk", sans-serif; }
+      body { background-color: #0c0e0d; color: #f5f5f4; margin: 0; font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+      #root { min-height: 100vh; }
+      header { background-color: #0c0e0d; }
+    </style>
+
+    <!-- Async Optimized Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,300&family=Space+Grotesk:wght@400;700&family=Inter:wght@400;600&display=swap" media="print" onload="this.media='all'"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" media="print" onload="this.media='all'"/>
+  </head>
+  <body class="bg-[#0c0e0d] text-stone-100 antialiased selection:bg-white selection:text-stone-900">
+    <div id="root">
+      <!-- App Shell (Pre-renderizado para Performance Lighthouse 100) -->
+      <style>
+        .shell-container { padding: 4rem 2rem; min-height: 85vh; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box; }
+        .shell-title { font-size: 3rem; font-family: "Noto Serif", serif; margin-bottom: 3rem; line-height: 1.15; color: #f5f5f4; font-weight: 700; margin-top: 0; }
+        .shell-subtitle { font-size: 1.25rem; font-family: "Inter", sans-serif; color: #d6d3d1; margin: 0; line-height: 1.625; }
+        @media (min-width: 768px) {
+          .shell-container { padding: 4rem 6rem; }
+          .shell-title { font-size: 4.5rem; }
+          .shell-subtitle { font-size: 1.5rem; max-width: 58%; margin-left: auto; }
+        }
+      </style>
+      <div class="shell-container">
+        <h1 class="shell-title">
+          Me diga o que você precisa.<br/>
+          <span style="font-style: italic; opacity: 0.8; font-weight: 300;">Eu cuido do resto.</span>
+        </h1>
+        <p class="shell-subtitle">
+          Soluções digitais de alta conversão para infoprodutores, SaaS e agências. Eu construo o sistema, você aumenta a margem.
+        </p>
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
