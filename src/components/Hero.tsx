@@ -63,7 +63,9 @@ export function Hero() {
       gsap.to(buttonRef.current, { x: moveX, y: moveY, duration: 0.4, ease: 'power3.out', overwrite: true });
       gsap.to(iconRef.current, { x: moveX * 0.5, duration: 0.4, ease: 'power3.out', overwrite: true });
     } else {
-      handleMouseLeave();
+      gsap.to(buttonRef.current, { x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.3)', overwrite: true });
+      gsap.to(iconRef.current, { x: 0, duration: 0.8, ease: 'elastic.out(1, 0.3)', overwrite: true });
+      buttonRectRef.current = null;
     }
   }, []);
 

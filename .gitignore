@@ -27,3 +27,7 @@ dist-ssr
 .agents/
 .stitch/
 skills-lock.json
+
+# PDF generation (local only)
+generate-pdf.mjs
+*.pdf
