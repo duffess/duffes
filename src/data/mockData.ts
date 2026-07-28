@@ -19,6 +19,16 @@ export const portfolioData = {
       ],
       tags: ["Framer Motion", "GSAP", "Premium UI", "SEO Pro"],
       linkUrl: "https://soft-kashata-a947d6.netlify.app/"
+    },
+    {
+      id: "fdm",
+      imageSrc: "/fabricademonstros.webp",
+      stats: [
+        { labelKey: "conversion", value: "+35%" },
+        { labelKey: "performance", value: "Sub-1s" }
+      ],
+      tags: ["React", "Vite", "Tailwind CSS", "Mobile-First"],
+      linkUrl: "https://fabricademonstros.vercel.app/"
     }
   ]
 };

@@ -13,7 +13,7 @@ export const translations = {
     },
     manifesto: {
       label: "Abordagem",
-      quote: "\"Não sou apenas um dev. Sou o engenheiro por trás das suas vendas. Cada pixel é desenhado para ROI.\""
+      quote: "\"Eu não faço site só para ficar bonito de enfeite. Eu vou unir o design de alta conversão com código rápido para criar páginas focadas em uma única coisa: fechar negócios.\""
     },
     pillars: {
       p1Label: "01 / VELOCIDADE",
@@ -24,7 +24,7 @@ export const translations = {
       p2Desc: "Sem intermediários. Você fala diretamente com quem resolve. Comunicação assíncrona e eficiente via Slack ou WhatsApp.",
       p3Label: "03 / RESULTADO",
       p3Title: "Performance Absoluta",
-      p3Desc: "Código limpo, SEO otimizado e taxas de carregamento sub-segundo. Sua infraestrutura moldada para converter tráfego frio em lucro."
+      p3Desc: "Código limpo, SEO otimizado e carregamento rápido."
     },
     caseStudy: {
       headerLabel: "Trabalhos Selecionados",
@@ -37,11 +37,11 @@ export const translations = {
       s1Label: "01 / Diagnóstico",
       s1Desc: "Entendo o seu negócio, seu público e o que precisa estar no site pra transformar visita em cliente.",
       s2Label: "02 / Criação",
-      s2Desc: "Desenvolvo o site com design profissional, textos persuasivos e estrutura pensada pra converter.",
+      s2Desc: "Desenvolvo o site com design profissional, textos persuasivos e estrutura para converter.",
       s3Label: "03 / Ajustes",
       s3Desc: "Você revisa, sugere mudanças e eu refino até estar exatamente do jeito que você quer.",
       s4Label: "04 / Publicação",
-      s4Desc: "Site no ar, domínio configurado e pronto pra receber clientes."
+      s4Desc: "Publico o site, configuro o domínio e você está pronto para receber clientes."
     },
     projectDetails: {
       closeBtn: "Fechar",
@@ -74,6 +74,16 @@ export const translations = {
         stats: {
           design: "Estética Editorial",
           booking: "Lead Qualification"
+        }
+      },
+      fdm: {
+        title: "Fábrica de Monstros CT",
+        description: "Landing page de alta energia focada em conversão direta para um centro de treinamento hardcore.",
+        challenge: "O centro de treinamento precisava de uma presença digital que refletisse a intensidade do seu ambiente físico. O desafio era sair da estética genérica de academias comuns e criar uma máquina de matrículas focada em resultados reais.",
+        solution: "Desenvolvemos uma interface industrial em 'Dark Mode' com alto contraste em tom laranja para guiar a ação do usuário. A arquitetura da página foi construída com foco agressivo em prova social e performance mobile.",
+        stats: {
+          conversion: "Captação de Alunos",
+          performance: "Otimização Mobile-First"
         }
       }
     }
@@ -154,6 +164,16 @@ export const translations = {
           design: "Editorial Aesthetic",
           booking: "Lead Qualification"
         }
+      },
+      fdm: {
+        title: "Fábrica de Monstros CT",
+        description: "High-energy landing page focused on direct conversion for a hardcore training center.",
+        challenge: "The training facility needed a digital footprint reflecting its intense physical environment. The challenge was breaking away from generic gym aesthetics to build an enrollment machine focused on real results.",
+        solution: "We designed an industrial 'Dark Mode' interface using high-contrast orange to drive user action. The page architecture was built with an aggressive focus on social proof and mobile performance.",
+        stats: {
+          conversion: "Student Enrollment",
+          performance: "Mobile-First Optimization"
+        }
       }
     }
   },
@@ -194,7 +214,7 @@ export const translations = {
       s1Desc: "Entiendo su negocio, su público y lo que se necesita en el sitio para transformar visitas en clientes.",
       s2Label: "02 / Creación",
       s2Desc: "Desarrollo el sitio con diseño profesional, textos persuasivos y estructura diseñada para convertir.",
-      s3Label: "03 / Ajustes" ,
+      s3Label: "03 / Ajustes",
       s3Desc: "Usted revisa, sugiere cambios y yo refino hasta que esté exactamente como lo desea.",
       s4Label: "04 / Lanzamiento",
       s4Desc: "Sitio en línea, dominio configurado y listo para recibir clientes."
@@ -230,6 +250,16 @@ export const translations = {
         stats: {
           design: "Estética Editorial",
           booking: "Calificación de Leads"
+        }
+      },
+      fdm: {
+        title: "Fábrica de Monstros CT",
+        description: "Landing page de alta energía enfocada en la conversión directa para un centro de entrenamiento hardcore.",
+        challenge: "El centro de entrenamiento necesitaba una presencia digital que reflejara la intensidad de su entorno físico. El obstáculo era huir del aspecto genérico de los gimnasios comunes y crear una máquina de matrículas enfocada en resultados reales.",
+        solution: "Desarrollamos una interfaz basada en un 'Dark Mode' industrial con alto contraste en color naranja para guiar la acción del usuario. La arquitectura de la página se estructuró con un enfoque agresivo en prueba social y rendimiento móvil.",
+        stats: {
+          conversion: "Captación de Alumnos",
+          performance: "Optimización Mobile-First"
         }
       }
     }
