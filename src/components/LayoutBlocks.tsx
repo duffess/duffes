@@ -40,7 +40,7 @@ export function Footer() {
         <h2 className="footer-anim font-headline text-4xl md:text-6xl mb-12 leading-tight">
           {t('footer', 'title')}
         </h2>
-        <button 
+        <a href="mailto:guiduffes@gmail.com?subject=Quero%20um%20site"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           className="footer-anim inline-flex items-center gap-3 bg-stone-900 text-stone-100 border border-stone-800 px-12 py-6 font-label text-sm tracking-widest uppercase font-bold hover:bg-stone-800 transition-colors duration-500 cursor-pointer"
@@ -48,7 +48,7 @@ export function Footer() {
         >
           {t('footer', 'cta')}
           <span ref={iconRef} className="material-symbols-outlined text-[16px] text-stone-400" aria-hidden="true">arrow_forward</span>
-        </button>
+        </a>
       </div>
       
       <div className="footer-anim w-full mt-24 flex flex-col items-center gap-12">

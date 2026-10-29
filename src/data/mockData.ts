@@ -1,31 +1,31 @@
 export const portfolioData = {
   caseStudies: [
     {
+      id: "patio",
+      imageSrc: "/patio-preview.png",
+      stats: [
+        { labelKey: "category", value: "Arquitetura" },
+        { labelKey: "format", value: "Demo" }
+      ],
+      tags: ["HTML", "CSS", "JavaScript", "GSAP"],
+      linkUrl: "/patio/index.html"
+    },
+    {
       id: "dashflow",
       imageSrc: "/dash-lp.webp",
       stats: [
-        { labelKey: "conversion", value: "+17%" },
-        { labelKey: "delivery", value: "47 Dias" }
+        { labelKey: "category", value: "SaaS" },
+        { labelKey: "format", value: "Landing" }
       ],
       tags: ["React 19", "Vite", "Tailwind V4", "Growth Design"],
       linkUrl: "https://bespoke-torte-bcc555.netlify.app/" 
     },
     {
-      id: "lumiere",
-      imageSrc: "/lumiere.webp",
-      stats: [
-        { labelKey: "design", value: "Luxury" },
-        { labelKey: "booking", value: "High-Ticket" }
-      ],
-      tags: ["Framer Motion", "GSAP", "Premium UI", "SEO Pro"],
-      linkUrl: "https://soft-kashata-a947d6.netlify.app/"
-    },
-    {
       id: "fdm",
       imageSrc: "/fabricademonstros.webp",
       stats: [
-        { labelKey: "conversion", value: "+35%" },
-        { labelKey: "performance", value: "Sub-1s" }
+        { labelKey: "category", value: "Fitness" },
+        { labelKey: "format", value: "Landing" }
       ],
       tags: ["React", "Vite", "Tailwind CSS", "Mobile-First"],
       linkUrl: "https://fabricademonstros.vercel.app/"

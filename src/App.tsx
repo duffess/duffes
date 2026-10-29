@@ -7,6 +7,7 @@ const Manifesto = lazy(() => import('./components/Manifesto').then(m => ({ defau
 const Pillars = lazy(() => import('./components/Pillars').then(m => ({ default: m.Pillars })));
 const Process = lazy(() => import('./components/Process').then(m => ({ default: m.Process })));
 const CaseStudy = lazy(() => import('./components/CaseStudy').then(m => ({ default: m.CaseStudy })));
+const Pricing = lazy(() => import('./components/Pricing').then(m => ({ default: m.Pricing })));
 const Footer = lazy(() => import('./components/LayoutBlocks').then(m => ({ default: m.Footer })));
 const CommercialProposal = lazy(() => import('./components/CommercialProposal').then(m => ({ default: m.CommercialProposal })));
 
@@ -34,6 +35,7 @@ function App() {
           <Pillars />
           <Process />
           <CaseStudy />
+          <Pricing />
         </Suspense>
       </main>
       <Suspense fallback={null}>

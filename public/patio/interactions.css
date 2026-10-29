@@ -1,0 +1,11 @@
+nav a{position:relative;transition:color .25s ease,transform .25s ease}
+nav a::after{content:'';position:absolute;left:0;right:0;bottom:5px;height:1px;background:var(--copper);transform:scaleX(0);transform-origin:right;transition:transform .35s cubic-bezier(.22,1,.36,1)}
+nav a:hover,nav a:focus-visible{color:var(--copper);transform:translateY(-2px)}
+nav a:hover::after,nav a:focus-visible::after{transform:scaleX(1);transform-origin:left}
+nav a:last-child{border-bottom-color:transparent}
+.project-frame{position:relative;overflow:hidden;height:570px;background:#1b1e18}
+.project .project-frame img{display:block;width:100%;height:100%;object-fit:cover}
+.project-frame .outgoing-image{position:absolute;inset:0;pointer-events:none}
+.carousel-status{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@media(max-width:700px){.project-frame{height:420px}}
+@media(prefers-reduced-motion:reduce){nav a,nav a::after{transition:none}nav a:hover,nav a:focus-visible{transform:none}}

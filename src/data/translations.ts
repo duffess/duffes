@@ -8,7 +8,7 @@ export const translations = {
     hero: {
       title: "Me diga o que você precisa.",
       titleItalic: "Eu cuido do resto.",
-      subtitle: "Soluções digitais de alta conversão para infoprodutores, SaaS e agências. Eu construo o que gera dinheiro.",
+      subtitle: "Sites profissionais para apresentar seu negócio, conquistar confiança e facilitar o contato com seus clientes.",
       cta: "Iniciar Contato Direto"
     },
     manifesto: {
@@ -17,8 +17,8 @@ export const translations = {
     },
     pillars: {
       p1Label: "01 / VELOCIDADE",
-      p1Title: "Entrega cirúrgica em menos de 50 dias",
-      p1Desc: "O mercado não espera. Desenvolvo sistemas robustos com a agilidade que operações de escala exigem.",
+      p1Title: "Prazo combinado desde o início",
+      p1Desc: "Cada entrega tem um cronograma claro, alinhado ao escopo do seu projeto.",
       p2Label: "02 / ACESSO",
       p2Title: "Suporte VIP (Linha direta)",
       p2Desc: "Sem intermediários. Você fala diretamente com quem resolve. Comunicação assíncrona e eficiente via Slack ou WhatsApp.",
@@ -30,6 +30,9 @@ export const translations = {
       headerLabel: "Trabalhos Selecionados",
       headerTitle: "Projetos",
       tag: "Destaque",
+      demoTag: "Projeto demonstrativo",
+      previous: "Projeto anterior",
+      next: "Próximo projeto",
       cta: "Ver Detalhes do Projeto"
     },
     method: {
@@ -39,7 +42,7 @@ export const translations = {
       s2Label: "02 / Criação",
       s2Desc: "Desenvolvo o site com design profissional, textos persuasivos e estrutura para converter.",
       s3Label: "03 / Ajustes",
-      s3Desc: "Você revisa, sugere mudanças e eu refino até estar exatamente do jeito que você quer.",
+      s3Desc: "Você revisa e sugere mudanças dentro das rodadas de ajustes combinadas.",
       s4Label: "04 / Publicação",
       s4Desc: "Publico o site, configuro o domínio e você está pronto para receber clientes."
     },
@@ -56,12 +59,21 @@ export const translations = {
       copyright: "© 2026 DUFFES. ALL RIGHTS RESERVED."
     },
     projects: {
+      patio: {
+        title: "Pátio Arquitetura",
+        description: "Um estudo de site para um escritório de arquitetura e interiores, com fotografia e movimento em destaque.",
+        challenge: "Criar uma presença digital para um escritório fictício, dando espaço à fotografia e a uma identidade visual marcante.",
+        solution: "Uma página responsiva com direção editorial, projetos navegáveis e animações sutis. Marca e projetos são fictícios; as imagens são ilustrativas.",
+        stats: { category: "Segmento", format: "Projeto" }
+      },
       dashflow: {
         title: "Dashflow Landing Page",
         description: "Estratégia visual e front-end cirúrgico para lançamento de um SaaS de análise com IA.",
         challenge: "A Dashflow desenvolveu um software B2B robusto de inteligência analítica. O obstáculo era empacotar essa densidade técnica em uma vitrine brutalista e sofisticada.",
         solution: "Arquitetamos uma LP baseada na estética 'Dark Software', injetando autoridade instantânea. O ambiente React/Vite garante carregamento sub-segundo.",
         stats: {
+          category: "Segmento",
+          format: "Formato",
           conversion: "Aumento de Conversão",
           delivery: "Tempo de Entrega"
         }
@@ -82,6 +94,8 @@ export const translations = {
         challenge: "O centro de treinamento precisava de uma presença digital que refletisse a intensidade do seu ambiente físico. O desafio era sair da estética genérica de academias comuns e criar uma máquina de matrículas focada em resultados reais.",
         solution: "Desenvolvemos uma interface industrial em 'Dark Mode' com alto contraste em tom laranja para guiar a ação do usuário. A arquitetura da página foi construída com foco agressivo em prova social e performance mobile.",
         stats: {
+          category: "Segmento",
+          format: "Formato",
           conversion: "Captação de Alunos",
           performance: "Otimização Mobile-First"
         }
@@ -117,6 +131,9 @@ export const translations = {
       headerLabel: "Selected Works",
       headerTitle: "Projects",
       tag: "Highlight",
+      demoTag: "Demonstration project",
+      previous: "Previous project",
+      next: "Next project",
       cta: "View Project Details"
     },
     method: {
@@ -126,7 +143,7 @@ export const translations = {
       s2Label: "02 / Creation",
       s2Desc: "Developing professional designs and persuasive copy engineered for high conversion.",
       s3Label: "03 / Refinement",
-      s3Desc: "Iterative review process where we refine every detail until it matches your exact vision.",
+      s3Desc: "You review the site and suggest changes within the agreed revision rounds.",
       s4Label: "04 / Launch",
       s4Desc: "Site live, domain configured, and technically prepared to start scaling your operation."
     },
@@ -145,12 +162,21 @@ export const translations = {
       copyright: "© 2026 DUFFES. ALL RIGHTS RESERVED."
     },
     projects: {
+      patio: {
+        title: "Pátio Architecture",
+        description: "A website concept for an architecture and interiors studio, with photography and movement at its heart.",
+        challenge: "Create a digital presence for a fictional architecture studio with an expressive visual identity.",
+        solution: "A responsive editorial page with browsable projects and subtle animations. The studio and projects are fictional; the images are illustrative.",
+        stats: { category: "Industry", format: "Project" }
+      },
       dashflow: {
         title: "Dashflow Landing Page",
         description: "Visual strategy and surgical front-end for the launch of an AI analysis SaaS.",
         challenge: "Dashflow engineered a robust B2B analytical AI. The bottleneck was translating that technical complexity into a slick, brutalist digital storefront.",
         solution: "We enforced a strict 'Dark Software' layout to exude instant high-ticket authority. React/Vite ensuring zero drops from paid traffic.",
         stats: {
+          category: "Industry",
+          format: "Format",
           conversion: "Conversion Increase",
           delivery: "Delivery Time"
         }
@@ -171,6 +197,8 @@ export const translations = {
         challenge: "The training facility needed a digital footprint reflecting its intense physical environment. The challenge was breaking away from generic gym aesthetics to build an enrollment machine focused on real results.",
         solution: "We designed an industrial 'Dark Mode' interface using high-contrast orange to drive user action. The page architecture was built with an aggressive focus on social proof and mobile performance.",
         stats: {
+          category: "Industry",
+          format: "Format",
           conversion: "Student Enrollment",
           performance: "Mobile-First Optimization"
         }
@@ -206,6 +234,9 @@ export const translations = {
       headerLabel: "Trabajos Seleccionados",
       headerTitle: "Proyectos",
       tag: "Destacado",
+      demoTag: "Proyecto demostrativo",
+      previous: "Proyecto anterior",
+      next: "Proyecto siguiente",
       cta: "Ver Detalles del Proyecto"
     },
     method: {
@@ -215,7 +246,7 @@ export const translations = {
       s2Label: "02 / Creación",
       s2Desc: "Desarrollo el sitio con diseño profesional, textos persuasivos y estructura diseñada para convertir.",
       s3Label: "03 / Ajustes",
-      s3Desc: "Usted revisa, sugiere cambios y yo refino hasta que esté exactamente como lo desea.",
+      s3Desc: "Revisas el sitio y sugieres cambios dentro de las rondas de ajustes acordadas.",
       s4Label: "04 / Lanzamiento",
       s4Desc: "Sitio en línea, dominio configurado y listo para recibir clientes."
     },
@@ -232,12 +263,21 @@ export const translations = {
       copyright: "© 2026 DUFFES. TODOS LOS DERECHOS RESERVADOS."
     },
     projects: {
+      patio: {
+        title: "Pátio Arquitectura",
+        description: "Un concepto de sitio para un estudio de arquitectura e interiores, con fotografía y movimiento.",
+        challenge: "Crear una presencia digital para un estudio ficticio con una identidad visual expresiva.",
+        solution: "Una página adaptable de estilo editorial, con proyectos navegables y animaciones sutiles. La marca y los proyectos son ficticios; las imágenes son ilustrativas.",
+        stats: { category: "Sector", format: "Proyecto" }
+      },
       dashflow: {
         title: "Dashflow Landing Page",
         description: "Estrategia visual y front-end quirúrgico para el lanzamiento de un SaaS de análisis con IA.",
         challenge: "Dashflow desarrolló um potente software B2B de inteligencia analítica. El desafío era envasar toda esa complejidad técnica en un escaparate digital simple y sofisticado.",
         solution: "Optamos por una estética 'Dark Software' implacable, proyectando un aire de alto valor corporativo. El entorno React/Vite asegura tiempos de carga sub-segundo.",
         stats: {
+          category: "Sector",
+          format: "Formato",
           conversion: "Aumento de Conversión",
           delivery: "Tiempo de Entrega"
         }
@@ -258,6 +298,8 @@ export const translations = {
         challenge: "El centro de entrenamiento necesitaba una presencia digital que reflejara la intensidad de su entorno físico. El obstáculo era huir del aspecto genérico de los gimnasios comunes y crear una máquina de matrículas enfocada en resultados reales.",
         solution: "Desarrollamos una interfaz basada en un 'Dark Mode' industrial con alto contraste en color naranja para guiar la acción del usuario. La arquitectura de la página se estructuró con un enfoque agresivo en prueba social y rendimiento móvil.",
         stats: {
+          category: "Sector",
+          format: "Formato",
           conversion: "Captación de Alumnos",
           performance: "Optimización Mobile-First"
         }

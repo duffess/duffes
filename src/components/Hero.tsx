@@ -5,7 +5,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 
 export function Hero() {
   const container = useRef<HTMLElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const buttonRef = useRef<HTMLAnchorElement>(null);
   const iconRef = useRef<HTMLSpanElement>(null);
   const { t } = useLanguage();
 
@@ -99,13 +99,13 @@ export function Hero() {
             <div className="hero-sub-reveal mb-12 h-px w-24 bg-stone-300 opacity-30"></div>
             
             <div className="flex items-center" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter}>
-              <button 
+              <a href="mailto:guiduffes@gmail.com?subject=Quero%20um%20site"
                 ref={buttonRef}
                 className="hero-sub-reveal inline-flex items-center gap-3 bg-stone-100 text-stone-900 px-8 py-4 font-label text-xs tracking-widest uppercase font-bold hover:bg-stone-300 transition-colors duration-500 cursor-pointer relative z-10"
               >
                 {t('hero', 'cta')}
                 <span ref={iconRef} className="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
-              </button>
+              </a>
             </div>
           </div>
         </div>

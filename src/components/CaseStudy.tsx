@@ -156,7 +156,7 @@ export function CaseStudy() {
           >
             <div className="case-info w-full md:w-1/2 order-2 md:order-1">
               <span className="font-label text-xs tracking-widest text-stone-400 uppercase mb-6 block">
-                {t('caseStudy', 'tag')}
+                {currentProject.id === 'patio' ? t('caseStudy', 'demoTag') : t('caseStudy', 'tag')}
               </span>
               <h3 className="font-headline text-4xl md:text-5xl mb-8 text-stone-100">{t('projects', currentProject.id, 'title')}</h3>
               <p className="font-body text-lg text-stone-400 mb-12 leading-relaxed">
@@ -190,7 +190,7 @@ export function CaseStudy() {
                 alt={`${currentProject.id} interface preview`} 
                 className="parallax-img w-full aspect-[4/3] object-cover focus:outline-none opacity-90 cursor-pointer scale-110" 
                 src={currentProject.imageSrc}
-                srcSet={`${currentProject.imageSrc.replace('.webp', '-400.webp')} 400w, ${currentProject.imageSrc.replace('.webp', '-669.webp')} 669w, ${currentProject.imageSrc} 1055w`}
+                srcSet={currentProject.imageSrc.endsWith('.webp') ? `${currentProject.imageSrc.replace('.webp', '-400.webp')} 400w, ${currentProject.imageSrc.replace('.webp', '-669.webp')} 669w, ${currentProject.imageSrc} 1055w` : undefined}
                 sizes="(max-width: 768px) 400px, 1055px"
                 onClick={() => openModal(currentProject)}
                 loading="lazy"
@@ -202,6 +202,7 @@ export function CaseStudy() {
           <div className="flex lg:flex-col items-center gap-6">
             <button 
               onClick={prevProject}
+              aria-label={t('caseStudy', 'previous')}
               className="w-10 h-10 border border-stone-800 rounded-full flex items-center justify-center text-stone-400 hover:text-stone-100 hover:border-stone-100 transition-all cursor-pointer group"
             >
               <span className="material-symbols-outlined text-[20px] group-hover:-translate-y-1 transition-transform">keyboard_arrow_up</span>
@@ -215,6 +216,7 @@ export function CaseStudy() {
 
             <button 
               onClick={nextProject}
+              aria-label={t('caseStudy', 'next')}
               className="w-10 h-10 border border-stone-800 rounded-full flex items-center justify-center text-stone-400 hover:text-stone-100 hover:border-stone-100 transition-all cursor-pointer group"
             >
               <span className="material-symbols-outlined text-[20px] group-hover:translate-y-1 transition-transform">keyboard_arrow_down</span>

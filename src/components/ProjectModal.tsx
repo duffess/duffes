@@ -78,12 +78,14 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
             <div className="w-2 h-2 rounded-full bg-stone-700"></div>
             <div className="w-2 h-2 rounded-full bg-stone-700"></div>
           </div>
-          {isOpen && (
+          {isOpen && project.id === 'patio' ? (
+            <img src={project.imageSrc} alt={t('projects', project.id, 'title')} className="w-full h-full pt-6 object-cover object-top" />
+          ) : isOpen && (
             <div className="w-full h-full pt-6">
               <iframe 
                 src={project.linkUrl} 
                 className="w-full h-full border-none bg-stone-950"
-                title={`${project.title} Preview`}
+                title={`${t('projects', project.id, 'title')} Preview`}
                 loading="lazy"
               ></iframe>
             </div>
