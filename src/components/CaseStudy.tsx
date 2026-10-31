@@ -156,7 +156,7 @@ export function CaseStudy() {
           >
             <div className="case-info w-full md:w-1/2 order-2 md:order-1">
               <span className="font-label text-xs tracking-widest text-stone-400 uppercase mb-6 block">
-                {currentProject.id === 'patio' ? t('caseStudy', 'demoTag') : t('caseStudy', 'tag')}
+                {['patio', 'forma'].includes(currentProject.id) ? t('caseStudy', 'demoTag') : t('caseStudy', 'tag')}
               </span>
               <h3 className="font-headline text-4xl md:text-5xl mb-8 text-stone-100">{t('projects', currentProject.id, 'title')}</h3>
               <p className="font-body text-lg text-stone-400 mb-12 leading-relaxed">

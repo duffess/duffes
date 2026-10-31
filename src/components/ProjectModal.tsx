@@ -78,7 +78,7 @@ export function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
             <div className="w-2 h-2 rounded-full bg-stone-700"></div>
             <div className="w-2 h-2 rounded-full bg-stone-700"></div>
           </div>
-          {isOpen && project.id === 'patio' ? (
+          {isOpen && ['patio', 'forma'].includes(project.id) ? (
             <img src={project.imageSrc} alt={t('projects', project.id, 'title')} className="w-full h-full pt-6 object-cover object-top" />
           ) : isOpen && (
             <div className="w-full h-full pt-6">

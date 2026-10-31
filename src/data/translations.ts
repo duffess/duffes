@@ -59,6 +59,13 @@ export const translations = {
       copyright: "© 2026 DUFFES. ALL RIGHTS RESERVED."
     },
     projects: {
+      forma: {
+        title: "Forma Estúdio",
+        description: "Um conceito de site para arquitetura residencial e interiores, inspirado em luz natural e materiais acolhedores.",
+        challenge: "Criar uma presença digital serena para um estúdio fictício especializado em casas e apartamentos.",
+        solution: "Uma página responsiva com navegação animada, rolagem suave e projetos em destaque. A marca e os projetos são fictícios; as imagens foram geradas por IA.",
+        stats: { category: "Segmento", format: "Projeto" }
+      },
       patio: {
         title: "Pátio Arquitetura",
         description: "Um estudo de site para um escritório de arquitetura e interiores, com fotografia e movimento em destaque.",
@@ -162,6 +169,13 @@ export const translations = {
       copyright: "© 2026 DUFFES. ALL RIGHTS RESERVED."
     },
     projects: {
+      forma: {
+        title: "Forma Studio",
+        description: "A residential architecture and interiors website concept inspired by natural light and welcoming materials.",
+        challenge: "Create a calm digital presence for a fictional studio specializing in houses and apartments.",
+        solution: "A responsive page with animated navigation, smooth scrolling and featured projects. The studio and projects are fictional; imagery was AI-generated.",
+        stats: { category: "Industry", format: "Project" }
+      },
       patio: {
         title: "Pátio Architecture",
         description: "A website concept for an architecture and interiors studio, with photography and movement at its heart.",
@@ -263,6 +277,13 @@ export const translations = {
       copyright: "© 2026 DUFFES. TODOS LOS DERECHOS RESERVADOS."
     },
     projects: {
+      forma: {
+        title: "Forma Estudio",
+        description: "Un concepto de sitio para arquitectura residencial e interiores, inspirado en la luz natural y los materiales acogedores.",
+        challenge: "Crear una presencia digital serena para un estudio ficticio especializado en casas y apartamentos.",
+        solution: "Una página adaptable con navegación animada, desplazamiento suave y proyectos destacados. La marca y los proyectos son ficticios; las imágenes fueron generadas con IA.",
+        stats: { category: "Sector", format: "Proyecto" }
+      },
       patio: {
         title: "Pátio Arquitectura",
         description: "Un concepto de sitio para un estudio de arquitectura e interiores, con fotografía y movimiento.",

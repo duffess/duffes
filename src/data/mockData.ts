@@ -11,6 +11,16 @@ export const portfolioData = {
       linkUrl: "/patio/index.html"
     },
     {
+      id: "forma",
+      imageSrc: "/forma-preview.png",
+      stats: [
+        { labelKey: "category", value: "Arquitetura" },
+        { labelKey: "format", value: "Demo" }
+      ],
+      tags: ["HTML", "CSS", "JavaScript", "GSAP", "Lenis"],
+      linkUrl: "/forma/index.html"
+    },
+    {
       id: "dashflow",
       imageSrc: "/dash-lp.webp",
       stats: [
