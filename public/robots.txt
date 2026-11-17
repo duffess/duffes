@@ -1,8 +1,2 @@
 User-agent: *
 Allow: /
-
-# Diretórios baseados em React SPA
-Allow: /*
-
-# Sitemaps
-# Sitemap: https://duffes-portfolio.netlify.app/sitemap.xml

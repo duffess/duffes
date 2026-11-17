@@ -1,235 +1,390 @@
-import { useRef, useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { portfolioData } from '../data/mockData';
-import { useLanguage } from '../contexts/LanguageContext';
+import type { ProjectItem } from '../data/mockData';
+import { useLanguage } from '../contexts/useLanguage';
+import { useReducedMotion } from '../hooks/useReducedMotion';
 import { ProjectModal } from './ProjectModal';
 
-export function CaseStudy() {
+type CaseStudyProps = {
+  onModalStateChange?: (isOpen: boolean) => void;
+};
+
+export function CaseStudy({ onModalStateChange }: CaseStudyProps) {
   const container = useRef<HTMLElement>(null);
   const cardContentRef = useRef<HTMLDivElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const magneticZoneRef = useRef<HTMLDivElement>(null);
+  const detailsBtnRef = useRef<HTMLButtonElement>(null);
+  const lastTriggerRef = useRef<HTMLElement | null>(null);
+  const prevIndexRef = useRef(0);
+
   const { t } = useLanguage();
+  const prefersReducedMotion = useReducedMotion();
+
   const [activeIndex, setActiveIndex] = useState(0);
-  const [selectedProject, setSelectedProject] = useState(null);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [modalProject, setModalProject] = useState<ProjectItem | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const projects = portfolioData.caseStudies;
   const currentProject = projects[activeIndex];
 
-  useGSAP(() => {
-    // Editorial Reveal with clip-path
-    gsap.from('.project-header', {
-      scrollTrigger: {
+  // Section scroll reveal + subtle magnetic CTA + thumbnail warmup
+  useGSAP(
+    () => {
+      // Preload remaining carousel thumbnails when user scrolls near section
+      const warmupTrigger = ScrollTrigger.create({
         trigger: container.current,
-        start: 'top 80%',
-      },
-      clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)',
-      y: 40,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.1,
-      ease: 'power4.out'
-    });
-
-    // Vertical Parallax Effect on Images
-    gsap.utils.toArray<HTMLElement>('.parallax-img').forEach((img) => {
-      gsap.to(img, {
-        yPercent: 20,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: img,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true
-        }
+        start: 'top 120%',
+        once: true,
+        onEnter: () => {
+          projects.slice(1).forEach((proj) => {
+            const img = new Image();
+            img.src = proj.imageSrc.replace('.webp', '-669.webp');
+          });
+        },
       });
-    });
-  }, { scope: container });
 
-  // Handle Project Switching Animation
-  useEffect(() => {
-    if (!cardContentRef.current) return;
+      const mm = gsap.matchMedia();
 
-    setIsAnimating(true);
-    
-    const tl = gsap.timeline({
-      onComplete: () => setIsAnimating(false)
-    });
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap.from('.project-header', {
+          scrollTrigger: {
+            trigger: container.current,
+            start: 'top 86%',
+            once: true,
+          },
+          y: 16,
+          opacity: 0,
+          duration: 0.38,
+          stagger: 0.05,
+          ease: 'power2.out',
+          clearProps: 'transform',
+        });
 
-    // Content Reveal Sequence
-    tl.fromTo(cardContentRef.current.querySelectorAll('.case-info > *, .case-image-wrapper'), 
-      { y: 20, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.6, stagger: 0.08, ease: 'power3.out' }
-    );
-  }, [activeIndex]);
+        gsap.from('.project-stage', {
+          scrollTrigger: {
+            trigger: container.current,
+            start: 'top 82%',
+            once: true,
+          },
+          y: 18,
+          opacity: 0,
+          duration: 0.42,
+          ease: 'power2.out',
+          clearProps: 'transform',
+        });
+      });
 
-  const switchProject = (index: number) => {
-    if (isAnimating || index === activeIndex) return;
-    
-    const tl = gsap.timeline({
-      onComplete: () => setActiveIndex(index)
-    });
+      mm.add(
+        '(prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine)',
+        () => {
+          const zone = magneticZoneRef.current;
+          const btn = detailsBtnRef.current;
+          if (!zone || !btn) return;
 
-    tl.to(cardContentRef.current?.querySelectorAll('.case-info > *, .case-image-wrapper') || [], {
-      y: -15,
-      opacity: 0,
-      duration: 0.3,
-      ease: 'power2.in'
-    });
+          const xTo = gsap.quickTo(btn, 'x', { duration: 0.28, ease: 'power3.out' });
+          const yTo = gsap.quickTo(btn, 'y', { duration: 0.28, ease: 'power3.out' });
+          let rect: DOMRect | null = null;
+
+          const onEnter = () => {
+            rect = btn.getBoundingClientRect();
+          };
+
+          const onMove = (e: MouseEvent) => {
+            if (!rect) rect = btn.getBoundingClientRect();
+            const dx = (e.clientX - (rect.left + rect.width / 2)) * 0.16;
+            const dy = (e.clientY - (rect.top + rect.height / 2)) * 0.16;
+            xTo(gsap.utils.clamp(-6, 6, dx));
+            yTo(gsap.utils.clamp(-4, 4, dy));
+          };
+
+          const onLeave = () => {
+            rect = null;
+            xTo(0);
+            yTo(0);
+          };
+
+          zone.addEventListener('mouseenter', onEnter);
+          zone.addEventListener('mousemove', onMove);
+          zone.addEventListener('mouseleave', onLeave);
+
+          return () => {
+            zone.removeEventListener('mouseenter', onEnter);
+            zone.removeEventListener('mousemove', onMove);
+            zone.removeEventListener('mouseleave', onLeave);
+          };
+        }
+      );
+
+      return () => {
+        warmupTrigger.kill();
+      };
+    },
+    { scope: container }
+  );
+
+  // Fast, StrictMode-safe, rapid-click-safe project switch transition
+  useGSAP(
+    () => {
+      if (prevIndexRef.current === activeIndex) return;
+      prevIndexRef.current = activeIndex;
+
+      if (prefersReducedMotion) return;
+
+      gsap.fromTo(
+        '.case-switch-item',
+        { opacity: 0, y: 8 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.24,
+          stagger: 0.025,
+          ease: 'power2.out',
+          overwrite: true,
+          clearProps: 'transform',
+        }
+      );
+    },
+    { dependencies: [activeIndex, prefersReducedMotion], scope: cardContentRef, revertOnUpdate: true }
+  );
+
+  const selectProject = (index: number) => {
+    if (index === activeIndex) return;
+    setActiveIndex(index);
   };
 
   const nextProject = () => {
-    const nextIdx = (activeIndex + 1) % projects.length;
-    switchProject(nextIdx);
+    setActiveIndex((prev) => (prev + 1) % projects.length);
   };
 
   const prevProject = () => {
-    const prevIdx = (activeIndex - 1 + projects.length) % projects.length;
-    switchProject(prevIdx);
+    setActiveIndex((prev) => (prev - 1 + projects.length) % projects.length);
   };
 
-  const buttonRectRef = useRef<DOMRect | null>(null);
-
-  const updateButtonRect = useCallback(() => {
-    if (buttonRef.current) {
-      buttonRectRef.current = buttonRef.current.getBoundingClientRect();
+  const handleCarouselKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      nextProject();
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      prevProject();
     }
+  };
+
+  const openModal = (project: ProjectItem, triggerEl: HTMLElement | null) => {
+    lastTriggerRef.current = triggerEl;
+    setModalProject(project);
+    setIsModalOpen(true);
+    onModalStateChange?.(true);
+  };
+
+  const closeModal = useCallback(() => {
+    setIsModalOpen(false);
+    onModalStateChange?.(false);
+  }, [onModalStateChange]);
+
+  const handleModalExited = useCallback(() => {
+    setModalProject(null);
   }, []);
 
-  // Magnetic Button Logic
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!buttonRef.current) return;
-    
-    let rect = buttonRectRef.current;
-    if (!rect) {
-      rect = buttonRef.current.getBoundingClientRect();
-      buttonRectRef.current = rect;
-    }
-
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    
-    const dist = Math.hypot(e.clientX - centerX, e.clientY - centerY);
-    const radius = 80;
-
-    if (dist < radius) {
-      const moveX = (e.clientX - centerX) * 0.4;
-      const moveY = (e.clientY - centerY) * 0.4;
-      gsap.to(buttonRef.current, { x: moveX, y: moveY, duration: 0.4, ease: 'power3.out', overwrite: true });
-    } else {
-      gsap.to(buttonRef.current, { x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.3)', overwrite: true });
-      buttonRectRef.current = null;
-    }
-  }, []);
-
-  const handleMouseEnter = () => {
-    updateButtonRect();
-  };
-
-  const handleMouseLeave = () => {
-    gsap.to(buttonRef.current, { x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.3)', overwrite: true });
-    buttonRectRef.current = null;
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const openModal = (project: any) => setSelectedProject(project);
-  const closeModal = () => setSelectedProject(null);
+  const projectTitle = t('projects', currentProject.id, 'title');
+  const badgeLabel = currentProject.isDemo ? t('caseStudy', 'demoTag') : t('caseStudy', 'tag');
+  const srcSet = `${currentProject.imageSrc.replace('.webp', '-400.webp')} 400w, ${currentProject.imageSrc.replace('.webp', '-669.webp')} 669w, ${currentProject.imageSrc} ${currentProject.width}w`;
 
   return (
     <>
-      <section 
-        ref={container} 
-        className="px-8 md:px-24 mb-48 relative select-none"
+      <section
+        id="projetos"
+        ref={container}
+        aria-labelledby="projects-title"
+        className="scroll-mt-28 px-6 sm:px-10 md:px-16 lg:px-20 mb-28 md:mb-40 relative"
       >
-        <div className="mb-24 text-center overflow-hidden">
-           <span className="project-header font-label text-sm tracking-widest text-stone-400 uppercase mb-6 block">{t('caseStudy', 'headerLabel')}</span>
-           <h2 className="project-header font-headline text-6xl md:text-7xl text-stone-100 letter-spacing-tighter italic font-light">{t('caseStudy', 'headerTitle')}</h2>
-        </div>
+        <div className="max-w-[1200px] mx-auto">
+          <div className="mb-14 md:mb-20 text-center">
+            <span className="project-header font-label text-xs font-semibold tracking-[0.2em] text-rose-accent uppercase mb-4 block">
+              {t('caseStudy', 'headerLabel')}
+            </span>
+            <h2
+              id="projects-title"
+              className="project-header font-headline text-4xl sm:text-5xl md:text-6xl text-stone-100 letter-spacing-tighter italic font-light"
+            >
+              {t('caseStudy', 'headerTitle')}
+            </h2>
+          </div>
 
-        <div className="flex flex-col lg:flex-row gap-12 items-center relative">
-          
-          {/* Project Display Card */}
-          <div 
-            ref={cardContentRef}
-            className="case-card bg-stone-900/50 p-12 md:p-24 relative overflow-hidden flex flex-col md:flex-row gap-16 items-center flex-1 w-full"
+          <div
+            onKeyDown={handleCarouselKeyDown}
+            className="project-stage flex flex-col lg:flex-row gap-8 lg:gap-10 items-center relative"
           >
-            <div className="case-info w-full md:w-1/2 order-2 md:order-1">
-              <span className="font-label text-xs tracking-widest text-stone-400 uppercase mb-6 block">
-                {['patio', 'forma'].includes(currentProject.id) ? t('caseStudy', 'demoTag') : t('caseStudy', 'tag')}
-              </span>
-              <h3 className="font-headline text-4xl md:text-5xl mb-8 text-stone-100">{t('projects', currentProject.id, 'title')}</h3>
-              <p className="font-body text-lg text-stone-400 mb-12 leading-relaxed">
-                {t('projects', currentProject.id, 'description')}
-              </p>
-              
-              <div className="grid grid-cols-2 gap-8 mb-12">
-                {currentProject.stats.map((stat, i) => (
-                  <div key={i}>
-                    <div className="font-label text-[0.6rem] uppercase tracking-widest text-stone-400 mb-1">
-                      {t('projects', currentProject.id, 'stats', stat.labelKey)}
+            {/* Project Display Card */}
+            <div
+              ref={cardContentRef}
+              aria-live="polite"
+              aria-atomic="true"
+              className="case-card bg-rose-soft/80 border border-rose-border/80 rounded-[3px] p-6 sm:p-10 lg:p-14 relative overflow-hidden flex flex-col lg:flex-row gap-8 lg:gap-14 items-center flex-1 w-full ambient-shadow"
+            >
+              <div className="case-info w-full lg:w-[46%] order-2 lg:order-1">
+                <span className="case-switch-item inline-block px-3 py-1 rounded-full bg-rose-pill border border-rose-border text-[#6a443e] font-label text-[0.65rem] font-semibold tracking-[0.15em] uppercase mb-5">
+                  {badgeLabel}
+                </span>
+
+                <h3 className="case-switch-item font-headline text-3xl sm:text-4xl md:text-[2.75rem] leading-[1.15] mb-5 text-stone-100">
+                  {projectTitle}
+                </h3>
+
+                <p className="case-switch-item font-body text-base sm:text-lg text-stone-300 mb-8 leading-relaxed">
+                  {t('projects', currentProject.id, 'description')}
+                </p>
+
+                <dl className="case-switch-item grid grid-cols-2 gap-6 mb-9 pt-6 border-t border-rose-border/70">
+                  {currentProject.stats.map((stat) => (
+                    <div key={stat.labelKey}>
+                      <dt className="font-label text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-stone-400 mb-1">
+                        {t('projects', currentProject.id, 'stats', stat.labelKey)}
+                      </dt>
+                      <dd className="font-headline text-xl md:text-2xl text-stone-100 m-0">
+                        {stat.value}
+                      </dd>
                     </div>
-                    <div className="font-headline text-3xl text-stone-100">{stat.value}</div>
-                  </div>
-                ))}
+                  ))}
+                </dl>
+
+                <div ref={magneticZoneRef} className="case-switch-item inline-block">
+                  <button
+                    ref={detailsBtnRef}
+                    type="button"
+                    onClick={(e) => openModal(currentProject, e.currentTarget)}
+                    className="inline-flex items-center gap-2.5 border-b border-stone-500 hover:border-stone-100 pb-1.5 font-label text-xs font-bold tracking-[0.15em] uppercase text-stone-200 hover:text-stone-100 transition-colors duration-200 cursor-pointer"
+                  >
+                    <span>{t('caseStudy', 'cta')}</span>
+                    <span aria-hidden="true">↗</span>
+                  </button>
+                </div>
               </div>
-              
-              <div className="inline-block" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter}>
-                <button 
-                  ref={buttonRef}
-                  onClick={() => openModal(currentProject)}
-                  className="inline-block border-b border-stone-700 pb-1 font-label text-xs tracking-widest uppercase text-stone-300 hover:text-stone-100 transition-colors duration-500 cursor-pointer relative z-10"
+
+              {/* Accessible Browser-Framed Preview */}
+              <div className="case-switch-item w-full lg:w-[54%] order-1 lg:order-2">
+                <button
+                  type="button"
+                  onClick={(e) => openModal(currentProject, e.currentTarget)}
+                  aria-label={`${t('caseStudy', 'cta')}: ${projectTitle}`}
+                  className="group block w-full text-left rounded-[3px] overflow-hidden border border-stone-800 bg-stone-950 ambient-shadow cursor-pointer p-0"
                 >
-                  {t('caseStudy', 'cta')}
+                  <div className="h-6 bg-stone-900 border-b border-stone-800 flex items-center px-3 gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-stone-700" />
+                    <span className="w-2 h-2 rounded-full bg-stone-700" />
+                    <span className="w-2 h-2 rounded-full bg-stone-700" />
+                    <span className="ml-2 font-label text-[10px] tracking-wider text-stone-400 truncate">
+                      {projectTitle}
+                    </span>
+                  </div>
+                  <div className="overflow-hidden bg-stone-950">
+                    <img
+                      alt={`Prévia da página inicial do projeto ${projectTitle}`}
+                      className="w-full aspect-[16/10] object-cover object-top block group-hover:scale-[1.02] transition-transform duration-500"
+                      src={currentProject.imageSrc}
+                      srcSet={srcSet}
+                      sizes="(max-width: 767px) 90vw, (max-width: 1023px) 84vw, 560px"
+                      width={currentProject.width}
+                      height={currentProject.height}
+                      decoding="async"
+                      loading="lazy"
+                    />
+                  </div>
                 </button>
               </div>
             </div>
-            
-            <div className="case-image-wrapper overflow-hidden w-full md:w-1/2 order-1 md:order-2 ambient-shadow rounded-sm hover:-translate-y-1 transition-transform duration-700">
-              <img 
-                alt={`${currentProject.id} interface preview`} 
-                className="parallax-img w-full aspect-[4/3] object-cover focus:outline-none opacity-90 cursor-pointer scale-110" 
-                src={currentProject.imageSrc}
-                srcSet={currentProject.imageSrc.endsWith('.webp') ? `${currentProject.imageSrc.replace('.webp', '-400.webp')} 400w, ${currentProject.imageSrc.replace('.webp', '-669.webp')} 669w, ${currentProject.imageSrc} 1055w` : undefined}
-                sizes="(max-width: 768px) 400px, 1055px"
-                onClick={() => openModal(currentProject)}
-                loading="lazy"
-              />
+
+            {/* Carousel Controls */}
+            <div
+              role="group"
+              aria-label="Navegação entre projetos"
+              className="flex lg:flex-col items-center gap-4 sm:gap-5"
+            >
+              <button
+                type="button"
+                onClick={prevProject}
+                aria-label={t('caseStudy', 'previous')}
+                className="w-11 h-11 border border-stone-700 bg-stone-950 rounded-full flex items-center justify-center text-stone-300 hover:text-stone-100 hover:border-stone-100 hover:bg-rose-soft transition-colors cursor-pointer"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 18 18"
+                  fill="none"
+                  aria-hidden="true"
+                  className="-rotate-90 lg:rotate-0"
+                >
+                  <path
+                    d="M4.5 11.25L9 6.75L13.5 11.25"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+
+              <div className="flex lg:flex-col items-center gap-1.5" role="tablist" aria-label="Selecionar projeto">
+                {projects.map((proj, idx) => {
+                  const isActive = idx === activeIndex;
+                  const title = t('projects', proj.id, 'title');
+                  return (
+                    <button
+                      key={proj.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={isActive}
+                      aria-label={`Projeto ${idx + 1} de ${projects.length}: ${title}`}
+                      onClick={() => selectProject(idx)}
+                      className={`w-9 h-9 rounded-full font-label text-xs tracking-widest transition-colors cursor-pointer flex items-center justify-center ${
+                        isActive
+                          ? 'bg-stone-100 text-stone-950 font-bold'
+                          : 'text-stone-400 hover:text-stone-100 hover:bg-rose-soft/80'
+                      }`}
+                    >
+                      0{idx + 1}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <button
+                type="button"
+                onClick={nextProject}
+                aria-label={t('caseStudy', 'next')}
+                className="w-11 h-11 border border-stone-700 bg-stone-950 rounded-full flex items-center justify-center text-stone-300 hover:text-stone-100 hover:border-stone-100 hover:bg-rose-soft transition-colors cursor-pointer"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 18 18"
+                  fill="none"
+                  aria-hidden="true"
+                  className="-rotate-90 lg:rotate-0"
+                >
+                  <path
+                    d="M4.5 6.75L9 11.25L13.5 6.75"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
-
-          {/* Navigation Side Counter (Right Side) */}
-          <div className="flex lg:flex-col items-center gap-6">
-            <button 
-              onClick={prevProject}
-              aria-label={t('caseStudy', 'previous')}
-              className="w-10 h-10 border border-stone-800 rounded-full flex items-center justify-center text-stone-400 hover:text-stone-100 hover:border-stone-100 transition-all cursor-pointer group"
-            >
-              <span className="material-symbols-outlined text-[20px] group-hover:-translate-y-1 transition-transform">keyboard_arrow_up</span>
-            </button>
-            
-            <div className="font-label text-xs tracking-[0.3em] text-stone-100 flex lg:flex-col items-center gap-1">
-              <span>0{activeIndex + 1}</span>
-              <span className="text-stone-600 block my-1">/</span>
-              <span className="text-stone-400">0{projects.length}</span>
-            </div>
-
-            <button 
-              onClick={nextProject}
-              aria-label={t('caseStudy', 'next')}
-              className="w-10 h-10 border border-stone-800 rounded-full flex items-center justify-center text-stone-400 hover:text-stone-100 hover:border-stone-100 transition-all cursor-pointer group"
-            >
-              <span className="material-symbols-outlined text-[20px] group-hover:translate-y-1 transition-transform">keyboard_arrow_down</span>
-            </button>
-          </div>
-
         </div>
       </section>
 
-      <ProjectModal 
-        isOpen={!!selectedProject} 
-        onClose={closeModal} 
-        project={selectedProject} 
+      <ProjectModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onExited={handleModalExited}
+        project={modalProject}
+        returnFocusRef={lastTriggerRef}
       />
     </>
   );

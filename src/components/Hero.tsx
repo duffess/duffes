@@ -1,110 +1,135 @@
-import { useRef, useCallback } from 'react';
+import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { useLanguage } from '../contexts/LanguageContext';
+import { useLanguage } from '../contexts/useLanguage';
+import { WHATSAPP_URL } from '../data/mockData';
 
 export function Hero() {
   const container = useRef<HTMLElement>(null);
+  const magneticZoneRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLAnchorElement>(null);
-  const iconRef = useRef<HTMLSpanElement>(null);
+  const iconRef = useRef<SVGSVGElement>(null);
   const { t } = useLanguage();
 
-  useGSAP(() => {
-    // Editorial Reveal with clip-path
-    gsap.from('.hero-reveal', {
-      clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)',
-      y: 80,
-      opacity: 0,
-      duration: 1.2,
-      stagger: 0.1,
-      ease: 'power4.out',
-      delay: 0.1
-    });
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
 
-    // Subtitle Reveal
-    gsap.from('.hero-sub-reveal', {
-      opacity: 0,
-      y: 20,
-      duration: 1,
-      ease: 'power3.out',
-      delay: 0.5
-    });
-  }, { scope: container });
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap.from('.hero-anim', {
+          y: 16,
+          opacity: 0,
+          duration: 0.38,
+          stagger: 0.045,
+          ease: 'power2.out',
+          clearProps: 'transform',
+        });
+      });
 
-  const buttonRectRef = useRef<DOMRect | null>(null);
+      mm.add(
+        '(prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine)',
+        () => {
+          const zone = magneticZoneRef.current;
+          const btn = buttonRef.current;
+          const icon = iconRef.current;
+          if (!zone || !btn || !icon) return;
 
-  const updateButtonRect = useCallback(() => {
-    if (buttonRef.current) {
-      buttonRectRef.current = buttonRef.current.getBoundingClientRect();
-    }
-  }, []);
+          const xTo = gsap.quickTo(btn, 'x', { duration: 0.3, ease: 'power3.out' });
+          const yTo = gsap.quickTo(btn, 'y', { duration: 0.3, ease: 'power3.out' });
+          const iconXTo = gsap.quickTo(icon, 'x', { duration: 0.3, ease: 'power3.out' });
 
-  // Magnetic Button Logic
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!buttonRef.current) return;
-    
-    // Read cached rect instead of calling getBoundingClientRect()
-    let rect = buttonRectRef.current;
-    if (!rect) {
-      rect = buttonRef.current.getBoundingClientRect();
-      buttonRectRef.current = rect;
-    }
+          let rect: DOMRect | null = null;
 
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    
-    // Distância do mouse ao centro
-    const dist = Math.hypot(e.clientX - centerX, e.clientY - centerY);
-    const radius = 100; // Raio de atração
+          const onEnter = () => {
+            rect = btn.getBoundingClientRect();
+            iconXTo(3);
+          };
 
-    if (dist < radius) {
-      const moveX = (e.clientX - centerX) * 0.35;
-      const moveY = (e.clientY - centerY) * 0.35;
-      gsap.to(buttonRef.current, { x: moveX, y: moveY, duration: 0.4, ease: 'power3.out', overwrite: true });
-      gsap.to(iconRef.current, { x: moveX * 0.5, duration: 0.4, ease: 'power3.out', overwrite: true });
-    } else {
-      gsap.to(buttonRef.current, { x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.3)', overwrite: true });
-      gsap.to(iconRef.current, { x: 0, duration: 0.8, ease: 'elastic.out(1, 0.3)', overwrite: true });
-      buttonRectRef.current = null;
-    }
-  }, []);
+          const onMove = (e: MouseEvent) => {
+            if (!rect) rect = btn.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const dx = (e.clientX - centerX) * 0.16;
+            const dy = (e.clientY - centerY) * 0.16;
+            xTo(gsap.utils.clamp(-8, 8, dx));
+            yTo(gsap.utils.clamp(-5, 5, dy));
+          };
 
-  const handleMouseEnter = () => {
-    updateButtonRect();
-  };
+          const onLeave = () => {
+            rect = null;
+            xTo(0);
+            yTo(0);
+            iconXTo(0);
+          };
 
-  const handleMouseLeave = () => {
-    gsap.to(buttonRef.current, { x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.3)', overwrite: true });
-    gsap.to(iconRef.current, { x: 0, duration: 0.8, ease: 'elastic.out(1, 0.3)', overwrite: true });
-    buttonRectRef.current = null;
-  };
+          zone.addEventListener('mouseenter', onEnter);
+          zone.addEventListener('mousemove', onMove);
+          zone.addEventListener('mouseleave', onLeave);
+
+          return () => {
+            zone.removeEventListener('mouseenter', onEnter);
+            zone.removeEventListener('mousemove', onMove);
+            zone.removeEventListener('mouseleave', onLeave);
+          };
+        }
+      );
+    },
+    { scope: container }
+  );
 
   return (
-    <section ref={container} className="px-8 md:px-24 min-h-[85vh] flex flex-col justify-center mb-32 pt-16 select-none">
-      <div className="max-w-[1200px] relative w-full">
-        <h1 className="font-headline text-5xl md:text-7xl lg:text-[6rem] leading-[1.15] text-stone-100 letter-spacing-tighter mb-12">
-          <div className="hero-reveal overflow-hidden inline-block mr-4 pb-4">
-            {t('hero', 'title')}
-          </div>
-          <div className="hero-reveal italic font-light opacity-80 overflow-hidden inline-block pb-4">
+    <section
+      id="inicio"
+      ref={container}
+      aria-labelledby="hero-title"
+      className="px-6 sm:px-10 md:px-16 lg:px-20 min-h-[78vh] md:min-h-[82vh] flex flex-col justify-center mb-24 md:mb-36 pt-8 pb-12"
+    >
+      <div className="max-w-[1200px] mx-auto relative z-10 w-full">
+        <p className="hero-eyebrow hero-anim">LYSS · CRIAÇÃO DE SITES</p>
+
+        <h1
+          id="hero-title"
+          className="font-headline text-4xl sm:text-5xl md:text-7xl lg:text-[5.5rem] leading-[1.1] text-stone-100 letter-spacing-tighter mb-10 md:mb-14 max-w-[16ch]"
+        >
+          <span className="hero-anim block">{t('hero', 'title')}</span>
+          <span className="hero-anim block italic font-light text-[#6e4942] mt-1">
             {t('hero', 'titleItalic')}
-          </div>
+          </span>
         </h1>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
           <div className="md:col-start-6 md:col-span-7">
-            <p className="hero-sub-reveal font-body text-xl md:text-2xl text-stone-300 leading-relaxed mb-8">
+            <p className="hero-anim font-body text-lg sm:text-xl md:text-[1.375rem] text-stone-300 leading-relaxed mb-7 max-w-[44ch]">
               {t('hero', 'subtitle')}
             </p>
-            <div className="hero-sub-reveal mb-12 h-px w-24 bg-stone-300 opacity-30"></div>
-            
-            <div className="flex items-center" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} onMouseEnter={handleMouseEnter}>
-              <a href="mailto:guiduffes@gmail.com?subject=Quero%20um%20site"
+            <div className="hero-anim mb-9 h-px w-20 bg-rose-border" aria-hidden="true" />
+
+            <div ref={magneticZoneRef} className="hero-anim inline-flex">
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 ref={buttonRef}
-                className="hero-sub-reveal inline-flex items-center gap-3 bg-stone-100 text-stone-900 px-8 py-4 font-label text-xs tracking-widest uppercase font-bold hover:bg-stone-300 transition-colors duration-500 cursor-pointer relative z-10"
+                className="inline-flex items-center gap-3.5 bg-stone-100 text-stone-950 px-7 sm:px-8 py-4 rounded-[2px] font-label text-xs tracking-[0.16em] uppercase font-bold hover:bg-[#4a3530] transition-colors duration-300 cursor-pointer shadow-sm"
               >
-                {t('hero', 'cta')}
-                <span ref={iconRef} className="material-symbols-outlined text-[16px]" aria-hidden="true">arrow_forward</span>
+                <span>{t('hero', 'cta')}</span>
+                <svg
+                  ref={iconRef}
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  aria-hidden="true"
+                  className="shrink-0"
+                >
+                  <path
+                    d="M3 8H13M13 8L9 4M13 8L9 12"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </a>
             </div>
           </div>

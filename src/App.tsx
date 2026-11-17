@@ -1,46 +1,49 @@
+import { useState, lazy, Suspense } from 'react';
 import { Navigation } from './components/Navigation';
 import { Hero } from './components/Hero';
-import { useEffect, useState, lazy, Suspense } from 'react';
+import { About } from './components/About';
+import { Process } from './components/Process';
+import { CaseStudy } from './components/CaseStudy';
+import { Pricing } from './components/Pricing';
+import { Footer } from './components/LayoutBlocks';
 
-// Lazy load below-the-fold components
-const Manifesto = lazy(() => import('./components/Manifesto').then(m => ({ default: m.Manifesto })));
-const Pillars = lazy(() => import('./components/Pillars').then(m => ({ default: m.Pillars })));
-const Process = lazy(() => import('./components/Process').then(m => ({ default: m.Process })));
-const CaseStudy = lazy(() => import('./components/CaseStudy').then(m => ({ default: m.CaseStudy })));
-const Pricing = lazy(() => import('./components/Pricing').then(m => ({ default: m.Pricing })));
-const Footer = lazy(() => import('./components/LayoutBlocks').then(m => ({ default: m.Footer })));
-const CommercialProposal = lazy(() => import('./components/CommercialProposal').then(m => ({ default: m.CommercialProposal })));
+const CommercialProposal = lazy(() =>
+  import('./components/CommercialProposal').then((m) => ({ default: m.CommercialProposal }))
+);
 
 function App() {
-  const [isProposal, setIsProposal] = useState(false);
-
-  useEffect(() => {
+  const [isProposal] = useState(() => {
+    if (typeof window === 'undefined') return false;
     const params = new URLSearchParams(window.location.search);
-    if (params.get('proposta') === 'true' || params.get('proposal') === 'true') {
-      setIsProposal(true);
-    }
-  }, []);
+    return params.get('proposta') === 'true' || params.get('proposal') === 'true';
+  });
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   if (isProposal) {
-    return <CommercialProposal />;
+    return (
+      <Suspense fallback={<div className="min-h-screen bg-[#0e0e10]" />}>
+        <CommercialProposal />
+      </Suspense>
+    );
   }
 
   return (
     <>
-      <Navigation />
-      <main className="pt-32 pb-20">
-        <Hero />
-        <Suspense fallback={<div className="h-20" />}>
-          <Manifesto />
-          <Pillars />
+      <div inert={isModalOpen || undefined}>
+        <a href="#conteudo" className="skip-link">
+          Pular para o conteúdo
+        </a>
+        <Navigation />
+        <main id="conteudo" tabIndex={-1} className="pt-20 md:pt-24 focus:outline-none">
+          <Hero />
+          <About />
           <Process />
-          <CaseStudy />
+          <CaseStudy onModalStateChange={setIsModalOpen} />
           <Pricing />
-        </Suspense>
-      </main>
-      <Suspense fallback={null}>
+        </main>
         <Footer />
-      </Suspense>
+      </div>
     </>
   );
 }

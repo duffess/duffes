@@ -1,35 +1,32 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { translations } from '../data/translations';
 import type { Language } from '../data/translations';
+import { LanguageContext } from './useLanguage';
 
-type LanguageContextProps = {
-  language: Language;
-  setLanguage: (lang: Language) => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  t: (key: string, ...subKeys: string[]) => string;
+const HTML_LANG_MAP: Record<Language, string> = {
+  pt: 'pt-BR',
+  en: 'en',
+  es: 'es',
 };
-
-const LanguageContext = createContext<LanguageContextProps | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>('pt');
 
   useEffect(() => {
-    document.documentElement.lang = language;
+    document.documentElement.lang = HTML_LANG_MAP[language];
   }, [language]);
 
   const t = (key: string, ...subKeys: string[]) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let result = (translations[language] as any)[key];
+    let current: unknown = (translations[language] as Record<string, unknown>)[key];
     for (const sk of subKeys) {
-      if (result && result[sk]) {
-        result = result[sk];
+      if (current && typeof current === 'object' && sk in (current as Record<string, unknown>)) {
+        current = (current as Record<string, unknown>)[sk];
       } else {
         return '';
       }
     }
-    return typeof result === 'string' ? result : '';
+    return typeof current === 'string' ? current : '';
   };
 
   return (
@@ -37,12 +34,4 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       {children}
     </LanguageContext.Provider>
   );
-}
-
-export function useLanguage() {
-  const context = useContext(LanguageContext);
-  if (context === undefined) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
-  }
-  return context;
 }

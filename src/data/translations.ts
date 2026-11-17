@@ -3,28 +3,28 @@ export type Language = 'pt' | 'en' | 'es';
 export const translations = {
   pt: {
     nav: {
-      logo: "DUFFES",
+      logo: "LYSS",
     },
     hero: {
       title: "Me diga o que você precisa.",
       titleItalic: "Eu cuido do resto.",
-      subtitle: "Sites profissionais para apresentar seu negócio, conquistar confiança e facilitar o contato com seus clientes.",
-      cta: "Iniciar Contato Direto"
+      subtitle: "Sites profissionais para apresentar seu negócio e aproximar você dos seus clientes.",
+      cta: "Conversar pelo WhatsApp"
     },
     manifesto: {
       label: "Abordagem",
-      quote: "\"Eu não faço site só para ficar bonito de enfeite. Eu vou unir o design de alta conversão com código rápido para criar páginas focadas em uma única coisa: fechar negócios.\""
+      quote: "Um site pensado com cuidado para apresentar o seu trabalho, transmitir confiança e aproximar você de novos clientes."
     },
     pillars: {
       p1Label: "01 / VELOCIDADE",
       p1Title: "Prazo combinado desde o início",
       p1Desc: "Cada entrega tem um cronograma claro, alinhado ao escopo do seu projeto.",
       p2Label: "02 / ACESSO",
-      p2Title: "Suporte VIP (Linha direta)",
-      p2Desc: "Sem intermediários. Você fala diretamente com quem resolve. Comunicação assíncrona e eficiente via Slack ou WhatsApp.",
+      p2Title: "Conversa de verdade",
+      p2Desc: "Um atendimento próximo, com espaço para tirar dúvidas e acompanhar cada etapa pelo WhatsApp.",
       p3Label: "03 / RESULTADO",
-      p3Title: "Performance Absoluta",
-      p3Desc: "Código limpo, SEO otimizado e carregamento rápido."
+      p3Title: "Bonito e fácil de usar",
+      p3Desc: "Uma página adaptada para celular e computador, com atenção à velocidade e à organização."
     },
     caseStudy: {
       headerLabel: "Trabalhos Selecionados",
@@ -38,46 +38,46 @@ export const translations = {
     method: {
       title: "O Método",
       s1Label: "01 / Diagnóstico",
-      s1Desc: "Entendo o seu negócio, seu público e o que precisa estar no site pra transformar visita em cliente.",
+      s1Desc: "Conversamos sobre seu negócio e suas ideias.",
       s2Label: "02 / Criação",
-      s2Desc: "Desenvolvo o site com design profissional, textos persuasivos e estrutura para converter.",
+      s2Desc: "Crio uma página com a cara do seu negócio.",
       s3Label: "03 / Ajustes",
-      s3Desc: "Você revisa e sugere mudanças dentro das rodadas de ajustes combinadas.",
+      s3Desc: "Você revisa e sugere os ajustes combinados.",
       s4Label: "04 / Publicação",
-      s4Desc: "Publico o site, configuro o domínio e você está pronto para receber clientes."
+      s4Desc: "Seu site vai ao ar, pronto para receber visitas."
     },
     projectDetails: {
       closeBtn: "Fechar",
       challengeLabel: "O Desafio",
-      solutionLabel: "Engenharia Aplicada",
-      stackLabel: "Stack Implementada",
+      solutionLabel: "A Solução",
+      stackLabel: "Tecnologias",
       liveBtn: "Acessar",
     },
     footer: {
-      title: "Pronto para escalar? Vamos desenhar o sistema que sua operação exige.",
-      cta: "Iniciar Contato Direto",
-      copyright: "© 2026 DUFFES. ALL RIGHTS RESERVED."
+      title: "Vamos tirar seu site do papel?",
+      cta: "Conversar pelo WhatsApp",
+      copyright: "© 2026 LYSS. TODOS OS DIREITOS RESERVADOS."
     },
     projects: {
       forma: {
         title: "Forma Estúdio",
-        description: "Um conceito de site para arquitetura residencial e interiores, inspirado em luz natural e materiais acolhedores.",
+        description: "Site demonstrativo para um estúdio de arquitetura.",
         challenge: "Criar uma presença digital serena para um estúdio fictício especializado em casas e apartamentos.",
         solution: "Uma página responsiva com navegação animada, rolagem suave e projetos em destaque. A marca e os projetos são fictícios; as imagens foram geradas por IA.",
         stats: { category: "Segmento", format: "Projeto" }
       },
       patio: {
         title: "Pátio Arquitetura",
-        description: "Um estudo de site para um escritório de arquitetura e interiores, com fotografia e movimento em destaque.",
+        description: "Site demonstrativo para um escritório de arquitetura.",
         challenge: "Criar uma presença digital para um escritório fictício, dando espaço à fotografia e a uma identidade visual marcante.",
         solution: "Uma página responsiva com direção editorial, projetos navegáveis e animações sutis. Marca e projetos são fictícios; as imagens são ilustrativas.",
         stats: { category: "Segmento", format: "Projeto" }
       },
       dashflow: {
         title: "Dashflow Landing Page",
-        description: "Estratégia visual e front-end cirúrgico para lançamento de um SaaS de análise com IA.",
-        challenge: "A Dashflow desenvolveu um software B2B robusto de inteligência analítica. O obstáculo era empacotar essa densidade técnica em uma vitrine brutalista e sofisticada.",
-        solution: "Arquitetamos uma LP baseada na estética 'Dark Software', injetando autoridade instantânea. O ambiente React/Vite garante carregamento sub-segundo.",
+        description: "Landing page para apresentação de uma plataforma SaaS de análise com IA.",
+        challenge: "Apresentar um software B2B de inteligência analítica de forma clara, moderna e fácil de compreender logo no primeiro acesso.",
+        solution: "Interface escura de alto contraste construída com React e Vite, com leitura rápida, seções diretas e carregamento leve.",
         stats: {
           category: "Segmento",
           format: "Formato",
@@ -97,9 +97,9 @@ export const translations = {
       },
       fdm: {
         title: "Fábrica de Monstros CT",
-        description: "Landing page de alta energia focada em conversão direta para um centro de treinamento hardcore.",
-        challenge: "O centro de treinamento precisava de uma presença digital que refletisse a intensidade do seu ambiente físico. O desafio era sair da estética genérica de academias comuns e criar uma máquina de matrículas focada em resultados reais.",
-        solution: "Desenvolvemos uma interface industrial em 'Dark Mode' com alto contraste em tom laranja para guiar a ação do usuário. A arquitetura da página foi construída com foco agressivo em prova social e performance mobile.",
+        description: "Landing page com foco em contato e matrículas para um centro de treinamento.",
+        challenge: "Criar uma presença digital alinhada à identidade intensa do espaço físico, facilitando a apresentação da estrutura e o contato de novos alunos.",
+        solution: "Interface em modo escuro com destaque em laranja para orientar a leitura e os botões de ação, pensada especialmente para navegação no celular.",
         stats: {
           category: "Segmento",
           format: "Formato",
@@ -111,7 +111,7 @@ export const translations = {
   },
   en: {
     nav: {
-      logo: "DUFFES",
+      logo: "LYSS",
     },
     hero: {
       title: "Tell me your bottleneck.",
@@ -166,7 +166,7 @@ export const translations = {
     footer: {
       title: "Ready to scale? Let's architect the system your operation demands.",
       cta: "Initiate Direct Contact",
-      copyright: "© 2026 DUFFES. ALL RIGHTS RESERVED."
+      copyright: "© 2026 LYSS. TODOS OS DIREITOS RESERVADOS."
     },
     projects: {
       forma: {
@@ -221,7 +221,7 @@ export const translations = {
   },
   es: {
     nav: {
-      logo: "DUFFES",
+      logo: "LYSS",
     },
     hero: {
       title: "Dime qué necesitas.",
@@ -274,7 +274,7 @@ export const translations = {
     footer: {
       title: "¿Listo para escalar? Vamos a diseñar el sistema que exige tu operación.",
       cta: "Iniciar Contacto Directo",
-      copyright: "© 2026 DUFFES. TODOS LOS DERECHOS RESERVADOS."
+      copyright: "© 2026 LYSS. TODOS LOS DERECHOS RESERVADOS."
     },
     projects: {
       forma: {
