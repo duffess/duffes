@@ -39,9 +39,12 @@ export function Closing() {
       if (r.bottom < -vh || r.top > vh * 2) return;
       const p = clamp(-r.top / (r.height - vh));
 
-      const cw = Math.min(240, vw * 0.56, (vh * 0.62) / 2.05);
+      const navH = document.querySelector('.nav')?.getBoundingClientRect().height ?? 64;
+      const titleH = title.offsetHeight;
+      const chMax = vh - 2 * (navH + titleH + 28);
+      const cw = Math.max(120, Math.min(240, vw * 0.56, chMax / 2.05));
       const ch = cw * 2.05;
-      title.style.bottom = `${vh / 2 + ch / 2 + 24}px`;
+      title.style.bottom = `${vh / 2 + ch / 2 + 20}px`;
 
       const phone = [cw, ch, 34];
       const lying = [ch * 0.62, cw * 0.62, 30];
@@ -59,12 +62,13 @@ export function Closing() {
       const l = (vw - w) / 2;
       layer.style.clipPath = `inset(${t}px ${l}px ${t}px ${l}px round ${rr}px)`;
 
+      // A tela do celular encolhe junto e some antes de o celular deitar,
+      // para nada vazar para fora do recorte.
       screen.style.width = `${cw}px`;
       screen.style.height = `${ch}px`;
-      const turn = ease(a1) * -90;
-      const scale = p < 0.25 ? lerp(1, 0.62, ease(a1)) : 0.62;
-      screen.style.transform = `translate(-50%,-50%) rotate(${turn}deg) scale(${scale})`;
-      screen.style.opacity = String(p < 0.25 ? 1 : 1 - clamp((p - 0.25) / 0.1));
+      screen.style.setProperty('--k', String(cw / 280));
+      screen.style.transform = `translate(-50%,-50%) scale(${lerp(1, 0.8, ease(clamp(a1 / 0.6)))})`;
+      screen.style.opacity = String(1 - clamp(a1 / 0.45));
       pill.style.opacity = String(clamp((p - 0.33) / 0.08) * (1 - clamp((p - 0.6) / 0.06)));
       title.style.opacity = String(1 - clamp((p - 0.5) / 0.1));
 
@@ -102,7 +106,49 @@ export function Closing() {
         </p>
         <div ref={layerRef} className="closing__layer">
           <div ref={screenRef} className="closing__screen" aria-hidden="true">
-            <img src="/fabricademonstros-669.webp" alt="" width={669} height={331} loading="lazy" decoding="async" />
+            <div className="mini">
+              <div className="mini__status">
+                <span>9:41</span>
+                <span className="mini__bars">
+                  <i />
+                  <i />
+                  <i />
+                </span>
+              </div>
+              <div className="mini__nav">
+                <span className="mini__brand">Seu negócio</span>
+                <span className="mini__menu">
+                  <i />
+                  <i />
+                </span>
+              </div>
+              <div className="mini__hero">
+                <span className="mini__photo" />
+                <p className="mini__tagline">O que você faz, do jeito que o seu cliente procura.</p>
+                <p className="mini__open">
+                  <span className="mini__dot" />
+                  Aberto agora
+                </p>
+              </div>
+              <ul className="mini__list">
+                <li>
+                  <span>Serviços</span>
+                  <span>Ver todos</span>
+                </li>
+                <li>
+                  <span>Onde fica</span>
+                  <span>Mapa</span>
+                </li>
+                <li>
+                  <span>Horários</span>
+                  <span>Hoje até 19h</span>
+                </li>
+              </ul>
+              <span className="mini__wa">
+                <WaGlyph />
+                Chamar no WhatsApp
+              </span>
+            </div>
           </div>
           <div ref={pillRef} className="closing__pill" aria-hidden="true">
             <WaGlyph />
