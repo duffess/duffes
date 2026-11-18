@@ -1,8 +1,8 @@
 import { PhoneDemo, WaGlyph } from './PhoneDemo';
 import { About } from './About';
 import { Closing } from './Closing';
-import { LitWords, ScrambleLines } from './TextFx';
-import { Traveler } from './Traveler';
+import { LitWords, RevealLines } from './TextFx';
+import { Trail } from './Trail';
 
 const HERO_LINES = ['Sites que fazem', 'o cliente chamar', 'no WhatsApp.'];
 import {
@@ -43,7 +43,7 @@ function Hero() {
     <section className="hero" id="topo" aria-labelledby="hero-title">
       <div className="hero__copy">
         <h1 id="hero-title" className="hero__title">
-          <ScrambleLines lines={HERO_LINES} />
+          <RevealLines lines={HERO_LINES} />
         </h1>
         <p className="hero__lead">
           Crio páginas sob medida para negócios do bairro: rápidas no celular, prontas para aparecer no Google e com um
@@ -167,8 +167,8 @@ export function Site() {
         Pular para o conteúdo
       </a>
       <Nav />
-      <Traveler />
       <main id="conteudo" tabIndex={-1}>
+        <Trail />
         <Hero />
         <Work />
         <Included />

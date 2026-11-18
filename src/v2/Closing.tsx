@@ -66,7 +66,6 @@ export function Closing() {
       // para nada vazar para fora do recorte.
       screen.style.width = `${cw}px`;
       screen.style.height = `${ch}px`;
-      screen.style.setProperty('--k', String(cw / 280));
       screen.style.transform = `translate(-50%,-50%) scale(${lerp(1, 0.8, ease(clamp(a1 / 0.6)))})`;
       screen.style.opacity = String(1 - clamp(a1 / 0.45));
       pill.style.opacity = String(clamp((p - 0.33) / 0.08) * (1 - clamp((p - 0.6) / 0.06)));
@@ -106,49 +105,8 @@ export function Closing() {
         </p>
         <div ref={layerRef} className="closing__layer">
           <div ref={screenRef} className="closing__screen" aria-hidden="true">
-            <div className="mini">
-              <div className="mini__status">
-                <span>9:41</span>
-                <span className="mini__bars">
-                  <i />
-                  <i />
-                  <i />
-                </span>
-              </div>
-              <div className="mini__nav">
-                <span className="mini__brand">Seu negócio</span>
-                <span className="mini__menu">
-                  <i />
-                  <i />
-                </span>
-              </div>
-              <div className="mini__hero">
-                <span className="mini__photo" />
-                <p className="mini__tagline">O que você faz, do jeito que o seu cliente procura.</p>
-                <p className="mini__open">
-                  <span className="mini__dot" />
-                  Aberto agora
-                </p>
-              </div>
-              <ul className="mini__list">
-                <li>
-                  <span>Serviços</span>
-                  <span>Ver todos</span>
-                </li>
-                <li>
-                  <span>Onde fica</span>
-                  <span>Mapa</span>
-                </li>
-                <li>
-                  <span>Horários</span>
-                  <span>Hoje até 19h</span>
-                </li>
-              </ul>
-              <span className="mini__wa">
-                <WaGlyph />
-                Chamar no WhatsApp
-              </span>
-            </div>
+            <img className="closing__shot" src="/patio-mobile.webp" alt="" width={560} height={1148} loading="lazy" decoding="async" />
+            <img className="closing__shot closing__shot--2" src="/forma-mobile.webp" alt="" width={560} height={1148} loading="lazy" decoding="async" />
           </div>
           <div ref={pillRef} className="closing__pill" aria-hidden="true">
             <WaGlyph />
