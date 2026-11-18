@@ -1,8 +1,9 @@
 import { PhoneDemo, WaGlyph } from './PhoneDemo';
+import { About } from './About';
+import { Closing } from './Closing';
 import {
   DEFAULT_WA_MESSAGE,
   PRICE_FROM,
-  WHATSAPP_DISPLAY,
   deliverables,
   projects,
   steps,
@@ -153,57 +154,6 @@ function Steps() {
           </li>
         ))}
       </ol>
-    </section>
-  );
-}
-
-function About() {
-  return (
-    <section className="section about" id="quem-faz" aria-labelledby="about-title">
-      <img
-        className="about__photo"
-        src="/lyss-retrato.webp"
-        srcSet="/lyss-retrato-480.webp 480w, /lyss-retrato.webp 720w"
-        sizes="(max-width: 900px) 60vw, 340px"
-        width={480}
-        height={853}
-        alt="Retrato de quem cria os sites da LYSS"
-        loading="lazy"
-        decoding="async"
-      />
-      <div className="about__text">
-        <h2 id="about-title" className="h2">
-          Quem faz o seu site
-        </h2>
-        <p>
-          Na LYSS, quem atende é quem desenha e programa. Você conversa direto comigo do primeiro áudio até o site
-          estar no ar, sem intermediário e sem formulário.
-        </p>
-        <p>
-          Cuido do visual, do código leve e de cada detalhe que faz o seu negócio parecer o que ele é de verdade.
-        </p>
-      </div>
-    </section>
-  );
-}
-
-function Closing() {
-  return (
-    <section className="closing" aria-labelledby="closing-title">
-      <h2 id="closing-title" className="closing__title">
-        Me conta o que você faz.
-      </h2>
-      <div className="closing__side">
-      <p className="closing__text">
-        Mande uma mensagem dizendo o seu ramo e o que você quer mostrar. Eu respondo com uma ideia de como o seu site
-        pode ficar.
-      </p>
-      <a className="btn btn--light" href={mainWa} target="_blank" rel="noopener noreferrer">
-        <WaGlyph />
-        Chamar no WhatsApp
-      </a>
-      <p className="closing__number">{WHATSAPP_DISPLAY}</p>
-      </div>
     </section>
   );
 }

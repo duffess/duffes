@@ -917,21 +917,86 @@ html {
   }
 }
 
-/* Quem faz */
+/* Quem faz — sites em órbita */
 
 .about {
   display: grid;
-  gap: 2.5rem;
+  gap: 3rem;
+  overflow-x: clip;
   align-items: center;
 }
 
-.about__photo {
-  width: min(64vw, 320px);
+.orbit {
+  position: relative;
+  height: clamp(420px, 60vw, 560px);
+  isolation: isolate;
+}
+
+.orbit__photo {
+  position: absolute;
+  left: 50%;
+  top: 6%;
+  z-index: 10;
+  width: clamp(170px, 38vw, 250px);
   aspect-ratio: 4 / 5;
+  transform: translateX(-50%);
   object-fit: cover;
   object-position: center 30%;
-  border-radius: 999px 999px 24px 24px;
+  border-radius: 999px 999px 28px 28px;
   background: var(--paper-2);
+  box-shadow: 0 30px 60px -28px rgba(27, 31, 59, 0.6);
+}
+
+.orbit::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 2%;
+  width: clamp(240px, 52vw, 340px);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: var(--sun);
+  z-index: 0;
+}
+
+.orbit__card {
+  position: absolute;
+  left: 50%;
+  top: 38%;
+  width: clamp(120px, 26vw, 190px);
+  margin-left: calc(clamp(120px, 26vw, 190px) / -2);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--ink);
+  box-shadow: 0 18px 36px -14px rgba(27, 31, 59, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.4);
+  will-change: transform, filter;
+}
+
+.orbit__card img {
+  width: 100%;
+}
+
+.orbit__caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  display: grid;
+  justify-items: center;
+  font-family: var(--display);
+  font-weight: 700;
+  font-variation-settings: 'wdth' 85, 'opsz' 24;
+  font-size: 1.15rem;
+  text-align: center;
+}
+
+.orbit__caption span {
+  font-family: var(--body);
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: var(--muted);
 }
 
 .about__text {
@@ -947,57 +1012,115 @@ html {
 
 @media (min-width: 900px) {
   .about {
-    grid-template-columns: auto 1fr;
-    column-gap: 5rem;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    column-gap: 4rem;
   }
 }
 
-/* Fechamento */
+/* Fechamento — celular vira botão vira tela */
 
 .closing {
-  margin: clamp(5rem, 12vw, 9rem) var(--gutter) 0;
-  padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 6vw, 5rem);
-  border-radius: 32px;
-  background: var(--cobalt);
-  color: #fff;
-  display: grid;
-  justify-items: start;
-  gap: 1.5rem;
+  position: relative;
+  height: 300svh;
+  margin-top: clamp(4rem, 10vw, 8rem);
 }
 
-@media (min-width: 1360px) {
-  .closing {
-    max-width: calc(var(--max) - 2 * 3.5rem);
-    margin-left: auto;
-    margin-right: auto;
-  }
+.closing__stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.closing__lead-in {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(50% + 260px);
+  padding: 0 var(--gutter);
+  text-align: center;
+  font-family: var(--display);
+  font-weight: 800;
+  font-variation-settings: 'wdth' 75, 'opsz' 96;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1;
+  letter-spacing: -0.015em;
+}
+
+.closing__layer {
+  position: absolute;
+  inset: 0;
+  background: var(--cobalt);
+  color: #fff;
+  will-change: clip-path;
+}
+
+.closing__screen {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 30px;
+  overflow: hidden;
+  background: #111;
+}
+
+.closing__screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 22% center;
+}
+
+.closing__pill {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  white-space: nowrap;
+  font-weight: 600;
+  font-size: 1.05rem;
+  opacity: 0;
+}
+
+.closing__final {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 0 var(--gutter);
+  opacity: 0;
+}
+
+.closing__inner {
+  display: grid;
+  justify-items: center;
+  gap: 1.5rem;
+  text-align: center;
+  max-width: 60rem;
 }
 
 .closing__title {
   font-family: var(--display);
   font-weight: 800;
   font-variation-settings: 'wdth' 75, 'opsz' 96;
-  font-size: clamp(3rem, 10vw, 7rem);
+  font-size: clamp(3.2rem, 11vw, 8.5rem);
   line-height: 0.88;
   letter-spacing: -0.018em;
-  max-width: 9ch;
 }
 
-.closing__side {
-  display: grid;
-  justify-items: start;
-  gap: 1.5rem;
+.closing__fill {
+  display: block;
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.92);
+  transition: color 0.8s var(--ease);
 }
 
-@media (min-width: 1000px) {
-  .closing {
-    grid-template-columns: 1.1fr 0.9fr;
-    align-items: end;
-    column-gap: 4rem;
-  }
-  .closing__title {
-    font-size: clamp(5rem, 8.5vw, 8.5rem);
-  }
+.closing__final.is-full .closing__fill {
+  color: #fff;
 }
 
 .closing__text {
@@ -1009,6 +1132,68 @@ html {
 .closing__number {
   font-size: 0.95rem;
   color: #dfe6ff;
+}
+
+.closing--static {
+  height: auto;
+}
+
+.closing--static .closing__stage {
+  position: relative;
+  height: auto;
+  min-height: 100svh;
+}
+
+.closing--static .closing__final {
+  position: relative;
+  min-height: 100svh;
+  opacity: 1;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.closing--static .closing__screen,
+.closing--static .closing__pill,
+.closing--static .closing__lead-in {
+  display: none;
+}
+
+/* Botão com halo (efeito 18-B) */
+
+.btn--halo {
+  position: relative;
+}
+
+.btn--halo::before,
+.btn--halo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  pointer-events: none;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .btn--halo::before,
+  .btn--halo::after {
+    animation: halo 2.4s var(--ease) infinite;
+  }
+  .btn--halo::after {
+    animation-delay: 1.2s;
+  }
+}
+
+@keyframes halo {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.25, 1.7);
+  }
 }
 
 /* Rodapé */
