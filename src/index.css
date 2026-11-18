@@ -1,5 +1,22 @@
 /* LYSS — redesign 2026-11. Estilos sem framework. */
 
+/* Fontes hospedadas no próprio site (só o alfabeto latino) e pré-carregadas no index.html */
+@font-face {
+  font-family: 'Big Shoulders Display Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/big-shoulders-display.woff2') format('woff2-variations');
+}
+
+@font-face {
+  font-family: 'Instrument Sans Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400 700;
+  src: url('/fonts/instrument-sans.woff2') format('woff2-variations');
+}
+
 :root {
   --paper: #edefe8;
   --paper-2: #e3e6dc;
@@ -1415,7 +1432,18 @@ main {
 
 @media (prefers-reduced-motion: no-preference) {
   .reveal__text {
-    animation: line-up 0.9s var(--ease) both;
+    animation: line-up 0.9s var(--ease) both paused;
+  }
+  .fonts-ready .reveal__text {
+    animation-play-state: running;
+  }
+  .hero__lead,
+  .hero__actions {
+    animation-play-state: paused;
+  }
+  .fonts-ready .hero__lead,
+  .fonts-ready .hero__actions {
+    animation-play-state: running;
   }
 }
 

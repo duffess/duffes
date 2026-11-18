@@ -57,12 +57,15 @@ export function Trail() {
       const gutter = sec ? parseFloat(getComputedStyle(sec).paddingLeft) || 20 : 20;
       const contentLeft = Math.max(0, (W - 1240) / 2) + gutter;
       const L = Math.max(9, contentLeft / 2);
-      const R = W - L;
       const box = (el: Element) => {
         const r = el.getBoundingClientRect();
         return { top: r.top - base.top, bottom: r.bottom - base.top };
       };
 
+      // Um lado só: o fio desce pela margem direita, ondulando de leve dentro dela.
+      // Nada de atravessar a página — as curvas são longas e suaves.
+      const R = W - L;
+      const amp = wide ? Math.max(0, Math.min(26, contentLeft / 2 - 36)) : 0;
       const pts: { x: number; y: number }[] = [];
       const hero = document.getElementById('topo');
       if (hero) pts.push({ x: R, y: box(hero).bottom - 80 });
@@ -70,16 +73,11 @@ export function Trail() {
         const el = document.getElementById(id);
         if (!el) return;
         const b = box(el);
-        const x = i % 2 === 0 ? R : L;
-        // As curvas acontecem no respiro de cima de cada seção (padding vazio),
-        // então a bolha só cruza a página onde não tem texto.
-        const padTop = parseFloat(getComputedStyle(el).paddingTop) || 0;
-        pts.push({ x, y: b.top + padTop * 0.85 }, { x, y: b.bottom });
+        pts.push({ x: R + (i % 2 === 0 ? -amp : amp), y: (b.top + b.bottom) / 2 });
       });
       const closing = document.querySelector('.closing');
       // o fio termina antes do fechamento, para não passar por cima do celular
-      const lastX = pts.length ? pts[pts.length - 1].x : L;
-      if (closing) pts.push({ x: lastX, y: box(closing).top - 8 });
+      if (closing) pts.push({ x: R, y: box(closing).top - 8 });
 
       let d = '';
       pts.forEach((p, i) => {
@@ -146,8 +144,10 @@ export function Trail() {
       if (wide) {
         x = hx;
         if (table.length && yPage > table[table.length - 1][0] + 1) {
-          // depois do fim do fio, a bolha voa e espera ao lado do celular
-          x = vw / 2 + Math.min(210, vw * 0.28);
+          // depois do fim do fio: espera na margem e, quando o fechamento
+          // gruda na tela, desliza na horizontal até o lado do celular
+          const closingTop = document.querySelector('.closing')?.getBoundingClientRect().top ?? 0;
+          x = closingTop > 0 ? table[table.length - 1][1] : vw / 2 + Math.min(210, vw * 0.28);
           y = vh * HEAD_AT;
         } else {
           y = hy + base.top;
@@ -188,11 +188,17 @@ export function Trail() {
 
     const loop = () => {
       const t = frame();
-      const f = first || reduced ? 1 : 0.2;
+      const f = first || reduced ? 1 : 0.14;
+      // limita a velocidade para a bolha deslizar em vez de pular
+      const maxStep = first || reduced ? Infinity : 22;
       first = false;
+      const step = (from: number, to: number) => {
+        const d = (to - from) * f;
+        return from + Math.max(-maxStep, Math.min(maxStep, d));
+      };
       cur = {
-        x: mix(cur.x, t.x, f),
-        y: mix(cur.y, t.y, f),
+        x: step(cur.x, t.x),
+        y: step(cur.y, t.y),
         s: mix(cur.s, t.s, f),
         r: mix(cur.r, t.r, f),
         op: mix(cur.op, t.op, Math.max(f, 0.25)),
