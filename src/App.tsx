@@ -1,32 +1,35 @@
-import { useState, lazy, Suspense } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { Navigation } from './components/Navigation';
 import { Hero } from './components/Hero';
-import { About } from './components/About';
-import { Process } from './components/Process';
 import { CaseStudy } from './components/CaseStudy';
-import { Pricing } from './components/Pricing';
+import { Pricing as Services } from './components/Pricing';
+import { Process } from './components/Process';
+import { About } from './components/About';
 import { Footer } from './components/LayoutBlocks';
-
-const CommercialProposal = lazy(() =>
-  import('./components/CommercialProposal').then((m) => ({ default: m.CommercialProposal }))
-);
+import { ProjectModal } from './components/ProjectModal';
+import { GoldenThread } from './components/GoldenThread';
+import type { ProjectItem } from './data/mockData';
 
 function App() {
-  const [isProposal] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    const params = new URLSearchParams(window.location.search);
-    return params.get('proposta') === 'true' || params.get('proposal') === 'true';
-  });
+  const stageRef = useRef<HTMLDivElement>(null);
+  const lastTriggerRef = useRef<HTMLElement | null>(null);
 
+  const [modalProject, setModalProject] = useState<ProjectItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  if (isProposal) {
-    return (
-      <Suspense fallback={<div className="min-h-screen bg-[#0e0e10]" />}>
-        <CommercialProposal />
-      </Suspense>
-    );
-  }
+  const openProjectModal = useCallback((project: ProjectItem, triggerEl: HTMLElement | null) => {
+    lastTriggerRef.current = triggerEl;
+    setModalProject(project);
+    setIsModalOpen(true);
+  }, []);
+
+  const closeProjectModal = useCallback(() => {
+    setIsModalOpen(false);
+  }, []);
+
+  const handleModalExited = useCallback(() => {
+    setModalProject(null);
+  }, []);
 
   return (
     <>
@@ -34,16 +37,31 @@ function App() {
         <a href="#conteudo" className="skip-link">
           Pular para o conteúdo
         </a>
+
         <Navigation />
-        <main id="conteudo" tabIndex={-1} className="pt-20 md:pt-24 focus:outline-none">
-          <Hero />
-          <About />
-          <Process />
-          <CaseStudy onModalStateChange={setIsModalOpen} />
-          <Pricing />
-        </main>
-        <Footer />
+
+        <div id="fio-stage" ref={stageRef} className="relative">
+          <GoldenThread containerRef={stageRef} />
+
+          <main id="conteudo" tabIndex={-1} className="pt-20 md:pt-24 focus:outline-none">
+            <Hero onOpenProject={openProjectModal} />
+            <CaseStudy onOpenProject={openProjectModal} />
+            <Services />
+            <Process />
+            <About />
+          </main>
+
+          <Footer />
+        </div>
       </div>
+
+      <ProjectModal
+        isOpen={isModalOpen}
+        onClose={closeProjectModal}
+        onExited={handleModalExited}
+        project={modalProject}
+        returnFocusRef={lastTriggerRef}
+      />
     </>
   );
 }

@@ -12,32 +12,36 @@ export function Process() {
       const mm = gsap.matchMedia();
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
+        const headTrigger = container.current?.querySelector('[data-fio-met-head]');
+        const gridTrigger = container.current?.querySelector('[data-fio-met-grid]');
+
         gsap.from('.process-header', {
           scrollTrigger: {
-            trigger: container.current,
-            start: 'top 86%',
+            trigger: headTrigger || container.current,
+            start: 'top 84%',
             once: true,
           },
-          y: 16,
+          y: 24,
           opacity: 0,
-          duration: 0.38,
-          stagger: 0.05,
-          ease: 'power2.out',
-          clearProps: 'transform',
+          filter: 'blur(5px)',
+          duration: 0.58,
+          stagger: 0.08,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity,filter',
         });
 
         gsap.from('.process-step', {
           scrollTrigger: {
-            trigger: container.current,
-            start: 'top 82%',
+            trigger: gridTrigger || container.current,
+            start: 'top 85%',
             once: true,
           },
-          y: 18,
+          y: 24,
           opacity: 0,
-          duration: 0.4,
-          stagger: 0.055,
-          ease: 'power2.out',
-          clearProps: 'transform',
+          duration: 0.54,
+          stagger: 0.08,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity',
         });
       });
     },
@@ -56,37 +60,39 @@ export function Process() {
       id="metodo"
       ref={container}
       aria-labelledby="process-title"
-      className="scroll-mt-28 px-6 sm:px-10 md:px-16 lg:px-20 mb-28 md:mb-40"
+      className="scroll-mt-28 px-6 sm:px-10 md:px-14 lg:px-20 mb-28 md:mb-32"
     >
-      <div className="max-w-[1200px] mx-auto">
-        <div className="mb-14 md:mb-20">
-          <span className="process-header font-label text-xs tracking-[0.2em] text-rose-accent uppercase mb-4 block font-semibold">
-            Passo a passo
+      <div className="max-w-[1220px] mx-auto border-t border-stone-800/80 pt-16 md:pt-24">
+        <div data-fio-met-head className="mb-12 md:mb-20 max-w-[560px] lg:max-w-[420px] xl:max-w-[520px]">
+          <span className="process-header font-label text-xs tracking-[0.2em] text-rose-accent uppercase mb-3.5 block font-semibold">
+            {t('method', 'eyebrow')}
           </span>
           <h2
             id="process-title"
-            className="process-header font-headline text-4xl sm:text-5xl md:text-6xl text-stone-100 letter-spacing-tighter italic font-light"
+            className="process-header font-headline text-3xl sm:text-5xl md:text-[3.25rem] text-stone-100 letter-spacing-tighter leading-[1.12] mb-3"
           >
             {t('method', 'title')}
           </h2>
-          <div className="process-header mt-6 h-px w-20 bg-rose-border" aria-hidden="true" />
+          <p className="process-header font-body text-base sm:text-lg text-stone-300 leading-relaxed m-0">
+            {t('method', 'subtitle')}
+          </p>
         </div>
 
-        <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-stone-800/70 overflow-hidden rounded-[2px] border border-stone-800 list-none p-0 m-0">
+        <ol data-fio-met-grid className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 list-none p-0 m-0">
           {steps.map((step, index) => {
             const [num, title] = step.label.split(' / ');
             return (
               <li
                 key={step.label}
-                className="process-step bg-stone-950 p-8 md:p-10 hover:bg-rose-soft/60 transition-colors duration-300 flex flex-col min-h-[200px] md:min-h-[250px]"
+                className="process-step process-step-card bg-stone-950 border border-stone-800 rounded-[6px] overflow-hidden p-7 md:p-9 hover:bg-rose-soft/60 flex flex-col min-h-[210px] md:min-h-[245px]"
               >
-                <span className="font-label text-[0.68rem] font-bold tracking-[0.2em] text-rose-accent uppercase mb-6 block">
+                <span className="font-label text-[0.68rem] font-bold tracking-[0.2em] text-rose-accent uppercase mb-5 block">
                   {num || `0${index + 1}`}
                 </span>
-                <h3 className="font-headline text-2xl text-stone-100 mb-4 leading-snug">
+                <h3 className="font-headline text-2xl text-stone-100 mb-3.5 leading-snug">
                   {title}
                 </h3>
-                <p className="font-body text-sm text-stone-300 leading-relaxed mt-auto">
+                <p className="font-body text-sm sm:text-[0.95rem] text-stone-300 leading-relaxed mt-auto m-0">
                   {step.desc}
                 </p>
               </li>

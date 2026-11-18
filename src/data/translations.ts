@@ -3,328 +3,433 @@ export type Language = 'pt' | 'en' | 'es';
 export const translations = {
   pt: {
     nav: {
-      logo: "LYSS",
+      logo: 'LYSS',
+      projects: 'Projetos',
+      services: 'Serviços',
+      method: 'Método',
+      about: 'Sobre',
+      contact: 'Conversar',
     },
     hero: {
-      title: "Me diga o que você precisa.",
-      titleItalic: "Eu cuido do resto.",
-      subtitle: "Sites profissionais para apresentar seu negócio e aproximar você dos seus clientes.",
-      cta: "Conversar pelo WhatsApp"
+      eyebrow: 'LYSS · CRIAÇÃO DE SITES',
+      titleLine1: 'Crio sites que apresentam',
+      titleLine2: 'seu negócio com',
+      titleAccent: 'clareza e presença.',
+      subtitle:
+        'Páginas feitas sob medida para celular e computador, pensadas para mostrar o seu trabalho e facilitar a chegada de novos clientes.',
+      cta: 'Conversar sobre meu projeto',
+      secondaryCta: 'Ver projetos',
+      previewLabel: 'Prévia de trabalho',
+      previewAction: 'Abrir projeto',
+      previewDetails: 'Ver ficha',
     },
     manifesto: {
-      label: "Abordagem",
-      quote: "Um site pensado com cuidado para apresentar o seu trabalho, transmitir confiança e aproximar você de novos clientes."
+      label: 'Abordagem',
+      quote:
+        'Um site pensado com cuidado para apresentar o seu trabalho, transmitir confiança e aproximar você de novos clientes.',
     },
     pillars: {
-      p1Label: "01 / VELOCIDADE",
-      p1Title: "Prazo combinado desde o início",
-      p1Desc: "Cada entrega tem um cronograma claro, alinhado ao escopo do seu projeto.",
-      p2Label: "02 / ACESSO",
-      p2Title: "Conversa de verdade",
-      p2Desc: "Um atendimento próximo, com espaço para tirar dúvidas e acompanhar cada etapa pelo WhatsApp.",
-      p3Label: "03 / RESULTADO",
-      p3Title: "Bonito e fácil de usar",
-      p3Desc: "Uma página adaptada para celular e computador, com atenção à velocidade e à organização."
+      p1Label: '01 / CLAREZA',
+      p1Title: 'Prazo combinado desde o início',
+      p1Desc: 'Cada entrega tem um cronograma claro, alinhado ao escopo do seu projeto.',
+      p2Label: '02 / PROXIMIDADE',
+      p2Title: 'Conversa direta',
+      p2Desc:
+        'Atendimento próximo para alinhar ideias, tirar dúvidas e acompanhar cada etapa pelo WhatsApp.',
+      p3Label: '03 / CUIDADO TÉCNICO',
+      p3Title: 'Bonito e fácil de navegar',
+      p3Desc:
+        'Páginas adaptadas para celular e computador, com atenção à leitura, velocidade e organização.',
     },
     caseStudy: {
-      headerLabel: "Trabalhos Selecionados",
-      headerTitle: "Projetos",
-      tag: "Destaque",
-      demoTag: "Projeto demonstrativo",
-      previous: "Projeto anterior",
-      next: "Próximo projeto",
-      cta: "Ver Detalhes do Projeto"
+      headerLabel: 'Trabalhos Selecionados',
+      headerTitle: 'Cada projeto com a identidade do negócio.',
+      headerSubtitle:
+        'Projetos publicados e estudos demonstrativos construídos do zero. Toque ou clique em qualquer trabalho para abrir o site ou ver como foi pensado.',
+      tag: 'Projeto publicado',
+      demoTag: 'Projeto demonstrativo',
+      liveCta: 'Abrir site ao vivo',
+      detailsCta: 'Ver detalhes',
+      nextCardLabel: 'Seu projeto aqui',
+      nextCardTitle: 'Quer apresentar seu negócio com esse cuidado?',
+      nextCardDesc:
+        'Me conte sobre sua área e o que você precisa mostrar. Definimos juntos a estrutura ideal para o seu site.',
+      nextCardCta: 'Conversar sobre meu projeto',
+    },
+    services: {
+      label: 'O que eu entrego',
+      title: 'Seu site, do primeiro passo ao ar.',
+      description:
+        'Cuido da estrutura, do visual e da publicação para que você tenha uma página profissional pronta para receber visitas e gerar conversas.',
+      includes: 'Presente em cada projeto',
+      scopeNote:
+        'Landing pages objetivas ou sites com mais seções e funcionalidades são desenhados sob medida conforme o momento do seu negócio.',
+      domainNote:
+        'Inclui configuração inicial de domínio e hospedagem para deixar tudo publicado e funcionando.',
+      cta: 'Conversar sobre meu projeto',
     },
     method: {
-      title: "O Método",
-      s1Label: "01 / Diagnóstico",
-      s1Desc: "Conversamos sobre seu negócio e suas ideias.",
-      s2Label: "02 / Criação",
-      s2Desc: "Crio uma página com a cara do seu negócio.",
-      s3Label: "03 / Ajustes",
-      s3Desc: "Você revisa e sugere os ajustes combinados.",
-      s4Label: "04 / Publicação",
-      s4Desc: "Seu site vai ao ar, pronto para receber visitas."
+      eyebrow: 'Passo a passo',
+      title: 'Como funciona',
+      subtitle: 'Um processo direto e acompanhado de perto, sem etapas confusas.',
+      s1Label: '01 / Diagnóstico',
+      s1Desc: 'Conversamos sobre seu negócio, seu público e o objetivo principal do site.',
+      s2Label: '02 / Criação',
+      s2Desc: 'Desenho e desenvolvo uma página exclusiva, com a identidade do seu trabalho.',
+      s3Label: '03 / Ajustes',
+      s3Desc: 'Você navega pela prévia no celular e no computador e alinhamos os ajustes combinados.',
+      s4Label: '04 / Publicação',
+      s4Desc: 'Seu site vai ao ar com domínio configurado, rápido e pronto para receber visitas.',
+    },
+    about: {
+      label: 'OLÁ, QUE BOM TER VOCÊ AQUI',
+      titlePrefix: 'Por trás da',
+      titleBrand: 'LYSS.',
+      description:
+        'Um espaço dedicado a criar sites com cuidado visual, código leve e atenção ao que torna cada negócio único.',
+      cta: 'Conversar pelo WhatsApp',
     },
     projectDetails: {
-      closeBtn: "Fechar",
-      challengeLabel: "O Desafio",
-      solutionLabel: "A Solução",
-      stackLabel: "Tecnologias",
-      liveBtn: "Acessar",
+      closeBtn: 'Fechar',
+      challengeLabel: 'O Desafio',
+      solutionLabel: 'A Solução',
+      stackLabel: 'Tecnologias',
+      liveBtn: 'Abrir site ao vivo',
+      talkBtn: 'Quero um projeto com esse cuidado',
     },
     footer: {
-      title: "Vamos tirar seu site do papel?",
-      cta: "Conversar pelo WhatsApp",
-      copyright: "© 2026 LYSS. TODOS OS DIREITOS RESERVADOS."
+      eyebrow: 'Próximo passo',
+      title: 'Vamos tirar seu site do papel?',
+      subtitle:
+        'Me chame no WhatsApp para contar o que você faz e o que espera do seu novo site.',
+      cta: 'Conversar sobre meu projeto',
+      copyright: '© 2026 LYSS · CRIAÇÃO DE SITES. TODOS OS DIREITOS RESERVADOS.',
     },
     projects: {
-      forma: {
-        title: "Forma Estúdio",
-        description: "Site demonstrativo para um estúdio de arquitetura.",
-        challenge: "Criar uma presença digital serena para um estúdio fictício especializado em casas e apartamentos.",
-        solution: "Uma página responsiva com navegação animada, rolagem suave e projetos em destaque. A marca e os projetos são fictícios; as imagens foram geradas por IA.",
-        stats: { category: "Segmento", format: "Projeto" }
-      },
       patio: {
-        title: "Pátio Arquitetura",
-        description: "Site demonstrativo para um escritório de arquitetura.",
-        challenge: "Criar uma presença digital para um escritório fictício, dando espaço à fotografia e a uma identidade visual marcante.",
-        solution: "Uma página responsiva com direção editorial, projetos navegáveis e animações sutis. Marca e projetos são fictícios; as imagens são ilustrativas.",
-        stats: { category: "Segmento", format: "Projeto" }
-      },
-      dashflow: {
-        title: "Dashflow Landing Page",
-        description: "Landing page para apresentação de uma plataforma SaaS de análise com IA.",
-        challenge: "Apresentar um software B2B de inteligência analítica de forma clara, moderna e fácil de compreender logo no primeiro acesso.",
-        solution: "Interface escura de alto contraste construída com React e Vite, com leitura rápida, seções diretas e carregamento leve.",
-        stats: {
-          category: "Segmento",
-          format: "Formato",
-          conversion: "Aumento de Conversão",
-          delivery: "Tempo de Entrega"
-        }
-      },
-      lumiere: {
-        title: "Lumière Estética Pro Max",
-        description: "Redesign editorial focado em conversão de alto ticket para clínica de luxo em São Paulo.",
-        challenge: "A Lumière precisava de uma presença digital que comunicasse exclusividade e luxo editorial para o público de alto ticket, sem perder a eficiência na captura de leads qualificados.",
-        solution: "Criamos uma interface minimalista com tipografia serifada de alto contraste e micro-animações suaves. O resultado é uma experiência que transmite valor premium instantâneo.",
-        stats: {
-          design: "Estética Editorial",
-          booking: "Lead Qualification"
-        }
+        title: 'Pátio Arquitetura',
+        description:
+          'Site demonstrativo para um escritório de arquitetura, com direção editorial, espaço para fotografia e transições suaves.',
+        challenge:
+          'Criar uma presença digital para um escritório fictício, dando espaço à fotografia e a uma identidade visual marcante.',
+        solution:
+          'Uma página responsiva com direção editorial, projetos navegáveis e animações sutis. Marca e projetos são fictícios; as imagens são ilustrativas.',
+        stats: { category: 'Segmento', format: 'Projeto' },
       },
       fdm: {
-        title: "Fábrica de Monstros CT",
-        description: "Landing page com foco em contato e matrículas para um centro de treinamento.",
-        challenge: "Criar uma presença digital alinhada à identidade intensa do espaço físico, facilitando a apresentação da estrutura e o contato de novos alunos.",
-        solution: "Interface em modo escuro com destaque em laranja para orientar a leitura e os botões de ação, pensada especialmente para navegação no celular.",
-        stats: {
-          category: "Segmento",
-          format: "Formato",
-          conversion: "Captação de Alunos",
-          performance: "Otimização Mobile-First"
-        }
-      }
-    }
+        title: 'Fábrica de Monstros CT',
+        description:
+          'Landing page com foco em contato direto e matrículas para um centro de treinamento no Rio de Janeiro.',
+        challenge:
+          'Criar uma presença digital alinhada à identidade intensa do espaço físico, facilitando a apresentação da estrutura e o contato de novos alunos.',
+        solution:
+          'Interface em modo escuro com destaque em laranja para orientar a leitura e os botões de ação, pensada especialmente para navegação no celular.',
+        stats: { category: 'Segmento', format: 'Formato' },
+      },
+      dashflow: {
+        title: 'Dashflow Landing Page',
+        description:
+          'Landing page para apresentação clara e objetiva de uma plataforma SaaS de análise com IA.',
+        challenge:
+          'Apresentar um software B2B de inteligência analítica de forma clara, moderna e fácil de compreender logo no primeiro acesso.',
+        solution:
+          'Interface escura de alto contraste construída com React e Vite, com leitura rápida, seções diretas e carregamento leve.',
+        stats: { category: 'Segmento', format: 'Formato' },
+      },
+      forma: {
+        title: 'Forma Estúdio',
+        description:
+          'Site demonstrativo para um estúdio de arquitetura residencial, inspirado em luz natural e navegação fluida.',
+        challenge:
+          'Criar uma presença digital serena para um estúdio fictício especializado em casas e apartamentos.',
+        solution:
+          'Uma página responsiva com navegação animada, rolagem suave e projetos em destaque. A marca e os projetos são fictícios; as imagens foram geradas por IA.',
+        stats: { category: 'Segmento', format: 'Projeto' },
+      },
+    },
   },
   en: {
     nav: {
-      logo: "LYSS",
+      logo: 'LYSS',
+      projects: 'Projects',
+      services: 'Services',
+      method: 'Method',
+      about: 'About',
+      contact: 'Let’s talk',
     },
     hero: {
-      title: "Tell me your bottleneck.",
-      titleItalic: "I'll engineer the execution.",
-      subtitle: "High-conversion digital solutions for infoproducts, SaaS, and agencies. I build revenue-generating assets.",
-      cta: "Initiate Direct Contact"
+      eyebrow: 'LYSS · WEB DESIGN',
+      titleLine1: 'I craft websites that present',
+      titleLine2: 'your business with',
+      titleAccent: 'clarity and presence.',
+      subtitle:
+        'Custom pages built for mobile and desktop, designed to showcase your work and make it easy for clients to reach out.',
+      cta: 'Discuss my project',
+      secondaryCta: 'Explore projects',
+      previewLabel: 'Work preview',
+      previewAction: 'Open project',
+      previewDetails: 'Case details',
     },
     manifesto: {
-      label: "The Approach",
-      quote: "\"I'm not just a dev. I'm the engineer behind your sales. Every pixel is crafted for absolute ROI.\""
+      label: 'Approach',
+      quote:
+        'A thoughtfully crafted website to present your work, build trust, and connect you with new clients.',
     },
     pillars: {
-      p1Label: "01 / VELOCITY",
-      p1Title: "Surgical execution under 50 days",
-      p1Desc: "The market doesn't wait. I deploy robust systems with the agility exactly what scaling operations demand.",
-      p2Label: "02 / ACCESS",
-      p2Title: "VIP Support (Direct Line)",
-      p2Desc: "No middlemen. You speak directly with the problem solver. Efficient asynchronous sync via Slack or WhatsApp.",
-      p3Label: "03 / OUTCOMES",
-      p3Title: "Absolute Performance",
-      p3Desc: "Clean code, SEO optimized, and sub-second load times. Your infrastructure molded to convert cold traffic into profit."
+      p1Label: '01 / CLARITY',
+      p1Title: 'Clear timeline from day one',
+      p1Desc: 'Every project follows a transparent schedule aligned with your scope.',
+      p2Label: '02 / ACCESS',
+      p2Title: 'Direct communication',
+      p2Desc: 'Close guidance and clear updates at every stage via WhatsApp.',
+      p3Label: '03 / CRAFT',
+      p3Title: 'Refined and easy to use',
+      p3Desc: 'Responsive pages crafted for fast loading, clean reading, and mobile usability.',
     },
     caseStudy: {
-      headerLabel: "Selected Works",
-      headerTitle: "Projects",
-      tag: "Highlight",
-      demoTag: "Demonstration project",
-      previous: "Previous project",
-      next: "Next project",
-      cta: "View Project Details"
+      headerLabel: 'Selected Works',
+      headerTitle: 'Every website shaped around its brand.',
+      headerSubtitle:
+        'Live client pages and concept studies built from scratch. Select any project to visit the live page or inspect its details.',
+      tag: 'Live project',
+      demoTag: 'Concept study',
+      liveCta: 'Open live site',
+      detailsCta: 'View details',
+      nextCardLabel: 'Your project next',
+      nextCardTitle: 'Want to present your business with this level of care?',
+      nextCardDesc:
+        'Tell me about your work and goals, and we will shape the right structure for your website.',
+      nextCardCta: 'Discuss my project',
+    },
+    services: {
+      label: 'What I deliver',
+      title: 'Your website, from first idea to launch.',
+      description:
+        'From structure and visual design to launch setup, so you have a professional page ready to welcome visitors.',
+      includes: 'Included in every build',
+      scopeNote:
+        'Focused landing pages or multi-section websites are tailored to fit your business goals.',
+      domainNote: 'Includes initial domain and hosting setup so your site goes live smoothly.',
+      cta: 'Discuss my project',
     },
     method: {
-      title: "The Method",
-      s1Label: "01 / Diagnosis",
-      s1Desc: "I identify your business needs and audience goals to turn visitors into paying customers.",
-      s2Label: "02 / Creation",
-      s2Desc: "Developing professional designs and persuasive copy engineered for high conversion.",
-      s3Label: "03 / Refinement",
-      s3Desc: "You review the site and suggest changes within the agreed revision rounds.",
-      s4Label: "04 / Launch",
-      s4Desc: "Site live, domain configured, and technically prepared to start scaling your operation."
+      eyebrow: 'Step by step',
+      title: 'How it works',
+      subtitle: 'A straightforward, collaborative process from briefing to launch.',
+      s1Label: '01 / Discovery',
+      s1Desc: 'We talk about your business, audience, and main website goals.',
+      s2Label: '02 / Design & Build',
+      s2Desc: 'I design and build a custom page aligned with your brand identity.',
+      s3Label: '03 / Refinement',
+      s3Desc: 'You review the preview on mobile and desktop and we refine the agreed details.',
+      s4Label: '04 / Launch',
+      s4Desc: 'Your website goes live with domain configured and ready for visitors.',
+    },
+    about: {
+      label: 'GLAD YOU ARE HERE',
+      titlePrefix: 'Behind',
+      titleBrand: 'LYSS.',
+      description:
+        'A studio space focused on crafting websites with visual care, clean code, and attention to what makes your business unique.',
+      cta: 'Chat on WhatsApp',
     },
     projectDetails: {
-      closeBtn: "Close",
-      challengeLabel: "The Bottleneck",
-      challengeText: "Dashflow engineered a robust B2B analytical AI. The bottleneck was translating that heavy structural complexity into a slick, brutalist digital storefront that convinces major ad agencies to subscribe at first glance.",
-      solutionLabel: "Applied Engineering",
-      solutionText: "We enforced a strict 'Dark Software' layout to exude instant high-ticket authority. The copywriting was recalibrated strictly for retention. Built on React/Vite with precision Tailwind animations, this LP loads in sub-seconds—ensuring zero drops from paid traffic campaigns.",
-      stackLabel: "Deployed Stack",
-      liveBtn: "Access",
+      closeBtn: 'Close',
+      challengeLabel: 'The Challenge',
+      solutionLabel: 'The Solution',
+      stackLabel: 'Technologies',
+      liveBtn: 'Open live site',
+      talkBtn: 'Start a similar project',
     },
     footer: {
-      title: "Ready to scale? Let's architect the system your operation demands.",
-      cta: "Initiate Direct Contact",
-      copyright: "© 2026 LYSS. TODOS OS DIREITOS RESERVADOS."
+      eyebrow: 'Next step',
+      title: 'Ready to bring your website to life?',
+      subtitle: 'Reach out on WhatsApp to share what you do and what you need.',
+      cta: 'Discuss my project',
+      copyright: '© 2026 LYSS · WEB DESIGN. ALL RIGHTS RESERVED.',
     },
     projects: {
-      forma: {
-        title: "Forma Studio",
-        description: "A residential architecture and interiors website concept inspired by natural light and welcoming materials.",
-        challenge: "Create a calm digital presence for a fictional studio specializing in houses and apartments.",
-        solution: "A responsive page with animated navigation, smooth scrolling and featured projects. The studio and projects are fictional; imagery was AI-generated.",
-        stats: { category: "Industry", format: "Project" }
-      },
       patio: {
-        title: "Pátio Architecture",
-        description: "A website concept for an architecture and interiors studio, with photography and movement at its heart.",
-        challenge: "Create a digital presence for a fictional architecture studio with an expressive visual identity.",
-        solution: "A responsive editorial page with browsable projects and subtle animations. The studio and projects are fictional; the images are illustrative.",
-        stats: { category: "Industry", format: "Project" }
-      },
-      dashflow: {
-        title: "Dashflow Landing Page",
-        description: "Visual strategy and surgical front-end for the launch of an AI analysis SaaS.",
-        challenge: "Dashflow engineered a robust B2B analytical AI. The bottleneck was translating that technical complexity into a slick, brutalist digital storefront.",
-        solution: "We enforced a strict 'Dark Software' layout to exude instant high-ticket authority. React/Vite ensuring zero drops from paid traffic.",
-        stats: {
-          category: "Industry",
-          format: "Format",
-          conversion: "Conversion Increase",
-          delivery: "Delivery Time"
-        }
-      },
-      lumiere: {
-        title: "Lumière Aesthetic Pro Max",
-        description: "Editorial redesign focused on high-ticket conversion for a luxury clinic in São Paulo.",
-        challenge: "Lumière required a digital presence communicating exclusivity and editorial luxury for a high-ticket audience while maintaining lead acquisition efficiency.",
-        solution: "We created a minimalist interface with high-contrast serif typography and smooth micro-animations. A premium experience before the first contact.",
-        stats: {
-          design: "Editorial Aesthetic",
-          booking: "Lead Qualification"
-        }
+        title: 'Pátio Architecture',
+        description:
+          'Concept website for an architecture studio featuring editorial typography, spacious photography, and subtle motion.',
+        challenge:
+          'Create a digital presence for a fictional architecture studio with an expressive visual identity.',
+        solution:
+          'A responsive editorial page with browsable projects and subtle animations. The studio and projects are fictional; the images are illustrative.',
+        stats: { category: 'Industry', format: 'Project' },
       },
       fdm: {
-        title: "Fábrica de Monstros CT",
-        description: "High-energy landing page focused on direct conversion for a hardcore training center.",
-        challenge: "The training facility needed a digital footprint reflecting its intense physical environment. The challenge was breaking away from generic gym aesthetics to build an enrollment machine focused on real results.",
-        solution: "We designed an industrial 'Dark Mode' interface using high-contrast orange to drive user action. The page architecture was built with an aggressive focus on social proof and mobile performance.",
-        stats: {
-          category: "Industry",
-          format: "Format",
-          conversion: "Student Enrollment",
-          performance: "Mobile-First Optimization"
-        }
-      }
-    }
+        title: 'Fábrica de Monstros CT',
+        description:
+          'Landing page focused on direct inquiries and memberships for a training center.',
+        challenge:
+          'Create a digital presence aligned with the energy of the physical space, making facilities and enrollment easy to explore.',
+        solution:
+          'Dark interface with high-contrast orange accents guiding mobile visitors to action.',
+        stats: { category: 'Industry', format: 'Format' },
+      },
+      dashflow: {
+        title: 'Dashflow Landing Page',
+        description: 'Landing page introducing an AI analytics SaaS platform with clarity.',
+        challenge:
+          'Present an analytical B2B platform in a clear, modern way from the very first screen.',
+        solution:
+          'High-contrast dark interface built with React and Vite for fast loading and scannable sections.',
+        stats: { category: 'Industry', format: 'Format' },
+      },
+      forma: {
+        title: 'Forma Studio',
+        description:
+          'Concept website for a residential architecture studio inspired by natural light and smooth navigation.',
+        challenge:
+          'Create a calm digital presence for a fictional studio specializing in houses and apartments.',
+        solution:
+          'A responsive page with animated navigation, smooth scrolling, and featured projects. Fictional brand and AI-generated imagery.',
+        stats: { category: 'Industry', format: 'Project' },
+      },
+    },
   },
   es: {
     nav: {
-      logo: "LYSS",
+      logo: 'LYSS',
+      projects: 'Proyectos',
+      services: 'Servicios',
+      method: 'Método',
+      about: 'Sobre',
+      contact: 'Hablemos',
     },
     hero: {
-      title: "Dime qué necesitas.",
-      titleItalic: "Yo me encargo del resto.",
-      subtitle: "Soluciones digitales de alta conversión para infoproductores, SaaS y agencias. Construyo lo que genera dinero.",
-      cta: "Iniciar Contacto Directo"
+      eyebrow: 'LYSS · CREACIÓN DE SITIOS',
+      titleLine1: 'Creo sitios que presentan',
+      titleLine2: 'tu negocio con',
+      titleAccent: 'claridad y presencia.',
+      subtitle:
+        'Páginas a medida para móvil y ordenador, pensadas para mostrar tu trabajo y acercarte a nuevos clientes.',
+      cta: 'Hablar sobre mi proyecto',
+      secondaryCta: 'Ver proyectos',
+      previewLabel: 'Vista previa',
+      previewAction: 'Abrir proyecto',
+      previewDetails: 'Ver ficha',
     },
     manifesto: {
-      label: "El Enfoque",
-      quote: "\"No soy solo un dev. Soy el ingeniero detrás de tus ventas. Cada pixel está diseñado para el ROI.\""
+      label: 'Enfoque',
+      quote:
+        'Un sitio pensado con cuidado para presentar tu trabajo, transmitir confianza y acercarte a nuevos clientes.',
     },
     pillars: {
-      p1Label: "01 / VELOCIDAD",
-      p1Title: "Entrega quirúrgica en menos de 50 días",
-      p1Desc: "El mercado no espera. Desarrollo sistemas robustos con la agilidad que exigen las operaciones a escala.",
-      p2Label: "02 / ACCESO",
-      p2Title: "Soporte VIP (Línea directa)",
-      p2Desc: "Sin intermediarios. Hablas directamente con quien resuelve. Comunicación asíncrona vía Slack o WhatsApp.",
-      p3Label: "03 / RESULTADO",
-      p3Title: "Rendimiento Absoluto",
-      p3Desc: "Código limpio, SEO optimizado y tiempos de carga inferiores a un segundo. Tu infraestructura moldeada para convertir tráfico en ganancias."
+      p1Label: '01 / CLARIDAD',
+      p1Title: 'Plazo acordado desde el inicio',
+      p1Desc: 'Cada entrega cuenta con un cronograma claro alineado al alcance del proyecto.',
+      p2Label: '02 / CERCANÍA',
+      p2Title: 'Conversación directa',
+      p2Desc: 'Atención cercana para resolver dudas y acompañar cada etapa por WhatsApp.',
+      p3Label: '03 / DETALLE TÉCNICO',
+      p3Title: 'Atractivo y fácil de usar',
+      p3Desc: 'Páginas adaptadas a móvil y escritorio con foco en lectura y velocidad.',
     },
     caseStudy: {
-      headerLabel: "Trabajos Seleccionados",
-      headerTitle: "Proyectos",
-      tag: "Destacado",
-      demoTag: "Proyecto demostrativo",
-      previous: "Proyecto anterior",
-      next: "Proyecto siguiente",
-      cta: "Ver Detalles del Proyecto"
+      headerLabel: 'Trabajos Seleccionados',
+      headerTitle: 'Cada proyecto con la identidad del negocio.',
+      headerSubtitle:
+        'Sitios publicados y proyectos demostrativos creados desde cero. Toca o haz clic para visitar el sitio o ver sus detalles.',
+      tag: 'Proyecto publicado',
+      demoTag: 'Proyecto demostrativo',
+      liveCta: 'Abrir sitio en vivo',
+      detailsCta: 'Ver detalles',
+      nextCardLabel: 'Tu próximo sitio',
+      nextCardTitle: '¿Quieres presentar tu negocio con este cuidado?',
+      nextCardDesc:
+        'Cuéntame sobre tu actividad y definimos juntos la estructura ideal para tu sitio.',
+      nextCardCta: 'Hablar sobre mi proyecto',
+    },
+    services: {
+      label: 'Qué entrego',
+      title: 'Tu sitio, del primer paso a la publicación.',
+      description:
+        'Me encargo de la estructura, el diseño y la publicación para que tengas una página profesional lista para recibir visitas.',
+      includes: 'Incluido en cada proyecto',
+      scopeNote:
+        'Landing pages objetivas o sitios con más secciones se adaptan a las necesidades de tu negocio.',
+      domainNote:
+        'Incluye configuración inicial de dominio y alojamiento para dejar todo en línea.',
+      cta: 'Hablar sobre mi proyecto',
     },
     method: {
-      title: "El Método",
-      s1Label: "01 / Diagnóstico",
-      s1Desc: "Entiendo su negocio, su público y lo que se necesita en el sitio para transformar visitas en clientes.",
-      s2Label: "02 / Creación",
-      s2Desc: "Desarrollo el sitio con diseño profesional, textos persuasivos y estructura diseñada para convertir.",
-      s3Label: "03 / Ajustes",
-      s3Desc: "Revisas el sitio y sugieres cambios dentro de las rondas de ajustes acordadas.",
-      s4Label: "04 / Lanzamiento",
-      s4Desc: "Sitio en línea, dominio configurado y listo para recibir clientes."
+      eyebrow: 'Paso a paso',
+      title: 'Cómo funciona',
+      subtitle: 'Un proceso directo y acompañado de cerca en cada etapa.',
+      s1Label: '01 / Diagnóstico',
+      s1Desc: 'Conversamos sobre tu negocio, tu público y el objetivo del sitio.',
+      s2Label: '02 / Creación',
+      s2Desc: 'Diseño y desarrollo una página con la identidad de tu trabajo.',
+      s3Label: '03 / Ajustes',
+      s3Desc: 'Revisas la vista previa en móvil y escritorio y aplicamos los ajustes acordados.',
+      s4Label: '04 / Publicación',
+      s4Desc: 'Tu sitio sale al aire configurado y listo para recibir visitas.',
+    },
+    about: {
+      label: 'QUÉ BUENO TENERTE AQUÍ',
+      titlePrefix: 'Detrás de',
+      titleBrand: 'LYSS.',
+      description:
+        'Un espacio dedicado a crear sitios con cuidado visual, código ligero y atención a lo que hace único a tu negocio.',
+      cta: 'Hablar por WhatsApp',
     },
     projectDetails: {
-      closeBtn: "Cerrar",
-      challengeLabel: "El Cuello de Botella",
-      solutionLabel: "Ingeniería Aplicada",
-      stackLabel: "Stack Computacional",
-      liveBtn: "Ingresar",
+      closeBtn: 'Cerrar',
+      challengeLabel: 'El Desafío',
+      solutionLabel: 'La Solución',
+      stackLabel: 'Tecnologías',
+      liveBtn: 'Abrir sitio en vivo',
+      talkBtn: 'Quiero un sitio con este cuidado',
     },
     footer: {
-      title: "¿Listo para escalar? Vamos a diseñar el sistema que exige tu operación.",
-      cta: "Iniciar Contacto Directo",
-      copyright: "© 2026 LYSS. TODOS LOS DERECHOS RESERVADOS."
+      eyebrow: 'Siguiente paso',
+      title: '¿Llevamos tu sitio del papel a la web?',
+      subtitle: 'Escríbeme por WhatsApp para contarme sobre tu negocio y tu proyecto.',
+      cta: 'Hablar sobre mi proyecto',
+      copyright: '© 2026 LYSS · CREACIÓN DE SITIOS. TODOS LOS DERECHOS RESERVADOS.',
     },
     projects: {
-      forma: {
-        title: "Forma Estudio",
-        description: "Un concepto de sitio para arquitectura residencial e interiores, inspirado en la luz natural y los materiales acogedores.",
-        challenge: "Crear una presencia digital serena para un estudio ficticio especializado en casas y apartamentos.",
-        solution: "Una página adaptable con navegación animada, desplazamiento suave y proyectos destacados. La marca y los proyectos son ficticios; las imágenes fueron generadas con IA.",
-        stats: { category: "Sector", format: "Proyecto" }
-      },
       patio: {
-        title: "Pátio Arquitectura",
-        description: "Un concepto de sitio para un estudio de arquitectura e interiores, con fotografía y movimiento.",
-        challenge: "Crear una presencia digital para un estudio ficticio con una identidad visual expresiva.",
-        solution: "Una página adaptable de estilo editorial, con proyectos navegables y animaciones sutiles. La marca y los proyectos son ficticios; las imágenes son ilustrativas.",
-        stats: { category: "Sector", format: "Proyecto" }
-      },
-      dashflow: {
-        title: "Dashflow Landing Page",
-        description: "Estrategia visual y front-end quirúrgico para el lanzamiento de un SaaS de análisis con IA.",
-        challenge: "Dashflow desarrolló um potente software B2B de inteligencia analítica. El desafío era envasar toda esa complejidad técnica en un escaparate digital simple y sofisticado.",
-        solution: "Optamos por una estética 'Dark Software' implacable, proyectando un aire de alto valor corporativo. El entorno React/Vite asegura tiempos de carga sub-segundo.",
-        stats: {
-          category: "Sector",
-          format: "Formato",
-          conversion: "Aumento de Conversión",
-          delivery: "Tiempo de Entrega"
-        }
-      },
-      lumiere: {
-        title: "Lumière Estética Pro Max",
-        description: "Rediseño editorial enfocado en conversión de alto valor para clínica de lujo en São Paulo.",
-        challenge: "Lumière requería una presencia digital que comunicara exclusividad y lujo editorial para un público de alto valor, sin perder la eficiencia en la captura de leads qualificados.",
-        solution: "Creamos uma interfaz minimalista con tipografía serifada de alto contraste y micro-animaciones suaves. Una experiencia premium antes del primer contacto.",
-        stats: {
-          design: "Estética Editorial",
-          booking: "Calificación de Leads"
-        }
+        title: 'Pátio Arquitectura',
+        description:
+          'Sitio demostrativo para un estudio de arquitectura con dirección editorial y transiciones suaves.',
+        challenge:
+          'Crear una presencia digital para un estudio ficticio con una identidad visual expresiva.',
+        solution:
+          'Una página adaptable de estilo editorial con proyectos navegables y animaciones sutiles. Marca e imágenes ilustrativas.',
+        stats: { category: 'Sector', format: 'Proyecto' },
       },
       fdm: {
-        title: "Fábrica de Monstros CT",
-        description: "Landing page de alta energía enfocada en la conversión directa para un centro de entrenamiento hardcore.",
-        challenge: "El centro de entrenamiento necesitaba una presencia digital que reflejara la intensidad de su entorno físico. El obstáculo era huir del aspecto genérico de los gimnasios comunes y crear una máquina de matrículas enfocada en resultados reales.",
-        solution: "Desarrollamos una interfaz basada en un 'Dark Mode' industrial con alto contraste en color naranja para guiar la acción del usuario. La arquitectura de la página se estructuró con un enfoque agresivo en prueba social y rendimiento móvil.",
-        stats: {
-          category: "Sector",
-          format: "Formato",
-          conversion: "Captación de Alumnos",
-          performance: "Optimización Mobile-First"
-        }
-      }
-    }
-  }
+        title: 'Fábrica de Monstros CT',
+        description:
+          'Landing page enfocada en contacto e inscripciones para un centro de entrenamiento.',
+        challenge:
+          'Reflejar la identidad intensa del espacio físico facilitando el contacto desde el móvil.',
+        solution: 'Interfaz oscura con acentos en naranja pensada para navegación móvil.',
+        stats: { category: 'Sector', format: 'Formato' },
+      },
+      dashflow: {
+        title: 'Dashflow Landing Page',
+        description: 'Landing page para presentar una plataforma SaaS de análisis con IA.',
+        challenge:
+          'Presentar un software analítico B2B con claridad desde el primer vistazo.',
+        solution:
+          'Interfaz oscura de alto contraste construida con React y Vite para lectura rápida.',
+        stats: { category: 'Sector', format: 'Formato' },
+      },
+      forma: {
+        title: 'Forma Estudio',
+        description:
+          'Sitio demostrativo para un estudio de arquitectura residencial inspirado en la luz natural.',
+        challenge:
+          'Crear una presencia digital serena para un estudio ficticio de casas y apartamentos.',
+        solution:
+          'Página adaptable con navegación animada y proyectos destacados. Marca ficticia e imágenes generadas con IA.',
+        stats: { category: 'Sector', format: 'Proyecto' },
+      },
+    },
+  },
 };

@@ -8,6 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.ticker.lagSmoothing(0);
 
 import { LanguageProvider } from './contexts/LanguageContext';
 

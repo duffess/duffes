@@ -4,89 +4,103 @@ import gsap from 'gsap';
 import { useLanguage } from '../contexts/useLanguage';
 import { WHATSAPP_URL } from '../data/mockData';
 
-const copy = {
-  pt: {
-    label: 'Oferta de lançamento',
-    title: 'Seu site, do primeiro passo ao ar.',
-    description: 'Uma página profissional para o seu negócio.',
-    price: 'R$ 497',
-    priceNote: 'Pagamento único',
-    includes: 'O que está incluído',
-    items: [
-      'Uma landing page com até 6 seções',
-      'Design adaptado para celular e computador',
-      'Botão de contato e configuração para o Google',
-      'Até 2 rodadas de ajustes',
-      'Domínio e hospedagem por 1 ano',
-    ],
-    renewal:
-      'Após 1 ano, domínio e hospedagem são renovados pelo cliente, conforme valores do fornecedor.',
-    custom: 'Mais páginas ou funcionalidades? Orçamento à parte.',
-    cta: 'Conversar sobre meu site',
-  },
-  en: {
-    label: 'Launch offer',
-    title: 'Your website, from first idea to launch.',
-    description: 'A professional page to introduce your business and help customers get in touch.',
-    price: 'R$ 497',
-    priceNote: 'One-time payment',
-    includes: 'What is included',
-    items: [
-      'One landing page with up to 6 sections',
-      'Responsive design for mobile and desktop',
-      'Contact button and basic Google setup',
-      'Up to 2 rounds of revisions',
-      'Domain and hosting for 1 year',
-    ],
-    renewal:
-      'After the first year, the client pays for domain and hosting renewal at the provider’s rates.',
-    custom: 'Projects with more pages or features are quoted separately.',
-    cta: 'Discuss my website',
-  },
-  es: {
-    label: 'Oferta de lanzamiento',
-    title: 'Tu sitio, de la idea a la publicación.',
-    description:
-      'Una página profesional para presentar tu negocio y facilitar el contacto con tus clientes.',
-    price: 'R$ 497',
-    priceNote: 'Pago único',
-    includes: 'Qué incluye',
-    items: [
-      'Una landing page de hasta 6 secciones',
-      'Diseño adaptable a móvil y ordenador',
-      'Botón de contacto y configuración básica para Google',
-      'Hasta 2 rondas de ajustes',
-      'Dominio y alojamiento durante 1 año',
-    ],
-    renewal:
-      'Después del primer año, la renovación del dominio y alojamiento corre por cuenta del cliente, según los precios del proveedor.',
-    custom: 'Los proyectos con más páginas o funcionalidades se presupuestan por separado.',
-    cta: 'Hablar sobre mi sitio',
-  },
+const deliverablesByLang = {
+  pt: [
+    {
+      title: 'Estrutura pensada para o seu negócio',
+      detail: 'Landing pages com até 6 seções objetivas ou páginas sob medida conforme o que você precisa apresentar.',
+    },
+    {
+      title: 'Celular e computador com a mesma clareza',
+      detail: 'Design responsivo pensado para leitura confortável, carregamento leve e navegação direta em telas pequenas.',
+    },
+    {
+      title: 'Caminho direto para o contato e Google',
+      detail: 'Botões claros de conversa pelo WhatsApp e configuração inicial de títulos, metadados e indexação.',
+    },
+    {
+      title: 'Revisão próxima e publicação acompanhada',
+      detail: 'Até 2 rodadas de ajustes alinhadas ao escopo, com configuração de domínio e hospedagem para colocar o site no ar.',
+    },
+  ],
+  en: [
+    {
+      title: 'Structure tailored to your business',
+      detail: 'Focused landing pages up to 6 sections or custom layouts shaped around your goals.',
+    },
+    {
+      title: 'Clear reading on mobile and desktop',
+      detail: 'Responsive design crafted for smooth navigation and fast loading across screen sizes.',
+    },
+    {
+      title: 'Direct contact and Google setup',
+      detail: 'Clear WhatsApp contact actions and foundational metadata setup for search visibility.',
+    },
+    {
+      title: 'Guided revisions and launch',
+      detail: 'Up to 2 agreed revision rounds plus domain and hosting configuration to go live smoothly.',
+    },
+  ],
+  es: [
+    {
+      title: 'Estructura pensada para tu negocio',
+      detail: 'Landing pages de hasta 6 secciones o páginas a medida según lo que necesites presentar.',
+    },
+    {
+      title: 'Claridad en móvil y ordenador',
+      detail: 'Diseño adaptable pensado para lectura cómoda y carga ligera en cualquier pantalla.',
+    },
+    {
+      title: 'Contacto directo y presencia en Google',
+      detail: 'Botones claros hacia WhatsApp y configuración inicial de metadatos para buscadores.',
+    },
+    {
+      title: 'Revisión cercana y publicación guiada',
+      detail: 'Hasta 2 rondas de ajustes acordadas, con configuración de dominio y alojamiento.',
+    },
+  ],
 };
 
 export function Pricing() {
   const container = useRef<HTMLElement>(null);
-  const { language } = useLanguage();
-  const content = copy[language];
+  const { language, t } = useLanguage();
+  const items = deliverablesByLang[language];
 
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
 
       mm.add('(prefers-reduced-motion: no-preference)', () => {
-        gsap.from('.pricing-anim', {
+        const leftTrigger = container.current?.querySelector('[data-fio-serv-left]');
+        const cardTrigger = container.current?.querySelector('[data-fio-serv-card]');
+
+        gsap.from('.services-text-item', {
           scrollTrigger: {
-            trigger: container.current,
-            start: 'top 86%',
+            trigger: leftTrigger || container.current,
+            start: 'top 84%',
             once: true,
           },
-          y: 18,
+          y: 24,
           opacity: 0,
-          duration: 0.4,
-          stagger: 0.06,
-          ease: 'power2.out',
-          clearProps: 'transform',
+          filter: 'blur(5px)',
+          duration: 0.58,
+          stagger: 0.08,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity,filter',
+        });
+
+        gsap.from('.services-card-item', {
+          scrollTrigger: {
+            trigger: cardTrigger || container.current,
+            start: 'top 85%',
+            once: true,
+          },
+          y: 20,
+          opacity: 0,
+          duration: 0.52,
+          stagger: 0.07,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity',
         });
       });
     },
@@ -95,73 +109,86 @@ export function Pricing() {
 
   return (
     <section
-      id="valores"
+      id="servicos"
       ref={container}
-      className="scroll-mt-28 px-6 sm:px-10 md:px-16 lg:px-20 mb-28 md:mb-36"
-      aria-labelledby="pricing-title"
+      className="scroll-mt-28 px-6 sm:px-10 md:px-14 lg:px-20 mb-24 md:mb-32"
+      aria-labelledby="services-title"
     >
-      <div className="max-w-[1200px] mx-auto border-t border-stone-800 pt-14 md:pt-20 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-        <div className="lg:col-span-5 pricing-anim">
-          <span className="font-label text-xs font-semibold tracking-[0.2em] uppercase text-rose-accent block mb-4">
-            {content.label}
+      <div className="max-w-[1220px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        <div data-fio-serv-left className="lg:col-span-5">
+          <span className="services-text-item font-label text-xs font-semibold tracking-[0.2em] uppercase text-rose-accent block mb-3.5">
+            {t('services', 'label')}
           </span>
           <h2
-            id="pricing-title"
-            className="font-headline text-4xl sm:text-5xl md:text-[3.5rem] text-stone-100 leading-[1.12] letter-spacing-tighter mb-6"
+            id="services-title"
+            className="services-text-item font-headline text-3xl sm:text-5xl md:text-[3.25rem] text-stone-100 leading-[1.12] letter-spacing-tighter mb-5"
           >
-            {content.title}
+            {t('services', 'title')}
           </h2>
-          <p className="font-body text-lg text-stone-300 leading-relaxed max-w-md">
-            {content.description}
+          <p className="services-text-item font-body text-base sm:text-lg text-stone-300 leading-relaxed mb-7 max-w-[42ch]">
+            {t('services', 'description')}
           </p>
+
+          <div className="services-text-item">
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-editorial-primary"
+            >
+              <span className="btn-roll-label">
+                <span>{t('services', 'cta')}</span>
+                <span aria-hidden="true">{t('services', 'cta')}</span>
+              </span>
+              <span className="btn-editorial-arrow" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+                  <path
+                    d="M3 8H13M13 8L9 4M13 8L9 12"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+            </a>
+          </div>
         </div>
 
-        <div className="lg:col-span-7 pricing-anim border border-rose-border bg-rose-soft/75 rounded-[3px] p-7 sm:p-10 md:p-12 ambient-shadow">
-          <div className="flex flex-wrap items-baseline justify-between gap-4 pb-8 mb-8 border-b border-rose-border/80">
-            <p className="font-headline text-5xl sm:text-6xl text-stone-100 leading-none">
-              {content.price}
-            </p>
-            <span className="inline-block px-3.5 py-1.5 rounded-full bg-stone-950 border border-rose-border font-label text-xs font-semibold tracking-[0.14em] uppercase text-[#6a443e]">
-              {content.priceNote}
-            </span>
-          </div>
-
-          <h3 className="font-label text-xs font-bold tracking-[0.18em] uppercase text-stone-200 mb-5">
-            {content.includes}
+        <div data-fio-serv-card className="lg:col-span-7 border border-rose-border bg-rose-soft/75 rounded-[6px] p-6 sm:p-9 md:p-11 ambient-shadow">
+          <h3 className="services-card-item font-label text-xs font-bold tracking-[0.18em] uppercase text-stone-200 pb-5 mb-6 border-b border-rose-border/80">
+            {t('services', 'includes')}
           </h3>
 
-          <ul className="space-y-3.5 mb-8 list-none p-0 m-0">
-            {content.items.map((item) => (
-              <li
-                key={item}
-                className="flex items-start gap-3 font-body text-sm sm:text-base text-stone-200 leading-relaxed"
-              >
-                <span className="text-rose-accent font-semibold mt-0.5 shrink-0" aria-hidden="true">
+          <ul className="space-y-5 mb-7 list-none p-0 m-0">
+            {items.map((item) => (
+              <li key={item.title} className="services-card-item flex items-start gap-3.5">
+                <span
+                  className="w-5 h-5 rounded-full bg-rose-pill border border-rose-border text-rose-accent font-bold text-xs inline-flex items-center justify-center mt-0.5 shrink-0"
+                  aria-hidden="true"
+                >
                   ✓
                 </span>
-                <span>{item}</span>
+                <div>
+                  <h4 className="font-headline text-lg sm:text-xl text-stone-100 leading-snug mb-1">
+                    {item.title}
+                  </h4>
+                  <p className="font-body text-sm sm:text-base text-stone-300 leading-relaxed m-0">
+                    {item.detail}
+                  </p>
+                </div>
               </li>
             ))}
           </ul>
 
-          <div className="pt-6 border-t border-rose-border/70 space-y-2 mb-8">
-            <p className="font-body text-xs sm:text-sm text-stone-400 leading-relaxed">
-              {content.renewal}
+          <div className="services-card-item pt-5 border-t border-rose-border/75 space-y-2">
+            <p className="font-body text-xs sm:text-sm text-stone-400 leading-relaxed m-0">
+              {t('services', 'domainNote')}
             </p>
-            <p className="font-body text-xs sm:text-sm text-stone-400 leading-relaxed">
-              {content.custom}
+            <p className="font-body text-xs sm:text-sm text-stone-400 leading-relaxed m-0">
+              {t('services', 'scopeNote')}
             </p>
           </div>
-
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 bg-stone-100 text-stone-950 px-7 py-4 rounded-[2px] font-label text-xs font-bold uppercase tracking-[0.16em] hover:bg-[#4a3530] transition-colors duration-300"
-          >
-            <span>{content.cta}</span>
-            <span aria-hidden="true">↗</span>
-          </a>
         </div>
       </div>
     </section>
