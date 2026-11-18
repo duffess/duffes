@@ -282,16 +282,9 @@ html {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .hero__line,
   .hero__lead,
   .hero__actions {
     animation: rise 0.9s var(--ease) both;
-  }
-  .hero__line:nth-child(2) {
-    animation-delay: 0.08s;
-  }
-  .hero__line:nth-child(3) {
-    animation-delay: 0.16s;
   }
   .hero__lead {
     animation-delay: 0.3s;
@@ -1379,4 +1372,77 @@ html {
   .chat__typing {
     opacity: 1;
   }
+}
+
+/* Títulos que acendem palavra por palavra */
+
+.lit--on .lit__w {
+  opacity: 0.18;
+  transition: opacity 0.45s var(--ease);
+}
+
+.lit--on .lit__w.is-lit {
+  opacity: 1;
+}
+
+/* Bolha do WhatsApp que viaja pela página */
+
+.traveler {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 45;
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50% 50% 50% 12%;
+  background: var(--wa);
+  color: #0b2b16;
+  box-shadow: 0 14px 30px -10px rgba(27, 31, 59, 0.45);
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform, opacity;
+}
+
+.traveler .wa-glyph {
+  width: 30px;
+  height: 30px;
+}
+
+.traveler__tip {
+  position: absolute;
+  right: calc(100% + 10px);
+  top: 50%;
+  translate: 0 -50%;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s var(--ease);
+}
+
+.traveler:hover .traveler__tip,
+.traveler:focus-visible .traveler__tip {
+  opacity: 1;
+}
+
+@media (min-width: 1100px) {
+  .traveler__tip {
+    display: none;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }

@@ -1,6 +1,10 @@
 import { PhoneDemo, WaGlyph } from './PhoneDemo';
 import { About } from './About';
 import { Closing } from './Closing';
+import { LitWords, ScrambleLines } from './TextFx';
+import { Traveler } from './Traveler';
+
+const HERO_LINES = ['Sites que fazem', 'o cliente chamar', 'no WhatsApp.'];
 import {
   DEFAULT_WA_MESSAGE,
   PRICE_FROM,
@@ -39,9 +43,7 @@ function Hero() {
     <section className="hero" id="topo" aria-labelledby="hero-title">
       <div className="hero__copy">
         <h1 id="hero-title" className="hero__title">
-          <span className="hero__line">Sites que fazem</span>{' '}
-          <span className="hero__line">o cliente chamar</span>{' '}
-          <span className="hero__line">no WhatsApp.</span>
+          <ScrambleLines lines={HERO_LINES} />
         </h1>
         <p className="hero__lead">
           Crio páginas sob medida para negócios do bairro: rápidas no celular, prontas para aparecer no Google e com um
@@ -67,7 +69,7 @@ function Work() {
     <section className="section work" id="trabalhos" aria-labelledby="work-title">
       <div className="section__head">
         <h2 id="work-title" className="h2">
-          Trabalhos
+          <LitWords text="Trabalhos" />
         </h2>
         <p className="section__intro">
           Um site publicado para cliente e estudos que fiz para mostrar como cada ramo pode ter a sua cara.
@@ -111,7 +113,7 @@ function Included() {
     <section className="section included" id="incluso" aria-labelledby="included-title">
       <div className="included__aside">
         <h2 id="included-title" className="h2">
-          O que vem no seu site
+          <LitWords text="O que vem no seu site" />
         </h2>
         <p className="section__intro">
           Uma página com até seis seções, ou um site maior quando o seu negócio pedir. Em todos eles:
@@ -139,7 +141,7 @@ function Steps() {
     <section className="section steps" id="como-funciona" aria-labelledby="steps-title">
       <div className="section__head">
         <h2 id="steps-title" className="h2">
-          Como funciona
+          <LitWords text="Como funciona" />
         </h2>
         <p className="section__intro">Quatro etapas, tudo combinado pelo WhatsApp.</p>
       </div>
@@ -165,6 +167,7 @@ export function Site() {
         Pular para o conteúdo
       </a>
       <Nav />
+      <Traveler />
       <main id="conteudo" tabIndex={-1}>
         <Hero />
         <Work />

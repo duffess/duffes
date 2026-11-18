@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { projects } from './data';
+import { LitWords } from './TextFx';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 
 // Efeito adaptado do "Laboratório Creative Romão" (09 · sites em órbita).
@@ -125,7 +126,7 @@ export function About() {
 
       <div className="about__text">
         <h2 id="about-title" className="h2">
-          Quem faz o seu site
+          <LitWords text="Quem faz o seu site" />
         </h2>
         <p>
           Na LYSS, quem atende é quem desenha e programa. Você conversa direto comigo do primeiro áudio até o site
