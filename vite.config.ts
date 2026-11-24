@@ -31,7 +31,7 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            if (id.includes('react')) return 'vendor';
+            if (/node_modules\/(react|react-dom|scheduler)\//.test(id)) return 'vendor';
             if (id.includes('gsap')) return 'gsap';
           }
         }

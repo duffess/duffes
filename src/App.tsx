@@ -1,10 +1,10 @@
-// Versão anterior: troque as duas linhas abaixo por
-//   import './index.css';
-//   import { Site } from './v2/Site';
+// Site principal: v4 ("A Assinatura", com 3D). Para voltar ao anterior, troque a linha
+// do Site por:  const Site = lazy(() => import('./v3/Site').then((m) => ({ default: m.Site })));
+// e importe './v3/v3.css' lá dentro (o v3 importa o CSS aqui no App).
 import { lazy, Suspense } from 'react';
-import './v3/v3.css';
-import { Site } from './v3/Site';
 
+// Cada página carrega só o próprio código e CSS: a Navalha não recebe os estilos do site principal.
+const Site = lazy(() => import('./v4/Site').then((m) => ({ default: m.Site })));
 // Sites de demonstração por nicho, cada um no seu endereço (ex.: /navalha).
 const Navalha = lazy(() => import('./navalha/Navalha'));
 
@@ -17,7 +17,11 @@ function App() {
       </Suspense>
     );
   }
-  return <Site />;
+  return (
+    <Suspense fallback={<div style={{ position: 'fixed', inset: 0, background: '#0d0b0a' }} />}>
+      <Site />
+    </Suspense>
+  );
 }
 
 export default App;
