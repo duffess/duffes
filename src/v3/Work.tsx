@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { projects } from './data';
 import { Reveal } from './Fx';
+import { useT, useLang } from './lang';
 import { ScrollTrigger, finePointer, gsap, prefersReduced, scrollToY, useGSAP } from './motion';
 
 const N = projects.length;
@@ -175,12 +176,14 @@ export function Work() {
   );
 
   const p = projects[active];
+  const t = useT();
+  const lang = useLang();
 
   return (
     <section className="work" id="trabalhos" ref={root} aria-labelledby="work-title">
       <div className="work__head wrap">
-        <Reveal id="work-title">Sites que a gente já assinou</Reveal>
-        <p className="work__hint">{finePointer() ? 'Role ou arraste para girar.' : 'Arraste para o lado.'}</p>
+        <Reveal key={lang} id="work-title">{t('Sites que a gente já assinou', 'Sites we have signed')}</Reveal>
+        <p className="work__hint">{finePointer() ? t('Role ou arraste para girar.', 'Scroll or drag to spin.') : t('Arraste para o lado.', 'Swipe sideways.')}</p>
       </div>
 
       <div className="reel" ref={stage}>
@@ -216,13 +219,18 @@ export function Work() {
         </div>
         <div className="work__text" aria-live="polite">
           <p className="work__kind">
-            {p.kind === 'cliente' ? 'Cliente' : 'Estudo'}
+            {p.kind === 'cliente' ? t('Cliente real', 'Real client') : t('Projeto conceito', 'Concept project')}
             {p.place ? `, ${p.place}` : ''}
           </p>
           <h3 className="h3">{p.title}</h3>
-          <p>{p.description}</p>
+          <p>{lang === 'en' ? p.descriptionEn : p.description}</p>
+          <ul className="work__details">
+            {p.details.map(([pt, en]) => (
+              <li key={pt}>{lang === 'en' ? en : pt}</li>
+            ))}
+          </ul>
           <a className="link" href={p.url} target="_blank" rel="noopener noreferrer">
-            Abrir {p.urlLabel}
+            {t('Abrir', 'Open')} {p.urlLabel}
           </a>
         </div>
         <div className="work__nav">
@@ -231,7 +239,7 @@ export function Work() {
             className="round"
             onClick={() => api.current?.go(active - 1)}
             disabled={active === 0}
-            aria-label="Trabalho anterior"
+            aria-label={t('Trabalho anterior', 'Previous project')}
           >
             <Arrow dir={-1} />
           </button>
@@ -240,7 +248,7 @@ export function Work() {
             className="round"
             onClick={() => api.current?.go(active + 1)}
             disabled={active === N - 1}
-            aria-label="Próximo trabalho"
+            aria-label={t('Próximo trabalho', 'Next project')}
           >
             <Arrow dir={1} />
           </button>

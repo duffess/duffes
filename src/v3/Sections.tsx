@@ -1,17 +1,20 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { PhoneDemo, WaGlyph } from './PhoneDemo';
 import { Signature } from './Signature';
 import { mainWa, writeTween } from './helpers';
-import { WHATSAPP_DISPLAY, plans, steps, waLink } from './data';
+import { WHATSAPP_DISPLAY, plans, steps, stepsEn, waLink } from './data';
 import { finePointer, gsap, prefersReduced, useGSAP } from './motion';
 import { BigSignature, Eye, Reveal } from './Fx';
+import { useLang, useT } from './lang';
 import { useEyes } from './useEyes';
 
 /* ---------- Topo: só o título, enorme, com os olhos ---------- */
 
 export function Hero({ ready }: { ready: boolean }) {
+  const t = useT();
+  const lang = useLang();
   const root = useRef<HTMLElement>(null);
-  useEyes(root, ready);
+  useEyes(root, ready, lang);
 
   // Saída: o título afunda e some enquanto a página desce.
   useGSAP(
@@ -49,29 +52,48 @@ export function Hero({ ready }: { ready: boolean }) {
 
   return (
     <section className="hero" id="topo" ref={root} aria-labelledby="hero-title">
-      <h1 id="hero-title" className="hero__title" aria-label="Todo site sai assinado.">
+      <h1 id="hero-title" className="hero__title" aria-label={t('Todo site sai assinado.', 'Good sites come signed.')}>
         <span className="hero__line" aria-hidden="true">
           <span>
-            T<Eye />d<Eye /> site
+            {lang === 'en' ? (
+              <>G<Eye /><Eye />d sites</>
+            ) : (
+              <>T<Eye />d<Eye /> site</>
+            )}
           </span>
         </span>
         <span className="hero__line hero__line--split" aria-hidden="true">
-          <span>sai</span> <span>assinado.</span>
+          {lang === 'en' ? (
+            <><span>come</span> <span>signed.</span></>
+          ) : (
+            <><span>sai</span> <span>assinado.</span></>
+          )}
         </span>
       </h1>
       <div className="hero__foot">
-        <p className="hero__lead">
-          Somos a Isabela e o Guilherme. Desenhamos e programamos sites para negócios locais, com botão direto para o
-          seu WhatsApp. A partir de R$ 497.
-        </p>
+        <div className="hero__copy">
+          <p className="hero__pain">
+            {t(
+              'Quem procura o seu serviço no Google e não te acha fecha com o concorrente.',
+              'If people search for your service and can’t find you, they book your competitor.',
+            )}
+          </p>
+          <p className="hero__lead">
+            {t(
+              'Somos a Isabela e o Guilherme. Desenhamos e programamos sites para negócios locais, com botão direto para o seu WhatsApp. A partir de R$ 597.',
+              'We are Isabela and Guilherme. We design and build websites for local businesses, with a button straight to your WhatsApp.',
+            )}
+          </p>
+        </div>
         <div className="hero__actions">
           <a className="btn" href={mainWa} target="_blank" rel="noopener noreferrer" data-magnetic>
             <WaGlyph />
-            Conversar no WhatsApp
+            {t('Conversar no WhatsApp', 'Chat on WhatsApp')}
           </a>
           <a className="link" href="#trabalhos">
-            Ver trabalhos
+            {t('Ver trabalhos', 'See our work')}
           </a>
+          <p className="trust">{t('Você vê a prévia e só paga se aprovar.', 'You see a preview and only pay if you approve it.')}</p>
         </div>
       </div>
     </section>
@@ -81,6 +103,8 @@ export function Hero({ ready }: { ready: boolean }) {
 /* ---------- Demonstração: o celular que troca de ramo ---------- */
 
 export function Demo() {
+  const t = useT();
+  const lang = useLang();
   const root = useRef<HTMLElement>(null);
 
   // No computador, o celular inclina com o mouse.
@@ -105,8 +129,8 @@ export function Demo() {
   return (
     <section className="try" id="exemplo" ref={root} aria-labelledby="try-title">
       <div className="wrap try__head">
-        <Reveal id="try-title">Imagina o seu negócio aqui</Reveal>
-        <p className="intro-text">Escolha um ramo e toque no botão verde para ver o cliente chegando no WhatsApp.</p>
+        <Reveal key={lang} id="try-title">{t('Imagina o seu negócio aqui', 'Picture your business here')}</Reveal>
+        <p className="intro-text">{t('Escolha um ramo e toque no botão verde para ver o cliente chegando no WhatsApp.', 'Pick a trade and tap the green button to watch a customer land on WhatsApp.')}</p>
       </div>
       <PhoneDemo />
     </section>
@@ -116,6 +140,8 @@ export function Demo() {
 /* ---------- Como funciona ---------- */
 
 export function Steps() {
+  const t = useT();
+  const lang = useLang();
   const root = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -160,8 +186,8 @@ export function Steps() {
     <section className="steps" id="como-funciona" ref={root} aria-labelledby="steps-title">
       <div className="wrap steps__grid">
         <div className="steps__head">
-          <Reveal id="steps-title">Do primeiro oi ao site no ar</Reveal>
-          <p className="intro-text">Quatro etapas, tudo combinado pelo WhatsApp. Em geral, de uma a duas semanas.</p>
+          <Reveal key={lang} id="steps-title">{t('Do primeiro oi ao site no ar', 'From hello to live site')}</Reveal>
+          <p className="intro-text">{t('Quatro etapas, tudo combinado pelo WhatsApp. Em geral, de uma a duas semanas.', 'Four steps, all agreed on WhatsApp. Usually one to two weeks.')}</p>
         </div>
         <div className="steps__body">
           <svg className="steps__ink" viewBox="0 0 40 1000" preserveAspectRatio="none" aria-hidden="true">
@@ -178,7 +204,7 @@ export function Steps() {
             <span className="steps__tip" />
           </span>
           <ol className="steps__list">
-            {steps.map((s, i) => (
+            {(lang === 'en' ? stepsEn : steps).map((s, i) => (
               <li key={s.title} className="step">
                 <span className="step__num" aria-hidden="true">
                   {i + 1}
@@ -197,6 +223,8 @@ export function Steps() {
 /* ---------- Preços ---------- */
 
 export function Pricing() {
+  const t = useT();
+  const lang = useLang();
   const root = useRef<HTMLElement>(null);
 
   // O selo cai na seção como um carimbo.
@@ -224,9 +252,12 @@ export function Pricing() {
           decoding="async"
         />
         <div className="menu__head">
-          <Reveal id="menu-title">Quanto custa</Reveal>
+          <Reveal key={lang} id="menu-title">{t('Quanto custa', 'Pricing')}</Reveal>
           <p className="intro-text">
-            Dois pacotes com preço fechado. Domínio e hospedagem ficam no seu nome, e a gente configura tudo.
+            {t(
+              'Dois pacotes com preço fechado. Você só paga depois de aprovar a prévia, em até 6x sem juros no cartão.',
+              'Two packages with fixed prices. You only pay after approving the preview, in up to 6 interest-free card installments.',
+            )}
           </p>
         </div>
         <ul className="menu__list">
@@ -237,18 +268,63 @@ export function Pricing() {
                 <span className="plan__dots" aria-hidden="true" />
                 <p className="plan__price">{p.price}</p>
               </div>
-              <p className="plan__summary">{p.summary}</p>
+              <p className="plan__summary">{lang === 'en' ? p.summaryEn : p.summary}</p>
               <ul className="plan__items">
-                {p.items.map((it) => (
+                {(lang === 'en' ? p.itemsEn : p.items).map((it) => (
                   <li key={it}>{it}</li>
                 ))}
               </ul>
               <a className="btn btn--ink" href={waLink(p.message)} target="_blank" rel="noopener noreferrer" data-magnetic>
-                Quero o {p.name}
+                {t('Quero o', 'I want')} {p.name}
               </a>
             </li>
           ))}
         </ul>
+        <p className="menu__note">
+          {t(
+            'Hospedagem sem custo. O domínio (.com.br) fica no seu nome e é pago à parte, cerca de R$ 40 por ano no Registro.br; a gente faz a configuração. Pegamos no máximo 6 sites por mês para dar atenção a cada um.',
+            'Hosting at no cost. The domain stays in your name and is paid separately; we set it up. We take at most 6 sites a month so each one gets proper attention.',
+          )}
+        </p>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Perguntas frequentes ---------- */
+
+const faq: [string, string, string, string][] = [
+  ['Preciso pagar alguma coisa antes?', 'Não. A gente desenha a prévia, você abre no celular e só paga depois de aprovar. Dá para parcelar em até 6x sem juros no cartão.',
+   'Do I pay anything upfront?', 'No. We build the preview, you open it on your phone and only pay after approving it. Up to 6 interest-free card installments.'],
+  ['E se eu não gostar da prévia?', 'Você aponta o que mudar e a gente ajusta. Se mesmo assim não fizer sentido, você não paga nada.',
+   'What if I don’t like the preview?', 'You point out what to change and we fix it. If it still isn’t right for you, you pay nothing.'],
+  ['O domínio e a hospedagem estão inclusos?', 'A hospedagem não tem custo. O domínio fica no seu nome e é pago à parte, cerca de R$ 40 por ano no Registro.br. A gente faz toda a configuração.',
+   'Are domain and hosting included?', 'Hosting has no cost. The domain stays in your name and is paid separately. We handle the whole setup.'],
+  ['Quanto tempo leva?', 'Em geral, de uma a duas semanas, do primeiro oi ao site no ar.',
+   'How long does it take?', 'Usually one to two weeks, from the first hello to the site going live.'],
+  ['Eu preciso entender de site?', 'Não. Tudo é combinado pelo WhatsApp. Você conta como funciona o seu negócio e a gente cuida do resto.',
+   'Do I need to know anything about websites?', 'No. Everything happens on WhatsApp. You tell us how your business works and we handle the rest.'],
+];
+
+export function Faq() {
+  const t = useT();
+  const lang = useLang();
+  return (
+    <section className="faq" id="duvidas" aria-labelledby="faq-title">
+      <div className="wrap">
+        <Reveal key={lang} id="faq-title">{t('Antes de chamar', 'Before you message us')}</Reveal>
+        <div className="faq__list">
+          {faq.map(([q, a, qe, ae]) => (
+            <details key={q} className="faq__item">
+              <summary>{lang === 'en' ? qe : q}</summary>
+              <p>{lang === 'en' ? ae : a}</p>
+            </details>
+          ))}
+        </div>
+        <a className="btn" href={mainWa} target="_blank" rel="noopener noreferrer" data-magnetic>
+          <WaGlyph />
+          {t('Pedir minha prévia', 'Ask for my preview')}
+        </a>
       </div>
     </section>
   );
@@ -262,6 +338,8 @@ const people = [
 ];
 
 export function Team() {
+  const t = useT();
+  const lang = useLang();
   const root = useRef<HTMLElement>(null);
   const sig = useRef<SVGSVGElement>(null);
   const reduced = prefersReduced();
@@ -288,14 +366,18 @@ export function Team() {
     <section className="team" id="quem-faz" ref={root} aria-labelledby="team-title">
       <div className="wrap team__grid">
         <div className="team__copy">
-          <Reveal id="team-title">Quem assina</Reveal>
+          <Reveal key={lang} id="team-title">{t('Quem assina', 'Who signs it')}</Reveal>
           <p>
-            A LYSS é uma dupla. Você fala direto com quem desenha e programa o seu site, sem atendente no meio e sem
-            modelo pronto.
+            {t(
+              'A LYSS é uma dupla. Você fala direto com quem desenha e programa o seu site, sem atendente no meio e sem modelo pronto.',
+              'LYSS is a duo. You talk directly to the people who design and build your site, no middleman and no template.',
+            )}
           </p>
           <p>
-            Cada site sai daqui com uma assinatura: a nossa promessa de que ele abre rápido, funciona no celular e leva o
-            cliente até você.
+            {t(
+              'Cada site sai daqui com uma assinatura: a nossa promessa de que ele abre rápido, funciona no celular e leva o cliente até você.',
+              'Every site leaves here signed: our promise that it loads fast, works on mobile and brings customers to you.',
+            )}
           </p>
           <Signature ref={sig} name="lyss" className="team__sig" hidden={!reduced} label="Assinatura Lyss" />
         </div>
@@ -324,6 +406,8 @@ export function Team() {
 /* ---------- Fechamento ---------- */
 
 export function Closing() {
+  const t = useT();
+  const lang = useLang();
   const root = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -342,17 +426,20 @@ export function Closing() {
     <section className="closing" id="contato" ref={root} aria-labelledby="closing-title">
       <div className="wrap closing__grid">
         <div>
-          <Reveal id="closing-title" className="closing__title">
-            Me conta o que você faz.
+          <Reveal key={lang} id="closing-title" className="closing__title">
+            {t('Me conta o que você faz.', 'Tell us what you do.')}
           </Reveal>
           <p className="closing__text">
-            Manda uma mensagem com o nome do seu negócio. A gente responde com uma ideia de como o seu site pode ficar.
+            {t(
+              'Manda uma mensagem com o nome do seu negócio. A gente responde com uma ideia de como o seu site pode ficar.',
+              'Send a message with your business name. We reply with an idea of how your site could look.',
+            )}
           </p>
           <a className="btn btn--paper" href={mainWa} target="_blank" rel="noopener noreferrer" data-magnetic>
             <WaGlyph />
-            Chamar no WhatsApp
+            {t('Chamar no WhatsApp', 'Message us on WhatsApp')}
           </a>
-          <p className="closing__phone">ou ligue {WHATSAPP_DISPLAY}</p>
+          <p className="closing__phone">{t('ou ligue', 'or call')} {WHATSAPP_DISPLAY}</p>
         </div>
         <img
           className="closing__seal"
@@ -369,16 +456,99 @@ export function Closing() {
 }
 
 export function Footer() {
+  const t = useT();
   return (
     <footer className="footer">
       <BigSignature />
       <div className="wrap footer__row">
         <img src="/logo-lyss-creme.svg" width={928} height={311} alt="LYSS" className="footer__logo" />
-        <p>Sites sob medida para negócios locais. © 2026</p>
+        <p>{t('Sites sob medida para negócios locais.', 'Custom websites for local businesses.')} © 2026</p>
         <a className="link" href="#topo">
-          Voltar ao topo
+          {t('Voltar ao topo', 'Back to top')}
         </a>
       </div>
     </footer>
+  );
+}
+
+/* ---------- Antes e depois: do Instagram ao site ---------- */
+
+export function InstaToSite() {
+  const t = useT();
+  const lang = useLang();
+  const [pos, setPos] = useState(50);
+  const box = useRef<HTMLDivElement>(null);
+  const drag = useRef(false);
+  const move = (x: number) => {
+    const r = box.current!.getBoundingClientRect();
+    setPos(Math.min(100, Math.max(0, ((x - r.left) / r.width) * 100)));
+  };
+  return (
+    <section className="ig2site" aria-labelledby="ig-title">
+      <div className="wrap try__head">
+        <Reveal key={lang} id="ig-title">{t('Do perfil ao site', 'From profile to website')}</Reveal>
+        <p className="intro-text">
+          {t('O Dash tinha um Instagram bonito e nenhum lugar para mandar quem chegava. Arraste a linha e veja o site que fizemos para ele.', 'Dash had a nice Instagram and nowhere to send the people who showed up. Drag the line to see the site we built for it.')}
+        </p>
+      </div>
+      <div
+        className="ig2site__box"
+        ref={box}
+        style={{ '--p': `${pos}%` } as React.CSSProperties}
+        onPointerDown={(e) => { e.preventDefault(); drag.current = true; (e.currentTarget as Element).setPointerCapture?.(e.pointerId); move(e.clientX); }}
+        onPointerMove={(e) => drag.current && move(e.clientX)}
+        onPointerUp={() => (drag.current = false)}
+        onPointerCancel={() => (drag.current = false)}
+      >
+        <div className="ig2site__side ig2site__site" aria-hidden="true">
+          <picture>
+            <source media="(max-width: 700px)" srcSet="/ig-dash/site-m.webp" />
+            <img src="/ig-dash/site.webp" width={1100} height={756} alt="" loading="lazy" decoding="async" draggable={false} />
+          </picture>
+          <span className="ig2site__tag ig2site__tag--r">{t('Site', 'Website')}</span>
+        </div>
+        <div className="ig2site__side ig2site__ig" aria-hidden="true">
+          <div className="mk-ig">
+            <p className="mk-ig__user">dashflow</p>
+            <div className="mk-ig__top">
+              <img className="mk-ig__av" src="/ig-dash/avatar.webp" alt="" draggable={false} />
+              <div><b>6</b><small>posts</small></div>
+              <div><b>87</b><small>{t('seguidores', 'followers')}</small></div>
+              <div><b>112</b><small>{t('seguindo', 'following')}</small></div>
+            </div>
+            <p className="mk-ig__bio">
+              <b>Dash · {t('Relatórios de tráfego com IA', 'AI ad reports')}</b>
+              {t('Relatório de Google Ads e Meta Ads pronto num clique. Pra agência de tráfego pequena.', 'Google Ads and Meta Ads reports in one click. For small ad agencies.')}
+              <span>{t('link na bio', 'link in bio')}</span>
+            </p>
+            <div className="mk-ig__hl">
+              {(['produto', 'como-funciona', 'dicas', 'novidades'] as const).map((h, i) => (
+                <figure key={h}>
+                  <img src={`/ig-dash/hl-${h}.webp`} alt="" loading="lazy" draggable={false} />
+                  <figcaption>{(lang === 'en' ? ['Product', 'How it works', 'Tips', 'News'] : ['Produto', 'Como funciona', 'Dicas', 'Novidades'])[i]}</figcaption>
+                </figure>
+              ))}
+            </div>
+            <div className="mk-ig__grid">
+              {[1, 2, 3, 4, 5, 6].map((n) => (
+                <img key={n} src={`/ig-dash/post${n}.webp`} alt="" loading="lazy" draggable={false} />
+              ))}
+            </div>
+          </div>
+          <span className="ig2site__tag">Instagram</span>
+        </div>
+        <div className="ig2site__handle" aria-hidden="true"><span>‹ ›</span></div>
+        <input
+          className="ig2site__range"
+          type="range"
+          min={0}
+          max={100}
+          value={Math.round(pos)}
+          onChange={(e) => setPos(Number(e.target.value))}
+          aria-label={t('Comparar Instagram e site', 'Compare Instagram and website')}
+        />
+      </div>
+      <p className="ig2site__note">{t('Dash é um projeto conceito: marca, perfil e números são fictícios.', 'Dash is a concept project: brand, profile and numbers are fictional.')}</p>
+    </section>
   );
 }

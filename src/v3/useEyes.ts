@@ -7,7 +7,7 @@ import { EYE, IRIS, PUPIL } from './eyeShape';
  * Seguem o mouse (ou o dedo), arregalam quando o cursor chega perto, levam um susto no clique,
  * piscam, passeiam quando ninguém mexe e ficam com sono depois de um tempo parados.
  */
-export function useEyes(scope: RefObject<HTMLElement | null>, awake: boolean) {
+export function useEyes(scope: RefObject<HTMLElement | null>, awake: boolean, key = '') {
   useGSAP(
     () => {
       const svgs = gsap.utils.toArray<SVGSVGElement>('.eye');
@@ -184,7 +184,7 @@ export function useEyes(scope: RefObject<HTMLElement | null>, awake: boolean) {
         openTween?.kill();
       };
     },
-    { scope, dependencies: [awake], revertOnUpdate: true },
+    { scope, dependencies: [awake, key], revertOnUpdate: true },
   );
 }
 

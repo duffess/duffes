@@ -114,6 +114,8 @@ export type Project = {
   title: string;
   place?: string;
   description: string;
+  descriptionEn: string;
+  details: [string, string][];
   image: string;
   srcSet: string;
   width: number;
@@ -134,6 +136,12 @@ export const projects: Project[] = [
     srcSet: '/fabricademonstros-669.webp 669w, /fabricademonstros.webp 1280w',
     width: 1280,
     height: 634,
+    descriptionEn: 'Training centre. The site shows the space and takes mobile visitors straight to sign-up on WhatsApp.',
+    details: [
+      ['Matrícula direta pelo WhatsApp', 'Sign-up straight on WhatsApp'],
+      ['Estrutura e modalidades em fotos', 'Space and classes shown in photos'],
+      ['Feito primeiro para o celular', 'Built mobile-first'],
+    ],
     url: '/fabricademonstros/',
     urlLabel: 'lysss.vercel.app/fabricademonstros',
   },
@@ -146,6 +154,12 @@ export const projects: Project[] = [
     srcSet: '/patio-preview-669.webp 669w, /patio-preview.webp 1224w',
     width: 1224,
     height: 873,
+    descriptionEn: 'Study for an architecture office, with room for photography and calm navigation.',
+    details: [
+      ['Fotografia em tela cheia', 'Full-screen photography'],
+      ['Navegação calma, sem distração', 'Calm, distraction-free navigation'],
+      ['Projetos organizados por obra', 'Projects organised by build'],
+    ],
     url: '/patio/',
     urlLabel: 'lysss.vercel.app/patio',
   },
@@ -159,21 +173,40 @@ export const projects: Project[] = [
     srcSet: '/forma-preview-669.webp 669w, /forma-preview.webp 1280w',
     width: 1280,
     height: 720,
+    descriptionEn: 'Study for a home and apartment studio, with smooth scrolling and featured projects. Fictional brand and images.',
+    details: [
+      ['Rolagem suave entre os projetos', 'Smooth scrolling between projects'],
+      ['Projetos em destaque com ficha técnica', 'Featured projects with specs'],
+      ['Marca e imagens fictícias', 'Fictional brand and images'],
+    ],
     url: '/forma/',
     urlLabel: 'lysss.vercel.app/forma',
   },
   {
     id: 'dashflow',
     kind: 'estudo',
-    title: 'Dashflow',
+    title: 'Dash',
     description: 'Página de apresentação para um software de análise, com leitura rápida e seções diretas.',
     image: '/dash-lp.webp',
     srcSet: '/dash-lp-669.webp 669w, /dash-lp.webp 1600w',
     width: 1600,
     height: 791,
+    descriptionEn: 'Landing page for an analytics product, quick to read with straight-to-the-point sections.',
+    details: [
+      ['Leitura rápida, seções diretas', 'Quick read, direct sections'],
+      ['Números do produto em destaque', 'Product numbers up front'],
+      ['Chamada para teste em cada dobra', 'Trial call-to-action on every fold'],
+    ],
     url: '/dashflow/',
     urlLabel: 'lysss.vercel.app/dashflow',
   },
+];
+
+export const stepsEn = [
+  { title: 'Chat', text: 'You tell us what you do, who your customers are and what the site needs to solve. All on WhatsApp.' },
+  { title: 'Design', text: 'We design and code a page that looks like your business, not like a template.' },
+  { title: 'Tweaks', text: 'You open the preview on your phone, point out changes and we fix them before launch.' },
+  { title: 'Signature', text: 'The site goes live on your domain. We sign it and hand it over working.' },
 ];
 
 export const steps = [
@@ -196,6 +229,8 @@ export type Plan = {
   price: string;
   summary: string;
   items: string[];
+  summaryEn: string;
+  itemsEn: string[];
   message: string;
 };
 
@@ -203,7 +238,7 @@ export const plans: Plan[] = [
   {
     id: 'essencial',
     name: 'Essencial',
-    price: 'R$ 497',
+    price: 'R$ 597',
     summary: 'Uma página para o seu negócio ser encontrado e chamado.',
     items: [
       'Página única com até seis seções',
@@ -213,6 +248,8 @@ export const plans: Plan[] = [
       'Publicada no seu domínio',
       'Duas rodadas de ajustes',
     ],
+    summaryEn: 'One page so your business gets found and contacted.',
+    itemsEn: ['Single page with up to six sections', 'Built mobile-first', 'WhatsApp button with a ready message', 'Title and description for Google', 'Published on your domain', 'Two rounds of tweaks'],
     message: 'Olá! Quero saber mais sobre o site Essencial.',
   },
   {
@@ -227,6 +264,8 @@ export const plans: Plan[] = [
       'Formulário de contato além do WhatsApp',
       'Três rodadas de ajustes',
     ],
+    summaryEn: 'For businesses that want to show everything they do, across more pages.',
+    itemsEn: ['Everything in Essencial', 'Up to five pages: services, photos, menu, about', 'Photo gallery of your space or work', 'Contact form besides WhatsApp', 'Three rounds of tweaks'],
     message: 'Olá! Quero saber mais sobre o site Completo.',
   },
 ];
