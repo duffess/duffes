@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useRef } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import { Environment, Lightformer } from '@react-three/drei';
 import { Bloom, EffectComposer, Noise, ToneMapping, Vignette } from '@react-three/postprocessing';
 import { ToneMappingMode, BlendFunction } from 'postprocessing';
 import * as THREE from 'three';
 import { Pen, PEN_CENTER } from './Pen';
-import { createPaper, PAPER } from './paper';
+import { createPaper } from './paper';
+import { PAPER } from './paperSize';
+import { InkMapLoader } from './inkMaps';
 import { FIRST_POINT, LAST_POINT, penAt } from '../brand/sigPath';
 import { COLORS } from '../brand/data';
 import { PHASE, easeInOut, range, smooth, stage } from './state';
@@ -16,13 +18,18 @@ type Props = { lite: boolean; lang: 'pt' | 'en'; onReady: () => void };
 const V = (x = 0, y = 0, z = 0) => new THREE.Vector3(x, y, z);
 
 /** Orientação da caneta: eixo `axis` (da ponta para o fim) e a face da pena virada para `face`. */
+const basisX = V(), basisY = V(), basisZ = V();
+const basis = new THREE.Matrix4();
+const spinRotation = new THREE.Quaternion();
+const up = V(0, 1, 0);
+const heroFace = V(0, 0.4, 1);
+
 function penQuat(axis: THREE.Vector3, face: THREE.Vector3, spin: number, out: THREE.Quaternion) {
-  const y = axis.clone().normalize();
-  const z = face.clone().sub(y.clone().multiplyScalar(face.dot(y))).normalize();
-  const x = new THREE.Vector3().crossVectors(y, z);
-  const m = new THREE.Matrix4().makeBasis(x, y, z);
-  out.setFromRotationMatrix(m);
-  if (spin) out.multiply(new THREE.Quaternion().setFromAxisAngle(V(0, 1, 0), spin));
+  basisY.copy(axis).normalize();
+  basisZ.copy(face).addScaledVector(basisY, -face.dot(basisY)).normalize();
+  basisX.crossVectors(basisY, basisZ);
+  out.setFromRotationMatrix(basis.makeBasis(basisX, basisY, basisZ));
+  if (spin) out.multiply(spinRotation.setFromAxisAngle(up, spin));
   return out;
 }
 
@@ -33,11 +40,13 @@ function Scene({ lite, lang, onReady }: Props) {
   const desk = useRef<THREE.Group>(null);
   const spot = useRef<THREE.SpotLight>(null);
   const { camera, size, setFrameloop } = useThree();
-  const paper = useMemo(() => createPaper(lite, lang), [lite, lang]);
+  const ink = useLoader(InkMapLoader, lite ? 'lite' : 'full');
+  const paper = useMemo(() => createPaper(lite, lang, ink.shape, ink.time), [lite, lang, ink]);
+  useEffect(() => () => paper.dispose(), [paper]);
   const portrait = size.width / size.height < 0.9;
 
   // Tudo que é recalculado a cada quadro fica aqui, sem alocar.
-  const k = useMemo(
+  const frame = useRef(useMemo(
     () => ({
       p: 0,
       t: 0,
@@ -49,6 +58,7 @@ function Scene({ lite, lang, onReady }: Props) {
       vel: V(),
       a: V(),
       b: V(),
+      wc: V(), wt: V(),
       cam: V(),
       tgt: V(),
       camS: V(0, 2.2, 4.8),
@@ -59,15 +69,15 @@ function Scene({ lite, lang, onReady }: Props) {
       first: true,
     }),
     [],
-  );
+  ));
 
   useEffect(() => {
     const onMove = (e: PointerEvent) => {
-      k.mouse.set((e.clientX / window.innerWidth) * 2 - 1, (e.clientY / window.innerHeight) * 2 - 1);
+      frame.current.mouse.set((e.clientX / window.innerWidth) * 2 - 1, (e.clientY / window.innerHeight) * 2 - 1);
     };
     window.addEventListener('pointermove', onMove, { passive: true });
     return () => window.removeEventListener('pointermove', onMove);
-  }, [k]);
+  }, []);
 
   // A cena para de desenhar quando a tinta já cobriu a tela.
   useEffect(() => {
@@ -102,6 +112,7 @@ function Scene({ lite, lang, onReady }: Props) {
   const proj = useMemo(() => V(), []);
 
   useFrame((state, dt) => {
+    const k = frame.current;
     const d = Math.min(dt, 1 / 20);
     k.t += d;
     // progresso amortecido: a câmera nunca dá tranco, mesmo com rolagem brusca
@@ -119,8 +130,9 @@ function Scene({ lite, lang, onReady }: Props) {
     // Pose de estúdio: girando devagar sobre o próprio eixo, flutuando.
     const spin = k.t * 0.35;
     const bob = Math.sin(k.t * 0.9) * 0.05;
-    penQuat(heroAxis, V(0, 0.4, 1), spin, k.qa);
-    k.a.copy(heroCenter).addScaledVector(heroAxis, -PEN_CENTER).add(V(0, bob, 0));
+    penQuat(heroAxis, heroFace, spin, k.qa);
+    k.a.copy(heroCenter).addScaledVector(heroAxis, -PEN_CENTER);
+    k.a.y += bob;
 
     if (p < PHASE.write[0]) {
       // Abertura e descida até o primeiro traço.
@@ -145,7 +157,7 @@ function Scene({ lite, lang, onReady }: Props) {
       // Assinou: a caneta sobe e sai de cena.
       paper.setProgress(2);
       penQuat(writeAxis, writeFace, 0, k.qb);
-      penQuat(heroAxis, V(0, 0.4, 1), lift * 1.2, k.qa);
+      penQuat(heroAxis, heroFace, lift * 1.2, k.qa);
       k.q.slerpQuaternions(k.qb, k.qa, lift);
       sigToWorld(LAST_POINT[0], LAST_POINT[1], 0.004, k.b);
       k.tip.lerpVectors(k.b, exitTip, lift);
@@ -167,16 +179,16 @@ function Scene({ lite, lang, onReady }: Props) {
       k.tgt.set(0, 1.85, 0);
       // segue a ponta de perto
       k.b.copy(k.tip).setY(0);
-      const wc = V(k.b.x * 0.92 + 0.3, 3.0, k.b.z + 2.9);
-      const wt = V(k.b.x * 0.92, 0, k.b.z + 0.1);
+      const wc = k.wc.set(k.b.x * 0.92 + 0.3, 3.0, k.b.z + 2.9);
+      const wt = k.wt.set(k.b.x * 0.92, 0, k.b.z + 0.1);
       k.cam.lerp(wc, descend);
       k.tgt.lerp(wt, descend);
     } else {
       k.cam.set(0, 2.2, 4.8);
       k.tgt.set(0.2, 2.0, 0);
       k.b.copy(k.tip).setY(0).multiplyScalar(0.32);
-      const wc = V(0.2 + k.b.x, 4.7, 2.9 + k.b.z * 0.6);
-      const wt = V(k.b.x, 0, 0.05 + k.b.z);
+      const wc = k.wc.set(0.2 + k.b.x, 4.7, 2.9 + k.b.z * 0.6);
+      const wt = k.wt.set(k.b.x, 0, 0.05 + k.b.z);
       k.cam.lerp(wc, descend);
       k.tgt.lerp(wt, descend);
     }
@@ -259,6 +271,32 @@ function Scene({ lite, lang, onReady }: Props) {
   );
 }
 
+// Keep native detail unless several seconds of visible animation miss the frame budget.
+function AdaptiveResolution({ lite }: { lite: boolean }) {
+  const { setDpr, viewport } = useThree();
+  const sample = useRef({ seconds: 0, frames: 0, fast: 0 });
+  useFrame((_, dt) => {
+    const s = sample.current;
+    if (dt <= 0 || dt > 0.25 || document.hidden) {
+      s.seconds = s.frames = s.fast = 0;
+      return;
+    }
+    s.seconds += dt;
+    s.frames++;
+    if (s.seconds < 3) return;
+    const fps = s.frames / s.seconds;
+    const max = Math.min(window.devicePixelRatio || 1, lite ? 1.5 : 2);
+    s.fast = fps > 55 ? s.fast + 1 : 0;
+    if (fps < 42 && viewport.dpr > 1) setDpr(Math.max(1, viewport.dpr - 0.25));
+    else if (s.fast >= 4 && viewport.dpr < max) {
+      setDpr(Math.min(max, viewport.dpr + 0.25));
+      s.fast = 0;
+    }
+    s.frames = s.seconds = 0;
+  });
+  return null;
+}
+
 export default function Studio({ lite, lang, onReady }: Props) {
   return (
     <Canvas
@@ -269,6 +307,7 @@ export default function Studio({ lite, lang, onReady }: Props) {
       camera={{ fov: lite ? 46 : 35, near: 0.1, far: 40, position: [0, 1.75, 5.4] }}
       aria-hidden
     >
+      <AdaptiveResolution lite={lite} />
       <Scene lite={lite} lang={lang} onReady={onReady} />
     </Canvas>
   );

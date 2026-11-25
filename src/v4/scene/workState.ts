@@ -12,6 +12,9 @@ export const work = {
   openAmt: 0,
 };
 
+// The DOM scroll/tween callbacks wake the visible WebGL canvas.
+export const deskFrames = { request: () => {} };
+
 export const N = projects.length;
 
 /** Trecho da rolagem: visão geral da mesa, depois uma folha por vez. */

@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { Eye } from '../brand/Eye';
 import { useEyes } from '../brand/useEyes';
-import { gsap, isLite, ScrollTrigger } from '../brand/motion';
+import { isLite, ScrollTrigger } from '../brand/motion';
 import { createWipe } from '../ink/wipe';
 import { PHASE, range, stage } from '../scene/state';
 import { useLang, useT } from '../brand/lang';
@@ -81,21 +81,12 @@ export function Opening({ reduced }: { reduced: boolean }) {
   useEffect(() => {
     if (isStatic || !wrap.current) return;
     stage.p = 0;
-    const st = ScrollTrigger.create({
-      trigger: wrap.current,
-      start: 'top top',
-      end: 'bottom bottom',
-      onUpdate: (self) => {
-        stage.p = self.progress;
-      },
-    });
-    stage.p = st.progress;
     const wipe = createWipe(wipeEl.current!);
-    const onResize = () => wipe.resize();
+    const onResize = () => { wipe.resize(); update(stage.p); };
     window.addEventListener('resize', onResize);
 
-    const tick = () => {
-      const p = stage.p;
+    const update = (p: number) => {
+      stage.p = p;
       const out = range(p, PHASE.titleOut);
       if (hero.current) {
         // a câmera desce, o título sobe: o mesmo movimento, visto de dentro
@@ -109,9 +100,14 @@ export function Opening({ reduced }: { reduced: boolean }) {
       }
       wipe.draw(range(p, PHASE.wipe), stage.tipScreen.x, stage.tipScreen.y);
     };
-    gsap.ticker.add(tick);
+    const st = ScrollTrigger.create({
+      trigger: wrap.current,
+      start: 'top top',
+      end: 'bottom bottom',
+      onUpdate: (self) => update(self.progress),
+    });
+    update(st.progress);
     return () => {
-      gsap.ticker.remove(tick);
       window.removeEventListener('resize', onResize);
       st.kill();
     };

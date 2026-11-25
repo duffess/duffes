@@ -39,7 +39,7 @@ export function createWipe(canvas: HTMLCanvasElement) {
     s: 0.4 + ((i * 29) % 11) / 11,
   }));
 
-  const edge = (th: number, r: number, seed: number) => {
+  const edge = (th: number, seed: number) => {
     let n = 0;
     for (const wv of waves) n += Math.sin(th * wv.f + wv.ph + seed) * wv.a;
     let dr = 0;
@@ -48,19 +48,21 @@ export function createWipe(canvas: HTMLCanvasElement) {
       const dd = Math.atan2(Math.sin(a), Math.cos(a));
       dr += Math.exp(-(dd * dd) / 0.004) * dp.a;
     }
-    return r * (1 + n * 0.14 + dr * 0.6) + n * 14;
+    return { scale: 1 + n * 0.14 + dr * 0.6, offset: n * 14, cos: Math.cos(th), sin: Math.sin(th) };
   };
 
-  const blob = (cx: number, cy: number, r: number, seed: number, color: string) => {
+  const contour = (seed: number) => Array.from({ length: 221 }, (_, i) => edge(i / 220 * Math.PI * 2, seed));
+  const outer = contour(0), inner = contour(0.12), paper = contour(2.1);
+
+  const blob = (cx: number, cy: number, r: number, points: typeof outer, color: string) => {
     if (r <= 0) return;
     ctx.fillStyle = color;
     ctx.beginPath();
-    const N = 220;
-    for (let i = 0; i <= N; i++) {
-      const th = (i / N) * Math.PI * 2;
-      const rr = Math.max(edge(th, r, seed), 0);
-      const x = cx + Math.cos(th) * rr;
-      const y = cy + Math.sin(th) * rr;
+    for (let i = 0; i < points.length; i++) {
+      const point = points[i];
+      const rr = Math.max(r * point.scale + point.offset, 0);
+      const x = cx + point.cos * rr;
+      const y = cy + point.sin * rr;
       if (i === 0) ctx.moveTo(x, y);
       else ctx.lineTo(x, y);
     }
@@ -88,8 +90,8 @@ export function createWipe(canvas: HTMLCanvasElement) {
     const R = far * 1.35;
     const ink = Math.pow(Math.min(t / 0.7, 1), 1.6);
     const cream = Math.pow(Math.max((t - 0.3) / 0.7, 0), 1.5);
-    blob(x, y, ink * R * 1.02, 0, COLORS.vinho2);
-    blob(x, y, ink * R, 0.12, COLORS.vinho);
+    blob(x, y, ink * R * 1.02, outer, COLORS.vinho2);
+    blob(x, y, ink * R, inner, COLORS.vinho);
     // respingos à frente da mancha
     ctx.fillStyle = COLORS.vinho;
     const r0 = ink * R;
@@ -100,7 +102,7 @@ export function createWipe(canvas: HTMLCanvasElement) {
       ctx.arc(x + Math.cos(sp.th) * rr, y + Math.sin(sp.th) * rr, sz, 0, Math.PI * 2);
       ctx.fill();
     }
-    blob(x, y, cream * R, 2.1, COLORS.creme);
+    blob(x, y, cream * R, paper, COLORS.creme);
   }
 
   return { draw, resize };

@@ -78,7 +78,7 @@ export type SheetMat = {
   dispose(): void;
 };
 
-export function createSheet(p: Project, index: number, total: number, lite: boolean, lang: 'pt' | 'en'): SheetMat {
+export function createSheet(p: Project, index: number, total: number, lite: boolean, lang: 'pt' | 'en', invalidate: () => void): SheetMat {
   const paper = new THREE.CanvasTexture(paperCanvas(p, index, total, lite, lang));
   paper.colorSpace = THREE.SRGBColorSpace;
   paper.anisotropy = 8;
@@ -89,6 +89,7 @@ export function createSheet(p: Project, index: number, total: number, lite: bool
   const mediaScale = new THREE.Vector2(1, 1);
   const mediaOffset = new THREE.Vector2(0, 0);
   const fit = (w: number, h: number) => {
+    invalidate();
     // como object-fit: cover, alinhado ao topo (o começo do site é o que importa)
     const a = w / h;
     if (a > MEDIA_ASPECT) {
@@ -197,11 +198,13 @@ void main() {`,
       );
   };
 
+  let playing = false;
   return {
     material,
     uniforms,
     setPlaying(on) {
-      if (!video) return;
+      if (!video || playing === on) return;
+      playing = on;
       if (on) video.play().catch(() => {});
       else video.pause();
     },

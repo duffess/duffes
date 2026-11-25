@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import { projects } from '../brand/projects';
 import { COLORS } from '../brand/data';
 import { createSheet, MEDIA_CENTER, SHEET, shadowTexture } from './sheet';
-import { N, sheetCursor, work } from './workState';
+import { deskFrames, N, sheetCursor, work } from './workState';
 import { range, smooth } from './state';
 
 type Props = { lite: boolean; lang: 'pt' | 'en'; running: boolean; onPick: (i: number) => void };
@@ -22,10 +22,11 @@ const sheetX = (c: number) => c * SPACING;
 const V = (x = 0, y = 0, z = 0) => new THREE.Vector3(x, y, z);
 
 function Sheets({ lite, lang, onPick }: { lite: boolean; lang: 'pt' | 'en'; onPick: (i: number) => void }) {
-  const mats = useMemo(() => projects.map((p, i) => createSheet(p, i, N, lite, lang)), [lite, lang]);
+  const invalidate = useThree((state) => state.invalidate);
+  const mats = useMemo(() => projects.map((p, i) => createSheet(p, i, N, lite, lang, invalidate)), [lite, lang, invalidate]);
   useEffect(() => () => mats.forEach((m) => m.dispose()), [mats]);
   const geo = useMemo(() => new THREE.PlaneGeometry(SHEET.w, SHEET.h, ...SHEET.seg), []);
-  const shadowTex = useMemo(shadowTexture, []);
+  const shadowTex = useMemo(() => shadowTexture(), []);
   const groups = useRef<(THREE.Group | null)[]>([]);
   const shadows = useRef<(THREE.Mesh | null)[]>([]);
   const amt = useMemo(() => projects.map(() => ({ h: 0, o: 0 })), []);
@@ -43,6 +44,8 @@ function Sheets({ lite, lang, onPick }: { lite: boolean; lang: 'pt' | 'en'; onPi
         work.hover === i || (lite && settled && Math.round(c) === i) ? 1 : 0;
       // mola: a dobra vem rápido e volta com calma
       a.h += (want - a.h) * (1 - Math.exp(-d * (want ? 8 : 5)));
+      if (Math.abs(want - a.h) > 0.0001) invalidate();
+      else a.h = want;
       const o = work.open === i ? work.openAmt : 0;
       a.o = o;
       // A folha fica inteira e plana na mesa; o hover só dobra o canto.
@@ -51,7 +54,9 @@ function Sheets({ lite, lang, onPick }: { lite: boolean; lang: 'pt' | 'en'; onPi
       m.uBend.value = 0;
       m.uAlive.value = 1;
       m.uZoom.value = 0;
-      mats[i].setPlaying(a.h > 0.5 || o > 0.5);
+      const playing = a.h > 0.5 || o > 0.5;
+      mats[i].setPlaying(playing);
+      if (projects[i].video && playing) invalidate();
       const j = JITTER[i % JITTER.length];
       g.position.set(sheetX(i), 0.004 + o * 0.25, j.z);
       // giro em torno do eixo vertical (YXZ): a folha gira na mesa sem afundar nela
@@ -89,10 +94,12 @@ function Sheets({ lite, lang, onPick }: { lite: boolean; lang: 'pt' | 'en'; onPi
               onPointerOver={(e) => {
                 e.stopPropagation();
                 work.hover = i;
+                invalidate();
                 document.body.style.cursor = 'pointer';
               }}
               onPointerOut={() => {
                 if (work.hover === i) work.hover = -1;
+                invalidate();
                 document.body.style.cursor = '';
               }}
               onClick={(e) => {
@@ -108,14 +115,15 @@ function Sheets({ lite, lang, onPick }: { lite: boolean; lang: 'pt' | 'en'; onPi
 }
 
 function Rig() {
-  const { camera, size, scene } = useThree();
+  const { camera, size, scene, invalidate } = useThree();
   const portrait = size.width / size.height < 0.9;
-  const k = useMemo(
+  const frame = useRef(useMemo(
     () => ({ p: 0, cam: V(), tgt: V(), camS: V(-2.5, 7, 7.5), tgtS: V(6, 0, -0.5), a: V(), b: V(), mc: V(), first: true }),
     [],
-  );
+  ));
 
   useFrame((_, dt) => {
+    const k = frame.current;
     const d = Math.min(dt, 1 / 20);
     k.p += (work.p - k.p) * (1 - Math.exp(-d * 7));
     const p = k.p;
@@ -167,13 +175,20 @@ function Rig() {
     k.tgtS.lerp(k.tgt, 1 - Math.exp(-d * rate));
     camera.position.copy(k.camS);
     camera.lookAt(k.tgtS);
+    if (Math.abs(work.p - p) > 0.00001 ||
+        k.camS.distanceToSquared(k.cam) > 1e-8 || k.tgtS.distanceToSquared(k.tgt) > 1e-8) invalidate();
   });
   return null;
 }
 
 function Loop({ running }: { running: boolean }) {
-  const setFrameloop = useThree((s) => s.setFrameloop);
-  useEffect(() => setFrameloop(running ? 'always' : 'never'), [running, setFrameloop]);
+  const invalidate = useThree((state) => state.invalidate);
+  useEffect(() => {
+    if (!running) return;
+    deskFrames.request = invalidate;
+    invalidate();
+    return () => { deskFrames.request = () => {}; };
+  }, [running, invalidate]);
   return null;
 }
 
@@ -181,11 +196,12 @@ export default function Desk({ lite, lang, running, onPick }: Props) {
   return (
     <Canvas
       className="desk__canvas"
+      frameloop={running ? 'demand' : 'never'}
       flat
       dpr={lite ? [1, 1.5] : [1, 2]}
       gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
       camera={{ fov: lite ? 46 : 35, near: 0.1, far: 60, position: [-3, 7.2, 7.6] }}
-      onPointerMissed={() => (work.hover = -1)}
+      onPointerMissed={() => { work.hover = -1; deskFrames.request(); }}
       aria-hidden
     >
       <Loop running={running} />

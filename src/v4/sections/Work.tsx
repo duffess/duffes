@@ -1,7 +1,7 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { projects } from '../brand/projects';
 import { gsap, isLite, lockScroll, ScrollTrigger, scrollToY } from '../brand/motion';
-import { sheetCursor, sheetProgress, work } from '../scene/workState';
+import { deskFrames, sheetCursor, sheetProgress, work } from '../scene/workState';
 import { ProjectDialog } from './ProjectDialog';
 import { useLang, useT } from '../brand/lang';
 import { projectText } from '../brand/projects';
@@ -50,6 +50,7 @@ export function Work({ reduced }: { reduced: boolean }) {
       end: 'bottom bottom',
       onUpdate: (self) => {
         work.p = self.progress;
+        deskFrames.request();
         const a = self.progress > 0.12 ? Math.round(sheetCursor(self.progress)) : -1;
         // a câmera chegou a outra folha: um sopro de papel bem baixo
         if (a !== last && a >= 0) sound.flip();
@@ -92,7 +93,7 @@ export function Work({ reduced }: { reduced: boolean }) {
       lockScroll(true);
       gsap
         .timeline({ onComplete: () => void (busy.current = false) })
-        .to(work, { openAmt: 1, duration: 1.15, ease: 'power3.inOut' })
+        .to(work, { openAmt: 1, onUpdate: () => deskFrames.request(), duration: 1.15, ease: 'power3.inOut' })
         .call(() => setShown(true), [], 0.72);
     },
     [isStatic],
@@ -110,6 +111,7 @@ export function Work({ reduced }: { reduced: boolean }) {
     setShown(false);
     gsap.to(work, {
       openAmt: 0,
+      onUpdate: () => deskFrames.request(),
       duration: 0.9,
       delay: 0.25,
       ease: 'power3.inOut',
