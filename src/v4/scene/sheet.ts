@@ -53,7 +53,7 @@ function paperCanvas(p: Project, index: number, total: number, lite: boolean, la
   x.lineWidth = 2 * k;
   x.strokeRect(left, MEDIA.y * H, right - left, top - MEDIA.y * H);
   x.fillStyle = COLORS.vinho;
-  x.font = `400 ${54 * k}px "Bagel Fat One", sans-serif`;
+  x.font = `400 ${54 * k}px "Agilov", sans-serif`;
   x.textBaseline = 'alphabetic';
   x.fillText(p.title, left, top + 90 * k);
   x.fillStyle = 'rgba(28,26,23,0.72)';

@@ -80,7 +80,7 @@ export function Hero({ ready }: { ready: boolean }) {
           </p>
           <p className="hero__lead">
             {t(
-              'Somos a Isabela e o Guilherme. Desenhamos e programamos sites para negócios locais, com botão direto para o seu WhatsApp. A partir de R$ 597.',
+              'Somos a Isabela e o Guilherme. Desenhamos e programamos sites para negócios locais, com botão direto para o seu WhatsApp. A partir de R$ 997.',
               'We are Isabela and Guilherme. We design and build websites for local businesses, with a button straight to your WhatsApp.',
             )}
           </p>

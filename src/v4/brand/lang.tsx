@@ -46,7 +46,7 @@ export function saveLang(l: Lang) {
     ?.setAttribute(
       'content',
       l === 'en'
-        ? 'Isabela and Guilherme design and build websites for local businesses: fast on mobile, ready for Google and with a button straight to your WhatsApp. From R$ 597.'
-        : 'Isabela e Guilherme desenham e programam sites para negócios locais: rápidos no celular, prontos para o Google e com botão direto para o seu WhatsApp. A partir de R$ 597.',
+        ? 'Isabela and Guilherme design and build websites for local businesses: fast on mobile, ready for Google and with a button straight to your WhatsApp. From R$ 997.'
+        : 'Isabela e Guilherme desenham e programam sites para negócios locais: rápidos no celular, prontos para o Google e com botão direto para o seu WhatsApp. A partir de R$ 997.',
     );
 }

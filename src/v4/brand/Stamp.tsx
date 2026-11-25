@@ -10,7 +10,7 @@ type Props = {
 };
 
 /**
- * Marca de carimbo: moldura dupla, título em Bagel e falhas de tinta.
+ * Marca de carimbo: moldura dupla, título em Agilov e falhas de tinta.
  * As falhas vêm de um ruído fixo (calculado uma vez, a marca não "ferve").
  */
 export const Stamp = forwardRef<SVGSVGElement, Props>(function Stamp({ top, title, bottom, className, style }, ref) {

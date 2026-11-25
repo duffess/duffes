@@ -238,7 +238,7 @@ export const plans: Plan[] = [
   {
     id: 'essencial',
     name: 'Essencial',
-    price: 'R$ 597',
+    price: 'R$ 997',
     summary: 'Uma página para o seu negócio ser encontrado e chamado.',
     items: [
       'Página única com até seis seções',
@@ -255,7 +255,7 @@ export const plans: Plan[] = [
   {
     id: 'completo',
     name: 'Completo',
-    price: 'R$ 997',
+    price: 'R$ 1.397',
     summary: 'Para quem quer mostrar tudo o que faz, com mais páginas.',
     items: [
       'Tudo o que vem no Essencial',

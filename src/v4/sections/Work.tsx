@@ -9,7 +9,7 @@ import { sound } from '../brand/sound';
 
 const Desk = lazy(() =>
   Promise.all([
-    document.fonts?.load('54px "Bagel Fat One"').catch(() => null),
+    document.fonts?.load('54px "Agilov"').catch(() => null),
     document.fonts?.load('600 24px "Instrument Sans Variable"').catch(() => null),
     import('../scene/Desk'),
   ]).then(([, , m]) => m),
