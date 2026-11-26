@@ -22,6 +22,37 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: 'marra',
+    kind: 'Estudo',
+    title: 'Marra',
+    place: 'Rio de Janeiro',
+    description:
+      'Loja de streetwear carioca. Os looks se montam peça por peça, as camisetas giram numa arara em 3D e a rua aparece em movimento.',
+    descriptionEn:
+      'Rio streetwear store. Looks come together piece by piece, tees spin on a 3D rack and the street shows up in motion.',
+    details: ['Provador com oito looks, peça por peça', 'Arara em 3D: arrasta e gira a camiseta', 'Lente de vidro que troca as fotos da rua'],
+    detailsEn: ['Fitting room with eight looks, piece by piece', '3D rack: drag and spin the tee', 'Glass lens that swaps the street photos'],
+    image: '/marra-preview.webp',
+    imageSmall: '/marra-preview-669.webp',
+    url: 'https://marra-one.vercel.app/',
+    urlLabel: 'marra-one.vercel.app',
+  },
+  {
+    id: 'aury',
+    kind: 'Estudo',
+    title: 'Aury Lopes Jr.',
+    place: 'Porto Alegre e Brasília',
+    description:
+      'Estudo para um dos nomes do processo penal no Brasil: a advocacia, os livros e as palestras num site só.',
+    descriptionEn: 'Study for one of the leading names in Brazilian criminal procedure: practice, books and talks on a single site.',
+    details: ['Abertura em WebGL: o templo sai do fosco', 'Obras com link direto para a livraria', 'Contato sigiloso para defesa, parecer ou palestra'],
+    detailsEn: ['WebGL opening: the temple rises out of the frost', 'Books linked straight to the bookstore', 'Confidential contact for defence, opinions or talks'],
+    image: '/aury-preview.webp',
+    imageSmall: '/aury-preview-669.webp',
+    url: 'https://aurylopesjr.vercel.app/',
+    urlLabel: 'aurylopesjr.vercel.app',
+  },
+  {
     id: 'fdm',
     kind: 'Cliente',
     title: 'Fábrica de Monstros CT',
