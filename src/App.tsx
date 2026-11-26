@@ -7,6 +7,8 @@ import { lazy, Suspense } from 'react';
 const Site = lazy(() => import('./v4/Site').then((m) => ({ default: m.Site })));
 // Sites de demonstração por nicho, cada um no seu endereço (ex.: /navalha).
 const Navalha = lazy(() => import('./navalha/Navalha'));
+// Página de links para a bio do Instagram.
+const Links = lazy(() => import('./links/Links'));
 
 function App() {
   const path = window.location.pathname.replace(/\/+$/, '');
@@ -14,6 +16,13 @@ function App() {
     return (
       <Suspense fallback={<div style={{ position: 'fixed', inset: 0, background: '#15130f' }} />}>
         <Navalha />
+      </Suspense>
+    );
+  }
+  if (path === '/links') {
+    return (
+      <Suspense fallback={<div style={{ position: 'fixed', inset: 0, background: '#590907' }} />}>
+        <Links />
       </Suspense>
     );
   }
