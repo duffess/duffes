@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import { Eye } from '../v4/brand/Eye';
 import { Signature } from '../v4/brand/Signature';
 import { useEyes } from '../v4/brand/useEyes';
+import { prefersReduced } from '../v4/brand/motion';
 import { WHATSAPP_DISPLAY, waLink } from '../v4/brand/data';
 import { plans, brl } from '../v4/brand/offer';
 import { projects } from '../v4/brand/projects';
@@ -25,13 +26,21 @@ export default function Links() {
   }, []);
 
   const recent = projects.slice(0, 2);
+  // Com "reduzir movimento" ligado, a bolinha fica parada.
+  const still = prefersReduced();
 
   return (
     <main className="lk" ref={root}>
       <header className="lk__top">
         <a className="lk__avatar" href="/" aria-label="LYSS, ir para o portfólio">
-          <Eye />
-          <Eye />
+          {still ? (
+            <img src="/lyss-bolinha.webp" alt="" width={240} height={240} />
+          ) : (
+            <video autoPlay loop muted playsInline poster="/lyss-bolinha.webp" width={240} height={240} aria-hidden="true">
+              <source src="/lyss-bolinha.webm" type="video/webm" />
+              <source src="/lyss-bolinha.mp4" type="video/mp4" />
+            </video>
+          )}
         </a>
         <p className="lk__handle">@{INSTAGRAM}</p>
       </header>
